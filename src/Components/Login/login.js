@@ -1,3 +1,5 @@
+// TODO: add functionality to link to the game display once teh submit button is clicked.
+
 const LoginWindow = function(props)
 {
 
