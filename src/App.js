@@ -1,20 +1,18 @@
 import './App.css';
 import LoginWindow from './Components/Login/login';
 import GameDisplay from "./Components/GameDisplay/game-display"
-import {BrowserRouter, Routes, Route} from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import UserSearch from './Components/UserSearch/user-search';
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-      <LoginWindow />
-      <Routes>
-        <Route path="/GameDisplay" element={<GameDisplay/>}></Route>
-      </Routes>
-      </BrowserRouter>
-    </div>
+      <header className='App-header'>
+        <GameDisplay />
+        <LoginWindow />
+      </header>
+    </div >
   );
 }
 
