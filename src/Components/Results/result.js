@@ -1,16 +1,45 @@
 import './result.css';
+
+// https://www.mongodb.com/languages/mern-stack-tutorial << help with displaying data
 // TODO: Submit MongoDB data into table
 // TODO: Style Tables to make it look less messy
+import React, {useEffect,useState} from 'react';
+import {Link} from "react-router-dom";
+import './result.css';
 
+function Result (props)  {
+   
+const [records, setRecords] = useState([]);
+  // Fetches the data from DB
 
-function Result () {
+    useEffect(()=> {
+        async function getRecords(){
+            const response = await fetch('http://localhost:5000/users/');
+            if (!response.ok){
+                const message = `An error occured: ${response.statusText}`;
+                window.alert(message);
+                return;
+            }
+            const records = await response.json()
+            setRecords(records);
+            console.log(records);
+        }
+        getRecords();
+    })
+
+    // Renders the fetched JSON Data to the result page
+
     return(
         <div className="result-name">
             <h3 id="results">Results</h3> 
+            <br/>
+            <br/>
             <table border ="1">
+                {/* Tables to display username + score */}
                 <tr>
-                    <td>Highest User Score</td>
-                    <td id="user-score-highest">(insert score data)</td>
+
+                    <td>Highest Username</td>
+                    <td id="user-score-highest">(insert score data)</td> 
                     <br/>
                 </tr>
 
@@ -18,7 +47,7 @@ function Result () {
             <table border="1">
                 <tr>
                 
-                    <td>Userscore</td>
+                    <td>Username</td>
                     <td id="user-score-2nd">(insert score data)</td>
                     
                 </tr>
@@ -26,7 +55,7 @@ function Result () {
             <table border="1">
                 <tr>   
                 <br/>
-                    <td >Userscore</td>
+                    <td >Username</td>
                     <td id ="user-score-3rd">(insert score data)</td>  
                 </tr>   
                 </table> 
