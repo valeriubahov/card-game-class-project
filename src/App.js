@@ -8,15 +8,15 @@ import UserSearch from './Components/UserSearch/user-search';
 
 function App() {
   return (
-    <div className="App-header">
+    <div className="App">
       <BrowserRouter>
         <header className='App-header'>
           <Nav />
         </header>
         <div className="gamePage">
           <Routes>
-          <Route path="/" element={<LoginWindow/>}></Route>
-        <Route path="/game-display" element={<GameDisplay/>}></Route>
+            <Route path="/" element={<GameDisplay />}></Route>
+            <Route path="/login" element={<LoginWindow />}></Route>
           </Routes>
         </div>
       </BrowserRouter>
