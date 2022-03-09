@@ -20,8 +20,12 @@ const LoginWindow = function(props)
                     <input type="submit" value="Login"></input>
                 </form>
 
+<<<<<<< HEAD
         </div>
     )
+=======
+    ) 
+>>>>>>> dbbc4513a07d85f70ee3dc9b43c4de5061d7dff7
 }
 
 export default LoginWindow;
