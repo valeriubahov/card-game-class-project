@@ -1,6 +1,4 @@
 import './result.css';
-
-// https://www.mongodb.com/languages/mern-stack-tutorial << help with displaying data
 // TODO: Submit MongoDB data into table
 // TODO: Style Tables to make it look less messy
 import React, {useEffect,useState} from 'react';
@@ -27,19 +25,17 @@ const [records, setRecords] = useState([]);
         getRecords();
     })
 
-    // Renders the fetched JSON Data to the result page
-
     return(
         <div className="result-name">
             <h3 id="results">Results</h3> 
             <br/>
             <br/>
             <table border ="1">
-                {/* Tables to display username + score */}
+                
                 <tr>
-
+                    
                     <td>Highest Username</td>
-                    <td id="user-score-highest">(insert score data)</td> 
+                    <td id="user-score-highest">(insert score data)</td>
                     <br/>
                 </tr>
 
@@ -69,3 +65,4 @@ const [records, setRecords] = useState([]);
 }
 
 export default Result;
+
