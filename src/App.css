@@ -12,7 +12,7 @@
 }
 
 .gamePage {
-  background-color: #282c34;
+  background: radial-gradient(circle, rgba(45,59,161,1) 22%, rgba(8,12,29,1) 100%);
   min-height: 100vh;
   display: flex;
   align-items: center;
