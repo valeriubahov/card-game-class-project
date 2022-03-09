@@ -65,3 +65,4 @@ const [records, setRecords] = useState([]);
 }
 
 export default Result;
+
