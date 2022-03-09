@@ -3,14 +3,28 @@ import { Link } from "react-router-dom";
 
 const LoginWindow = (props) => {
 
+    const uploadImage = () => {
+        alert("uploading");
+        //add a post using a fetch 
+        //grab the file that's in the form 
+        //use "https://stackoverflow.com/questions/36067767/how-do-i-upload-a-file-with-the-js-fetch-api" as a starting point.
+    }
+
+
+
+
+
+
+
+
     return (
         <div>
             <h1>Honey Badger Games!</h1>
             <p>New Player:</p>
-                <form id="newUserCreation">
+                <form id="newUserCreation" onSubmit={uploadImage}>
                     <label htmlFor="newUserName">Please Enter Your Username:</label><br></br>
                     <input type="text" id="newUserName" name="newUserName"></input><br></br>
-                    <span>Upload your Profile Picture: </span> <input type="button" id="userIcon" value="Select your Image"></input><br></br>
+                    <span>Upload your Profile Picture: </span> <input type="file" id="userIcon"></input><br></br>
                     <input type="submit" value="Create New User"></input>
                 </form>
             <br></br>

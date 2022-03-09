@@ -17,3 +17,9 @@ app.listen(port, () => {
     });
     console.log(`Server is running on port: ${port}`);
 }); 
+
+
+//used for the user uploading profile pics
+app.post('/upload', function(req, res) {
+    console.log(req.files.foo); // the uploaded file object
+  });
