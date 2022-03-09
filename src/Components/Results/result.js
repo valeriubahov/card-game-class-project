@@ -6,7 +6,25 @@ import {Link} from "react-router-dom";
 import './result.css';
 
 function Result (props)  {
-    <p>{props.record.name}</p> // TODO: Bring over USER from DB to display 
+   
+const [records, setRecords] = useState([]);
+  // Fetches the data from DB
+
+    useEffect(()=> {
+        async function getRecords(){
+            const response = await fetch('http://localhost:5000/users/');
+            if (!response.ok){
+                const message = `An error occured: ${response.statusText}`;
+                window.alert(message);
+                return;
+            }
+            const records = await response.json()
+            setRecords(records);
+            console.log(records);
+        }
+        getRecords();
+    })
+
     return(
         <div className="result-name">
             <h3 id="results">Results</h3> 
