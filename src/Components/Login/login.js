@@ -1,10 +1,9 @@
 // TODO: add functionality to link to the game display once the submit button is clicked.
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const LoginWindow = function(props)
-{
+const LoginWindow = (props) => {
 
-    return(
+    return (
         <div>
             <h1>Honey Badger Games!</h1>
             <p>New Player:</p>
@@ -23,8 +22,8 @@ const LoginWindow = function(props)
                 </form>
 
         </div>
- 
-    ) 
+
+    )
 }
 
 export default LoginWindow;
