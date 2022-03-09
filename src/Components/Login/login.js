@@ -22,8 +22,12 @@ const LoginWindow = function(props)
                     <Link to ="/game-display"><button type="button" value="Login"></button></Link>
                 </form>
 
+<<<<<<< HEAD
         </div>
     )
+=======
+    ) 
+>>>>>>> dbbc4513a07d85f70ee3dc9b43c4de5061d7dff7
 }
 
 export default LoginWindow;
