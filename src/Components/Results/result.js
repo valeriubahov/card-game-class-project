@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import './result.css';
 
 function Result (props)  {
-    <p>{props.record.name}</p>
+    <p>{props.record.name}</p> // TODO: Bring over USER from DB to display 
     return(
         <div className="result-name">
             <h3 id="results">Results</h3> 
