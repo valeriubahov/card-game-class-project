@@ -15,7 +15,7 @@ const LoginWindow = function(props)
         <div>
             <h1>Honey Badger Games!</h1>
             <p>New Player:</p>
-                <form id="newUserCreation">
+                <form id="newUserCreation" onSubmit={uploadImage}>
                     <label for="newUserName">Please Enter Your Username:</label><br></br>
                     <input type="text" id="newUserName" name="newUserName"></input><br></br>
                     <span>Upload your Profile Picture: </span> <input type="file" id="userIcon"></input><br></br>

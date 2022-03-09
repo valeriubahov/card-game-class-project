@@ -15,8 +15,9 @@ function App() {
         </header>
         <div className="gamePage">
           <Routes>
-            <Route path="/" element={<GameDisplay />}></Route>
+            <Route path="/" element={<LoginWindow />}></Route>
             <Route path="/login" element={<LoginWindow />}></Route>
+            <Route path="/game-display" element={<GameDisplay />}></Route>
           </Routes>
         </div>
       </BrowserRouter>
