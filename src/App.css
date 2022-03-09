@@ -4,11 +4,11 @@
 
 .App-header {
   background-color: #282c34;
-  display: fixed;
+  color: white;
+  position: fixed;
   top: 0;
   width: 100%;
-  color: white;
-  border-bottom: 1px solid orangered;
+  border-bottom: 1px solid white;
 }
 
 .gamePage {
