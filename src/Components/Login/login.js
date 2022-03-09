@@ -11,7 +11,7 @@ const LoginWindow = function(props)
         <input type="submit"></input>
         </form>
 
-    )
+    ) 
 }
 
 export default LoginWindow;
