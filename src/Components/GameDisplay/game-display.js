@@ -1,6 +1,16 @@
 import './styles.css';
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+
+let playerCardValue = 0;
+let playerScore = 0;
+let botCardValue = 0;
+let botScore = 0;
+
+const cardImageValue = new Map();
+cardImageValue.set('JACK', 11);
+cardImageValue.set('QUEEN', 12);
+cardImageValue.set('KING', 13);
+cardImageValue.set('ACE', 14);
 
 const GameDisplay = function (props) {
 
@@ -13,7 +23,7 @@ const GameDisplay = function (props) {
 
     const [botCard, setBotCard] = useState(null);
 
-
+    // GET AI DECK ID - THE ID IS USED TO KNOW FROM WHICH DECK TO DRAW
     useEffect(() => {
         fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
             .then(res => res.json())
@@ -23,6 +33,7 @@ const GameDisplay = function (props) {
             });
     }, []);
 
+    // GET PLAYER DECK ID - THE ID IS USED TO KNOW FROM WHICH DECK TO DRAW
     useEffect(() => {
         fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
             .then(res => res.json())
@@ -40,25 +51,35 @@ const GameDisplay = function (props) {
         fetch(API_URL_PLAYER).then(response => response.json())
             .then(playerCard => {
                 const picUrl = playerCard.cards[0].image;
-                const cardValue = playerCard.cards[0].value;
+                playerCardValue = playerCard.cards[0].value;
                 setPlayerCard(picUrl);
+                if (isNaN(playerCardValue)) {
+                    playerCardValue = cardImageValue.get(playerCardValue);
+                }
             });
 
         // DRAW CARD FROM BOT DECK
         fetch(API_URL_BOT).then(response => response.json())
             .then(botCard => {
                 const picUrl = botCard.cards[0].image;
-                const cardValue = botCard.cards[0].value;
+                botCardValue = botCard.cards[0].value;
                 setBotCard(picUrl);
+                if (isNaN(botCardValue)) {
+                    botCardValue = cardImageValue.get(botCardValue);
+                }
             });
 
-
+        if (botCardValue > playerCardValue) {
+            botScore += parseInt(botCardValue) + parseInt(playerCardValue);
+        }
+        else if (botCardValue < playerCardValue) {
+            playerScore += parseInt(botCardValue) + parseInt(playerCardValue);
+        }
     }
 
 
     return (
         <div className='game-table'>
-
 
             <div className='card-display'>
 
@@ -66,7 +87,7 @@ const GameDisplay = function (props) {
                     <p>Computer</p>
                     <img className='deck2' ></img>
                     <img src={botCard} className='bot-draw' ></img>
-                    <p>Score</p>
+                    <p>Score: {botScore}</p>
                 </div>
 
 
@@ -74,18 +95,13 @@ const GameDisplay = function (props) {
                     <p>Player Name</p>
                     <img src={playerCard} className='player-draw' ></img>
                     <img className='deck1' ></img>
-                    <p>Score</p>
+                    <p>Score: {playerScore}</p>
                 </div>
             </div>
 
-
             <button className='drawButton' onClick={draw}>Draw</button>
-
         </div>
-
-
     )
-
 }
 
 export default GameDisplay;
