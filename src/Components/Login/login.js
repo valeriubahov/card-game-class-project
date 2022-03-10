@@ -19,7 +19,7 @@ const LoginWindow = function(props)
                     <label for="newUserName">Please Enter Your Username:</label><br></br>
                     <input type="text" id="newUserName" name="newUserName"></input><br></br>
                     <span>Upload your Profile Picture: </span> <input type="file" id="userIcon"></input><br></br>
-                    <Link to ="/game-display"><button type="button" value="Create New User">Login</button></Link>
+                    <Link to ="/game-display"><button type="button" value="Create New User">Create New User</button></Link>
                 </form>
             <br></br>
             <p>Already a Player:</p>
