@@ -39,8 +39,10 @@
 
 .player-draw {
   float: left;
+  margin-left: 1rem;
 }
 
 .bot-draw {
   float: right;
+  margin-right: 1rem;
 }
