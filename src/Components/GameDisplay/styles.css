@@ -1,10 +1,46 @@
-.game-table
-{
-    height: 80vh;
-    width: 90vw;
-    background: radial-gradient(circle, rgba(23,184,8,1) 0%, rgba(11,89,6,1) 100%);
-    border: 40px solid rgb(90, 54, 20);
-    border-radius: 42%;
-    box-shadow: rgba(0,0,0,0.8) 0 0 100px,
-                inset 0 0 50px 20px rgba(0,0,0,0.8);
+.game-table {
+  height: 80vh;
+  width: 90vw;
+  background: radial-gradient(
+    circle,
+    rgba(23, 184, 8, 1) 0%,
+    rgba(11, 89, 6, 1) 100%
+  );
+  border: 40px solid rgb(90, 54, 20);
+  border-radius: 42%;
+  box-shadow: rgba(0, 0, 0, 0.8) 0 0 100px,
+    inset 0 0 50px 20px rgba(0, 0, 0, 0.8);
+}
+
+.card-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.player-cards,
+.bot-cards {
+  width: 100%;
+}
+
+.player-draw,
+.bot-draw,
+.deck1,
+.deck2 {
+  width: 150px;
+  min-width: 150px;
+  border: 1px solid white;
+  height: 200px;
+  border-radius: 4%;
+}
+
+.player-draw {
+  float: left;
+}
+
+.bot-draw {
+  float: right;
 }
