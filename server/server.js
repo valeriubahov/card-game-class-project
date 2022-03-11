@@ -8,6 +8,9 @@ app.use(express.json());
 app.use(require("./routes/users"));
 // get driver connection
 const dbo = require("./db/conn");
+//multer needed for profile pic uploading
+const multer = require("multer");
+const upload = multer({dest: "./uploads"})
 
 app.listen(port, () => {
     // perform a database connection when server starts
@@ -20,6 +23,6 @@ app.listen(port, () => {
 
 
 //used for the user uploading profile pics
-app.post('/upload', function(req, res) {
-    console.log(req.files.foo); // the uploaded file object
+app.post('/uploads', upload.single("profilePic"), function(req, res) {
+    console.log(req.file.profilePic); // the uploaded file object
   });
