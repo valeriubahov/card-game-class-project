@@ -23,12 +23,13 @@ const GameDisplay = function (props) {
 
     const [botCard, setBotCard] = useState(null);
 
+    const [deckEnded, setDeckEnded] = useState(false);
+
     // GET AI DECK ID - THE ID IS USED TO KNOW FROM WHICH DECK TO DRAW
     useEffect(() => {
         fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
             .then(res => res.json())
             .then(botDeckID => {
-                console.log(botDeckID.deck_id)
                 setBotDeckID(botDeckID.deck_id);
             });
     }, []);
@@ -46,40 +47,92 @@ const GameDisplay = function (props) {
     const API_URL_PLAYER = `https://deckofcardsapi.com/api/deck/${playerDeckID}/draw/?count=1`
     const API_URL_BOT = `https://deckofcardsapi.com/api/deck/${botDeckID}/draw/?count=1`
 
-    const draw = () => {
+
+
+
+    async function getPlayerCard() {
+        const callAPi = await fetch(API_URL_PLAYER);
+        const card = await callAPi.json();
+        return card;
+    }
+
+    async function getAICard() {
+        const callAPi = await fetch(API_URL_BOT);
+        const card = await callAPi.json();
+        return card;
+    }
+
+    async function checkHandWinner() {
+        if (!deckEnded) {
+            if (botCardValue > playerCardValue) {
+                botScore += parseInt(botCardValue) + parseInt(playerCardValue);
+                console.log(`BOT WINS`);
+            }
+            else if (botCardValue < playerCardValue) {
+                playerScore += parseInt(botCardValue) + parseInt(playerCardValue);
+                console.log(`PLAYER WINS`);
+            }
+            else {
+                console.log(`DRAW`);
+            }
+        }
+        else {
+            console.log('Saving to DB')
+        }
+    }
+
+
+    async function draw() {
         // DRAW CARD FROM THE PLAYER DECK
-        fetch(API_URL_PLAYER).then(response => response.json())
-            .then(playerCard => {
+        await getPlayerCard().then(playerCard => {
+            if (playerCard.remaining > 0) {
                 const picUrl = playerCard.cards[0].image;
                 playerCardValue = playerCard.cards[0].value;
                 setPlayerCard(picUrl);
                 if (isNaN(playerCardValue)) {
                     playerCardValue = cardImageValue.get(playerCardValue);
                 }
-            });
+            }
+            else {
+                setDeckEnded(true);
+            }
+        });
 
         // DRAW CARD FROM BOT DECK
-        fetch(API_URL_BOT).then(response => response.json())
-            .then(botCard => {
+        await getAICard().then(botCard => {
+            if (botCard.remaining > 0) {
                 const picUrl = botCard.cards[0].image;
                 botCardValue = botCard.cards[0].value;
                 setBotCard(picUrl);
                 if (isNaN(botCardValue)) {
                     botCardValue = cardImageValue.get(botCardValue);
                 }
-            });
+            }
+            else {
+                setDeckEnded(true);
+            }
+        });
 
-        if (botCardValue > playerCardValue) {
-            botScore += parseInt(botCardValue) + parseInt(playerCardValue);
+        await checkHandWinner();
+    }
+
+    const [BG, setBG] = useState("game-table1")
+
+    const changeBG = () => {
+        if (BG == "game-table1"){
+            setBG("game-table2")
         }
-        else if (botCardValue < playerCardValue) {
-            playerScore += parseInt(botCardValue) + parseInt(playerCardValue);
+        else if(BG == "game-table2"){
+            setBG("game-table3")
+        }
+        else{
+            setBG("game-table1")
         }
     }
 
 
     return (
-        <div className='game-table'>
+        <div className={BG}>
 
             <div className='card-display'>
 
@@ -90,6 +143,7 @@ const GameDisplay = function (props) {
                     <p>Score: {botScore}</p>
                 </div>
 
+                <button className='drawButton' onClick={draw}>Draw</button>
 
                 <div className="player-cards">
                     <p>Player Name</p>
@@ -99,7 +153,7 @@ const GameDisplay = function (props) {
                 </div>
             </div>
 
-            <button className='drawButton' onClick={draw}>Draw</button>
+            <button className='colorButton' onClick={changeBG}>Table Color</button>
         </div>
     )
 }
