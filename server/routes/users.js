@@ -20,8 +20,13 @@ recordRoutes.route("/users").get(function (req, res) {
     .find({})
     .toArray(function (err, result) {
       if (err) throw err;
-      res.json(result);
+      // This stop it from pulling it every second
+      const results = res.json(result);
+       db_connect.close();
+      return results;
     });
+  
+
 });
 
 // This section will help you get a single record by id
