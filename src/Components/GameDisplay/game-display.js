@@ -28,7 +28,6 @@ const GameDisplay = function (props) {
         fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
             .then(res => res.json())
             .then(botDeckID => {
-                console.log(botDeckID.deck_id)
                 setBotDeckID(botDeckID.deck_id);
             });
     }, []);
@@ -46,35 +45,62 @@ const GameDisplay = function (props) {
     const API_URL_PLAYER = `https://deckofcardsapi.com/api/deck/${playerDeckID}/draw/?count=1`
     const API_URL_BOT = `https://deckofcardsapi.com/api/deck/${botDeckID}/draw/?count=1`
 
-    const draw = () => {
+
+
+
+    async function getPlayerCard() {
+        const callAPi = await fetch(API_URL_PLAYER);
+        const card = await callAPi.json();
+        return card;
+    }
+
+    async function getAICard() {
+        const callAPi = await fetch(API_URL_BOT);
+        const card = await callAPi.json();
+        return card;
+    }
+
+    async function checkHandWinner() {
+        if (botCardValue > playerCardValue) {
+            botScore += parseInt(botCardValue) + parseInt(playerCardValue);
+            console.log(`BOT WINS`);
+        }
+        else if (botCardValue < playerCardValue) {
+            playerScore += parseInt(botCardValue) + parseInt(playerCardValue);
+            console.log(`PLAYER WINS`);
+        }
+        else {
+            console.log(`DRAW`);
+        }
+    }
+
+
+    async function draw() {
         // DRAW CARD FROM THE PLAYER DECK
-        fetch(API_URL_PLAYER).then(response => response.json())
-            .then(playerCard => {
+        await getPlayerCard().then(playerCard => {
+            if (playerCard.remaining > 0) {
                 const picUrl = playerCard.cards[0].image;
                 playerCardValue = playerCard.cards[0].value;
                 setPlayerCard(picUrl);
                 if (isNaN(playerCardValue)) {
                     playerCardValue = cardImageValue.get(playerCardValue);
                 }
-            });
+            }
+        });
 
         // DRAW CARD FROM BOT DECK
-        fetch(API_URL_BOT).then(response => response.json())
-            .then(botCard => {
+        await getAICard().then(botCard => {
+            if (botCard.remaining > 0) {
                 const picUrl = botCard.cards[0].image;
                 botCardValue = botCard.cards[0].value;
                 setBotCard(picUrl);
                 if (isNaN(botCardValue)) {
                     botCardValue = cardImageValue.get(botCardValue);
                 }
-            });
+            }
+        });
 
-        if (botCardValue > playerCardValue) {
-            botScore += parseInt(botCardValue) + parseInt(playerCardValue);
-        }
-        else if (botCardValue < playerCardValue) {
-            playerScore += parseInt(botCardValue) + parseInt(playerCardValue);
-        }
+        await checkHandWinner();
     }
 
 
