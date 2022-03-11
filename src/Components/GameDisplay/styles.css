@@ -1,10 +1,38 @@
-.game-table {
+.game-table1 {
   height: 80vh;
   width: 90vw;
   background: radial-gradient(
     circle,
     rgba(23, 184, 8, 1) 0%,
     rgba(11, 89, 6, 1) 100%
+  );
+  border: 40px solid rgb(90, 54, 20);
+  border-radius: 42%;
+  box-shadow: rgba(0, 0, 0, 0.8) 0 0 100px,
+    inset 0 0 50px 20px rgba(0, 0, 0, 0.8);
+}
+.game-table2
+{
+  height: 80vh;
+  width: 90vw;
+  background: radial-gradient(
+    circle,
+    rgb(184, 8, 8) 0%,
+    rgb(63, 4, 4) 100%
+  );
+  border: 40px solid rgb(90, 54, 20);
+  border-radius: 42%;
+  box-shadow: rgba(0, 0, 0, 0.8) 0 0 100px,
+    inset 0 0 50px 20px rgba(0, 0, 0, 0.8);
+}
+.game-table3
+{
+  height: 80vh;
+  width: 90vw;
+  background: radial-gradient(
+    circle,
+    rgb(0, 217, 255) 0%,
+    rgb(3, 50, 68) 100%
   );
   border: 40px solid rgb(90, 54, 20);
   border-radius: 42%;

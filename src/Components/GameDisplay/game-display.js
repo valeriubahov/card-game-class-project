@@ -103,9 +103,23 @@ const GameDisplay = function (props) {
         await checkHandWinner();
     }
 
+    const [BG, setBG] = useState("game-table1")
+
+    const changeBG = () => {
+        if (BG == "game-table1"){
+            setBG("game-table2")
+        }
+        else if(BG == "game-table2"){
+            setBG("game-table3")
+        }
+        else{
+            setBG("game-table1")
+        }
+    }
+
 
     return (
-        <div className='game-table'>
+        <div className={BG}>
 
             <div className='card-display'>
 
@@ -116,6 +130,7 @@ const GameDisplay = function (props) {
                     <p>Score: {botScore}</p>
                 </div>
 
+                <button className='drawButton' onClick={draw}>Draw</button>
 
                 <div className="player-cards">
                     <p>Player Name</p>
@@ -125,7 +140,7 @@ const GameDisplay = function (props) {
                 </div>
             </div>
 
-            <button className='drawButton' onClick={draw}>Draw</button>
+            <button className='colorButton' onClick={changeBG}>Table Color</button>
         </div>
     )
 }
