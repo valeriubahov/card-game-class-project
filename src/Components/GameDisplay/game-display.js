@@ -23,6 +23,8 @@ const GameDisplay = function (props) {
 
     const [botCard, setBotCard] = useState(null);
 
+    const [deckEnded, setDeckEnded] = useState(false);
+
     // GET AI DECK ID - THE ID IS USED TO KNOW FROM WHICH DECK TO DRAW
     useEffect(() => {
         fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
@@ -61,16 +63,21 @@ const GameDisplay = function (props) {
     }
 
     async function checkHandWinner() {
-        if (botCardValue > playerCardValue) {
-            botScore += parseInt(botCardValue) + parseInt(playerCardValue);
-            console.log(`BOT WINS`);
-        }
-        else if (botCardValue < playerCardValue) {
-            playerScore += parseInt(botCardValue) + parseInt(playerCardValue);
-            console.log(`PLAYER WINS`);
+        if (!deckEnded) {
+            if (botCardValue > playerCardValue) {
+                botScore += parseInt(botCardValue) + parseInt(playerCardValue);
+                console.log(`BOT WINS`);
+            }
+            else if (botCardValue < playerCardValue) {
+                playerScore += parseInt(botCardValue) + parseInt(playerCardValue);
+                console.log(`PLAYER WINS`);
+            }
+            else {
+                console.log(`DRAW`);
+            }
         }
         else {
-            console.log(`DRAW`);
+            console.log('Saving to DB')
         }
     }
 
@@ -86,6 +93,9 @@ const GameDisplay = function (props) {
                     playerCardValue = cardImageValue.get(playerCardValue);
                 }
             }
+            else {
+                setDeckEnded(true);
+            }
         });
 
         // DRAW CARD FROM BOT DECK
@@ -97,6 +107,9 @@ const GameDisplay = function (props) {
                 if (isNaN(botCardValue)) {
                     botCardValue = cardImageValue.get(botCardValue);
                 }
+            }
+            else {
+                setDeckEnded(true);
             }
         });
 
