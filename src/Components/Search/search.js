@@ -21,7 +21,7 @@ function Search() {
         if(user !== undefined){
           setDisplay(`${user.userName}'s Top Scores`)
           // set up to display the top scores in db on scoreboard table
-          console.log(user.userId.$numberDecimal)
+          console.log('ID=', user.userId.$numberDecimal)
         }
       } else { 
         setMsg('User not found.');
