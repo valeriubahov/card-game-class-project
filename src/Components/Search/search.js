@@ -1,39 +1,27 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState } from "react"; 
 
-function Search() {
+export default function Search() {
+  const [display, setDisplay] = useState({ msg: '', title: '' });
 
-  const [search, setSearch] = useState('');
-  const [msg, setMsg] = useState('');
-  const [display, setDisplay] = useState('');
-
-  useEffect(() => { // i think this is not very efficient rn 
-    async function searchUsers() {
-      const response = await fetch(`http://localhost:5000/users/`);
-      if (!response.ok){
-        window.alert(`An error occured: ${response.statusText}`);
-        return;
-      }
-      const users = await response.json();
-      let user = users.find(u => u.userName === search)
-      
-      if (search == '' ||  user !== undefined) {
-        setMsg('')
-        if(user !== undefined){
-          setDisplay(`${user.userName}'s Top Scores`)
-          // set up to display the top scores in db on scoreboard table
-          console.log('ID=', user.userId.$numberDecimal)
-        }
-      } else { 
-        setMsg('User not found.');
-        setDisplay('');
-      }
-    }
-    searchUsers();
-  })
-
-  function clicked(e) {
+  async function clicked(e) {
     e.preventDefault();
-    setSearch(e.target.searchUser.value);
+    const query = e.target.searchUser.value;
+    
+    const response = await fetch(`http://localhost:5000/users/`);
+    if (!response.ok){
+      window.alert(`An error occured: ${response.statusText}`);
+      return;
+    }
+
+    const users = await response.json();
+    let user = users.find(u => u.userName === query);
+    if (user !== undefined) {
+      setDisplay({ msg: '', title: `${user.userName}'s Top Scores` });
+      console.log('ID = ', user.userId.$numberDecimal); // need this to match against scoreboard collection
+    }
+    if(user == undefined && query !== undefined) { 
+      setDisplay({ msg: 'User not found.', title: '' });
+    }
   }
   
   return (
@@ -43,15 +31,12 @@ function Search() {
         <input 
           type="text"
           name="searchUser"
-          id="userQuery"
-          placeholder="Enter Username">
-        </input>
-      <button type="submit">Go</button>    
+          placeholder="Enter Username"
+        />
+        <button type="submit">Go</button>    
       </form>
-      <p>{msg}</p>
-      <h2>{display}</h2>
+      <p>{display.msg}</p>
+      <h2>{display.title}</h2>
     </div>
   )
 }
-
-export default Search;
