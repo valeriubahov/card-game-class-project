@@ -1,13 +1,10 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const Nav = (props) => {
-    return (
-        <>
-            <Link className="link" to="/login">Login</Link>
-        </>
-    )
+export default function Nav() {
+  return (
+    <>
+      <Link className='link' to='/login'>Login</Link>
+      <Link className='link' to='/search'>Search</Link>
+    </>
+  )
 }
-
-export default Nav;
-
-// 

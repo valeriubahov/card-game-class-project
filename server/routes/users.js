@@ -11,8 +11,7 @@ const dbo = require("../db/conn");
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require("mongodb").ObjectId;
 
-
-// This section will help you get a list of all the records.
+// returns array of all user objects
 recordRoutes.route("/users").get(function (req, res) {
   let db_connect = dbo.getDb("CardGame");
   db_connect
@@ -25,11 +24,9 @@ recordRoutes.route("/users").get(function (req, res) {
        db_connect.close();
       return results;
     });
-  
-
 });
 
-// This section will help you get a single record by id
+// returns single user object by userId
 recordRoutes.route("/users/:id").get(function (req, res) {
   let db_connect = dbo.getDb("CardGame");
   let myquery = { userId: parseInt(req.params.id) };
