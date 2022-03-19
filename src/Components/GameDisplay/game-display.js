@@ -57,17 +57,17 @@ const GameDisplay = function (props) {
 
     async function getPlayerCard() {
         const callAPi = await fetch(API_URL_PLAYER);
-        const card = await callAPi.json();
+        const card = callAPi.json();
         return card;
     }
 
     async function getAICard() {
         const callAPi = await fetch(API_URL_BOT);
-        const card = await callAPi.json();
+        const card = callAPi.json();
         return card;
     }
 
-    async function checkHandWinner() {
+    function checkHandWinner() {
         if (!deckEnded) {
             if (botCardValue > playerCardValue) {
                 botScore += parseInt(botCardValue) + parseInt(playerCardValue);
@@ -118,7 +118,7 @@ const GameDisplay = function (props) {
             }
         });
 
-        await checkHandWinner();
+        checkHandWinner();
     }
 
     const [BG, setBG] = useState("game-table1")
