@@ -1,6 +1,9 @@
 const express = require("express");
 
-// recordRoutes is an instance of the express router.
+// Purpose: pulls ScoreBoard 
+
+
+
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /record.
 const recordRoutes = express.Router();
@@ -11,27 +14,29 @@ const dbo = require("../db/conn");
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require("mongodb").ObjectId;
 
-// returns array of all user objects
+
+// This section will help you get a list of all the records.
 recordRoutes.route("/users").get(function (req, res) {
   let db_connect = dbo.getDb("CardGame");
   db_connect
-    .collection("Users")
+    .collection("ScoreBoard")
     .find({})
     .toArray(function (err, result) {
       if (err) throw err;
-      // This stop it from pulling it every second
       const results = res.json(result);
-       db_connect.close();
+      db_connect.close();
       return results;
     });
+
+
 });
 
-// returns single user object by userId
+// This section will help you get a single record by id
 recordRoutes.route("/users/:id").get(function (req, res) {
   let db_connect = dbo.getDb("CardGame");
   let myquery = { userId: parseInt(req.params.id) };
   db_connect
-    .collection("Users")
+    .collection("Scoreboard")
     .findOne(myquery, function (err, result) {
       if (err) throw err;
       res.json(result);
@@ -64,7 +69,7 @@ recordRoutes.route("/update/:id").post(function (req, response) {
     },
   };
   db_connect
-    .collection("Users")
+    .collection("ScoreBoard")
     .updateOne(myquery, newvalues, function (err, res) {
       if (err) throw err;
       console.log("1 document updated");
@@ -76,7 +81,7 @@ recordRoutes.route("/update/:id").post(function (req, response) {
 recordRoutes.route("/:id").delete((req, response) => {
   let db_connect = dbo.getDb("CardGame");
   let myquery = { _id: ObjectId(req.params.id) };
-  db_connect.collection("Users").deleteOne(myquery, function (err, obj) {
+  db_connect.collection("ScoreBoard").deleteOne(myquery, function (err, obj) {
     if (err) throw err;
     console.log("1 document deleted");
     response.json(obj);

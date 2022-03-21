@@ -14,3 +14,12 @@ table, th, td {
   table {
     border-spacing: 10px;
   }
+
+
+
+  #username-1st{
+    font-style: italic;
+    font-weight: bolder;
+  }
+
+  

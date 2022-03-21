@@ -3,10 +3,10 @@ import LoginWindow from './Components/Login/login';
 import GameDisplay from "./Components/GameDisplay/game-display"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Nav from './Components/Nav/nav';
-import UserSearch from './Components/UserSearch/user-search';
+import Result from './Components/Results/result';
+import Search from './Components/Search/search';
 
-
-function App() {
+export default function App() {
   return (
     <div className="App">
       <BrowserRouter>
@@ -16,15 +16,14 @@ function App() {
         <div className="gamePage">
           <Routes>
             <Route path="/" element={<LoginWindow />}></Route>
-            <Route path="/play" element={<GameDisplay />}></Route>
             <Route path="/login" element={<LoginWindow />}></Route>
+            <Route path="/search" element={<Search />}></Route>
+            <Route path="/play" element={<GameDisplay />}></Route>
             <Route path="/game-display" element={<GameDisplay />}></Route>
-
+            <Route path="/result" element={<Result />}></Route>
           </Routes>
         </div>
       </BrowserRouter>
     </div >
   );
 }
-
-export default App;

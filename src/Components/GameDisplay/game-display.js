@@ -1,5 +1,8 @@
 import './styles.css';
 import React, { useState, useEffect } from 'react';
+import RedCard from "./red-card.jpg";
+import BlueCard from "./blue-card.jpg";
+import BlackCard from "./black-card.jpg";
 
 let playerCardValue = 0;
 let playerScore = 0;
@@ -24,6 +27,8 @@ const GameDisplay = function (props) {
     const [botCard, setBotCard] = useState(null);
 
     const [deckEnded, setDeckEnded] = useState(false);
+
+
 
     // GET AI DECK ID - THE ID IS USED TO KNOW FROM WHICH DECK TO DRAW
     useEffect(() => {
@@ -52,17 +57,17 @@ const GameDisplay = function (props) {
 
     async function getPlayerCard() {
         const callAPi = await fetch(API_URL_PLAYER);
-        const card = await callAPi.json();
+        const card = callAPi.json();
         return card;
     }
 
     async function getAICard() {
         const callAPi = await fetch(API_URL_BOT);
-        const card = await callAPi.json();
+        const card = callAPi.json();
         return card;
     }
 
-    async function checkHandWinner() {
+    function checkHandWinner() {
         if (!deckEnded) {
             if (botCardValue > playerCardValue) {
                 botScore += parseInt(botCardValue) + parseInt(playerCardValue);
@@ -113,10 +118,28 @@ const GameDisplay = function (props) {
             }
         });
 
-        await checkHandWinner();
+        checkHandWinner();
     }
 
     const [BG, setBG] = useState("game-table1")
+
+    const [d1, setD1] = useState(RedCard)
+    const [d2, setD2] = useState(RedCard)
+
+    const changeDeck = () => {
+        if(d1 === RedCard) {
+            setD1 (BlueCard)
+            setD2 (BlueCard)
+        }
+        else if(d1 === BlueCard){
+            setD1(BlackCard)
+            setD2(BlackCard)
+        }
+        else{
+            setD1(RedCard)
+            setD2(RedCard)
+        }
+    }
 
     const changeBG = () => {
         if (BG == "game-table1"){
@@ -130,7 +153,6 @@ const GameDisplay = function (props) {
         }
     }
 
-
     return (
         <div className={BG}>
 
@@ -138,7 +160,7 @@ const GameDisplay = function (props) {
 
                 <div className="bot-cards">
                     <p>Computer</p>
-                    <img className='deck2' ></img>
+                    <img className='deck2' src={d2}></img>
                     <img src={botCard} className='bot-draw' ></img>
                     <p>Score: {botScore}</p>
                 </div>
@@ -148,12 +170,13 @@ const GameDisplay = function (props) {
                 <div className="player-cards">
                     <p>Player Name</p>
                     <img src={playerCard} className='player-draw' ></img>
-                    <img className='deck1' ></img>
+                    <img className='deck1' src={d1}></img>
                     <p>Score: {playerScore}</p>
                 </div>
             </div>
 
             <button className='colorButton' onClick={changeBG}>Table Color</button>
+            <button className='cardColor' onClick={changeDeck}>Card Color</button>
         </div>
     )
 }
