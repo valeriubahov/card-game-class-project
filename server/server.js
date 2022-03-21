@@ -9,6 +9,18 @@ app.use(require("./routes/users"));
 // get driver connection
 const dbo = require("./db/conn");
 
+//multer needed for profile pic uploading
+const multer = require("multer");
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+  })
+  const upload = multer({storage: storage})
+
 app.listen(port, () => {
     // perform a database connection when server starts
     dbo.connectToServer(function (err) {
@@ -20,6 +32,6 @@ app.listen(port, () => {
 
 
 //used for the user uploading profile pics
-app.post('/upload', function(req, res) {
-    console.log(req.files.foo); // the uploaded file object
+app.post('/uploads', upload.single("profilePic"), function(req, res) {
+    console.log(req.file.profilePic); // the uploaded file object
   });
