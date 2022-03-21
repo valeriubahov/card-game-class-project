@@ -22,13 +22,34 @@ const LoginWindow = function(props)
         //use "https://stackoverflow.com/questions/36067767/how-do-i-upload-a-file-with-the-js-fetch-api" as a starting point.
     }
 
+    const createUser = () => {
+        alert("createing user");
+
+        const newUserName = document.getElementById("newUserName")
+
+        const nameData = new FormData(newUserName)
+        nameData.append("person_position", "0")
+        nameData.append("person_level", "0")
+
+        fetch("http://localhost:5000//users/add", {
+            method: "POST",
+            body: nameData
+        })
+
+//take the image upload function and grab the guts of it and put it here.  
+//change the onclick for new user from upload Image to the create user function
+//create a blob section in mongo to upload the image from the temp folder into the database.
+
+
+    }
+
     return(
         <div>
             <h1>Honey Badger Games!</h1>
             <p>New Player:</p>
                 <form id="newUserCreation" onSubmit={uploadImage}>
                     <label htmlFor="newUserName">Please Enter Your Username:</label><br></br>
-                    <input type="text" id="newUserName" name="newUserName"></input><br></br>
+                    <input type="text" id="newUserName" name="person_name"></input><br></br>
                     <span>Upload your Profile Picture: </span> <input type="file" id="userIcon"></input><br></br>
                     <Link to ="/game-display"><button type="button" value="Create New User" onClick={uploadImage} >Create New User</button></Link>
                 </form>
