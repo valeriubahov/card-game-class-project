@@ -42,7 +42,6 @@ recordRoutes.route("/userscore").get(function (req, res) {
     .toArray(function (err, result) {
       if (err) throw err;
       const results = res.json(result);
-      db_connect.close();
       return results;
     });
 });

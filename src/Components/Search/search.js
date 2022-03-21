@@ -1,98 +1,91 @@
+/*
+TODO: 
+clean up names of state variables... 
+add good comments 
+make output topscores into a table or something 
+
+BROKEN: on matt bc he has less than 5 scores.. fix!! 
+
+test...
+  user found
+    more than 5 scores (mykyta 6 scores)
+    less than 5 scores (matt)
+    0 scores (val) => add no data available msg 
+  user not found 
+    found user loaded
+    nothing loaded
+*/
 import React, { useState } from "react"; 
 
 export default function Search() {
-
-  const [display, setDisplay] = useState({// rename any of these?
-    msg: '', // displays under search bar
-    title: '', // displays over table
-    // table stuff?
-  });
+    const [display, setDisplay] = useState({ 
+      msg: '',
+      title: '',
+      highscores: '',
+    });
 
   async function clicked(e) {
     e.preventDefault();
-
-    const response = await fetch(`http://localhost:5000/users/`);
+    const response = await fetch(`http://localhost:5000/userscore/`);
     if (!response.ok){
       window.alert(`An error occured: ${response.statusText}`);
       return;
     }
-
+    
+    const data = await response.json();
     const query = e.target.searchUser.value;
-    const users = await response.json();
+    let user = data.find(x => x.userName === query);
 
-
-
-    let user = users.find(u => u.userName === query);
-    if (user !== undefined) {
-      setDisplay({ 
-        msg: '', 
-        title: `${user.userName}'s Top Scores` 
-      });
-
-      // i am not actually connected to the db at all here... i am just getting the user collection from the server route
-      // so i cant actually join the tables here, i need a scores route from the server 
-
- 
-
-
-
-      // console.log('ID = ', user.userId.$numberDecimal);
-      
-      // display top 5 scores from user ... match against scoreboard table 
-      // get data from scoreboard table to print here 
-
-
-
-
-
-
-    }
-
-
-    // node server is crashing after each request to server... fix this 
-
+    // queried user not found 
     if(query !== undefined && user == undefined) { 
       setDisplay({ 
         msg: 'User not found.', 
         title: '',
+        highscores: '',
       });
     } 
+
+    if (user !== undefined) { // queried user found 
+      if(user.score.length > 0) { // if user has scores saved in db 
+        let sortedScore = user.score.reduce((sorted, x) => {
+          let i = 0;
+          let score = parseInt(x.score.$numberDecimal);
+          let date = x.date.slice(0, 10);
+          while(i < sorted.length && score < sorted[i][0]) i++;
+          sorted.splice(i, 0, [score, date]);
+          return sorted;
+        }, []);
+              
+        let test = ''//rename if using
+        for(let i=0; i<5; i++) {// dont go up to 5 if you dont need to 
+          test += `${i + 1}. ${sortedScore[i][0]} on ${sortedScore[i][1]}\n`
+        }// return as a big string but its discarding lne breaks 
+
+        setDisplay({ 
+          msg: '', 
+          title: `${user.userName}'s Top Scores`,
+          highscores: `${test}`,
+        });
+
+      } else { setDisplay({ msg: 'No score data found.' }) }
+    }
   }
 
   return (
     <div>
-
       <h1>Search User Scores</h1>
-
       <form onSubmit={clicked}>
-
         <input 
           type="text"
           name="searchUser"
           placeholder="Enter Username"
         />
         <button type="submit">Go</button>
-
       </form>
-
       <p>{display.msg}</p>
-
       <h2>{display.title}</h2>
-
-      {/* only display table when user is found */}
-      {/* show top 5 scores available, or as many as are available if theres less than that  */}
-
-      {/* <table>
-        <tr>
-          <th>Score</th>
-          <th>Date</th>
-        </tr>
-        <tr>
-          <td>100</td>
-          <td>May 1, 2020</td>
-        </tr>
-      </table> */}
-
+      {/* make the scores output less ugly */}
+      <p>{display.highscores}</p>
     </div>
   )
 }
