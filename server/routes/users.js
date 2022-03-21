@@ -21,7 +21,28 @@ recordRoutes.route("/users").get(function (req, res) {
       if (err) throw err;
       // This stop it from pulling it every second
       const results = res.json(result);
-       db_connect.close();
+      db_connect.close();
+      return results;
+    });
+});
+
+// joins the mongodb score to user
+recordRoutes.route("/userscore").get(function (req, res) {
+  let db_connect = dbo.getDb("CardGame");
+  db_connect
+    .collection("Users")
+    .aggregate([{
+        $lookup: {
+          from: "ScoreBoard",
+          localField: "userId",
+          foreignField: "userId",
+          as: "score"
+        }
+      }])
+    .toArray(function (err, result) {
+      if (err) throw err;
+      const results = res.json(result);
+      db_connect.close();
       return results;
     });
 });

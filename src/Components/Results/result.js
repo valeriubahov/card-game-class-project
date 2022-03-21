@@ -1,6 +1,5 @@
 import './result.css';
-// TODO: Submit MongoDB data into table
-// TODO: Style Tables to make it look less messy
+
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import './result.css';
@@ -25,12 +24,13 @@ function Result(props) {
         getRecords().then(data => {
             console.log(data)
             setRecords(data);
-
-           let Sortname =  data.map(x=> x.userName)
-           console.log(Sortname) 
             
+           let Sortname =  data.map(x=> x.userName)
+           let UserID = data.map (x=> x.userId)
+          
 
-            document.getElementById('username-1st').innerHTML = Sortname;    
+            document.getElementById('username-1st').innerHTML = Sortname; 
+            document.getElementById('user-score-highest').innerHTML = UserID;   
             document.getElementById('username-2nd').innerHTML = Sortname;
             document.getElementById('username-3rd').innerHTML = Sortname;
         });
