@@ -72,13 +72,16 @@ const GameDisplay = function (props) {
             if (botCardValue > playerCardValue) {
                 botScore += parseInt(botCardValue) + parseInt(playerCardValue);
                 console.log(`BOT WINS`);
+                setDrawResult('BOT WINS');
             }
             else if (botCardValue < playerCardValue) {
                 playerScore += parseInt(botCardValue) + parseInt(playerCardValue);
                 console.log(`PLAYER WINS`);
+                setDrawResult('PLAYER WINS');
             }
             else {
                 console.log(`DRAW`);
+                setDrawResult('DRAW');
             }
         }
         else {
@@ -122,6 +125,7 @@ const GameDisplay = function (props) {
     }
 
     const [BG, setBG] = useState("game-table1")
+    const [drawResult, setDrawResult] = useState('')
 
     const [d1, setD1] = useState(RedCard)
     const [d2, setD2] = useState(RedCard)
@@ -164,8 +168,10 @@ const GameDisplay = function (props) {
                     <img src={botCard} className='bot-draw' ></img>
                     <p>Score: {botScore}</p>
                 </div>
-
-                <button className='drawButton' onClick={draw}>Draw</button>
+                <div className='game-process'>
+                    <div className='draw-result'>{drawResult}</div>
+                    <button className='drawButton' onClick={draw}>Draw</button>
+                </div>
 
                 <div className="player-cards">
                     <p>Player Name</p>
