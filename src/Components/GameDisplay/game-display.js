@@ -100,19 +100,21 @@ const GameDisplay = function (props) {
     function checkHandWinner() {
         if (!deckEnded) {
             if (botCardValue > playerCardValue) {
-                let botScoreTmp = 0;
                 if (botWinStreak >= 2) {
-                    botScoreTmp = (botScore + parseInt(botCardValue) + parseInt(playerCardValue)) * 2;
+                    setBotScore(botScore => (botScore + parseInt(botCardValue) + parseInt(playerCardValue)) * 2);
                 }
                 else {
-                    botScoreTmp = botScore + parseInt(botCardValue) + parseInt(playerCardValue);
+                    setBotScore(botScore => botScore + parseInt(botCardValue) + parseInt(playerCardValue));
                 }
-                setBotScore(botScoreTmp);
                 setDrawResult('BOT WINS');
             }
             else if (botCardValue < playerCardValue) {
-                const playerScoreTmp = playerScore + parseInt(botCardValue) + parseInt(playerCardValue);
-                setPlayerScore(playerScoreTmp);
+                if (playerWinStreak >= 2) {
+                    setPlayerScore(playerScore => (playerScore + parseInt(botCardValue) + parseInt(playerCardValue)) * 2);
+                }
+                else {
+                    setPlayerScore(playerScore => playerScore + parseInt(botCardValue) + parseInt(playerCardValue));
+                }
                 setDrawResult('PLAYER WINS');
             }
             else {
@@ -204,7 +206,7 @@ const GameDisplay = function (props) {
                         botCard ?
                             <img src={botCard} className='bot-draw' ></img>
                             :
-                            <img src={null} className='bot-draw' ></img>
+                            <div className='bot-draw'></div>
                     }
                     <p>Score: {botScore}</p>
                 </div>
@@ -227,7 +229,7 @@ const GameDisplay = function (props) {
                         playerCard ?
                             <img src={playerCard} className='player-draw' ></img>
                             :
-                            <img src={null} className='player-draw' ></img>
+                            <div className='player-draw'></div>
 
                     }
                     <img className='deck1' src={d1}></img>
