@@ -29,6 +29,16 @@ const GameDisplay = function (props) {
     const [botScore, setBotScore] = useState(0);
     const [playerScore, setPlayerScore] = useState(0);
 
+    const [playerWinStreak, setPlayerWinStreak] = useState(0);
+    const [botWinStreak, setBotWinStreak] = useState(0);
+
+
+    const [BG, setBG] = useState("game-table1")
+    const [drawResult, setDrawResult] = useState('')
+
+    const [d1, setD1] = useState(RedCard)
+    const [d2, setD2] = useState(RedCard)
+
 
 
     // GET AI DECK ID - THE ID IS USED TO KNOW FROM WHICH DECK TO DRAW
@@ -54,7 +64,26 @@ const GameDisplay = function (props) {
     const API_URL_BOT = `https://deckofcardsapi.com/api/deck/${botDeckID}/draw/?count=1`
 
 
+    function nextRoud() {
+        fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
+            .then(res => res.json())
+            .then(botDeckID => {
+                setBotDeckID(botDeckID.deck_id);
+            });
+        // GET PLAYER DECK ID - THE ID IS USED TO KNOW FROM WHICH DECK TO DRAW
 
+        fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
+            .then(res => res.json())
+            .then(playerDeckID => {
+                setPlayerDeckID(playerDeckID.deck_id);
+            });
+        setDeckEnded(false);
+        setPlayerCard(null);
+        setBotCard(null);
+        setDrawResult('');
+        playerCardValue = 0;
+        botCardValue = 0;
+    }
 
     async function getPlayerCard() {
         const callAPi = await fetch(API_URL_PLAYER);
@@ -71,7 +100,13 @@ const GameDisplay = function (props) {
     function checkHandWinner() {
         if (!deckEnded) {
             if (botCardValue > playerCardValue) {
-                const botScoreTmp = botScore + parseInt(botCardValue) + parseInt(playerCardValue);
+                let botScoreTmp = 0;
+                if (botWinStreak >= 2) {
+                    botScoreTmp = (botScore + parseInt(botCardValue) + parseInt(playerCardValue)) * 2;
+                }
+                else {
+                    botScoreTmp = botScore + parseInt(botCardValue) + parseInt(playerCardValue);
+                }
                 setBotScore(botScoreTmp);
                 setDrawResult('BOT WINS');
             }
@@ -85,6 +120,12 @@ const GameDisplay = function (props) {
             }
         }
         else {
+            if (botScore > playerScore) {
+                setBotWinStreak(botWinStreak + 1);
+            }
+            else {
+                setPlayerWinStreak(playerWinStreak + 1);
+            }
             console.log('Saving to DB')
         }
     }
@@ -124,12 +165,6 @@ const GameDisplay = function (props) {
         checkHandWinner();
     }
 
-    const [BG, setBG] = useState("game-table1")
-    const [drawResult, setDrawResult] = useState('')
-
-    const [d1, setD1] = useState(RedCard)
-    const [d2, setD2] = useState(RedCard)
-
     const changeDeck = () => {
         if (d1 === RedCard) {
             setD1(BlueCard)
@@ -165,17 +200,36 @@ const GameDisplay = function (props) {
                 <div className="bot-cards">
                     <p>Computer</p>
                     <img className='deck2' src={d2}></img>
-                    <img src={botCard} className='bot-draw' ></img>
+                    {
+                        botCard ?
+                            <img src={botCard} className='bot-draw' ></img>
+                            :
+                            <img src={null} className='bot-draw' ></img>
+                    }
                     <p>Score: {botScore}</p>
                 </div>
-                <div className='game-process'>
-                    <div className='draw-result'>{drawResult}</div>
-                    <button className='drawButton' onClick={draw}>Draw</button>
-                </div>
+                {
+                    !deckEnded && (botWinStreak === 0 && playerWinStreak === 0) ?
+                        <div className='game-process'>
+                            <div className='draw-result'>{drawResult}</div>
+                            <button className='drawButton' onClick={draw}>Draw</button>
+                        </div> :
+                        <div className='game-process'>
+                            <div className='draw-result'>{drawResult}</div>
+                            <button className='drawButton' onClick={nextRoud}>Next Round</button>
+                        </div>
+                }
+
 
                 <div className="player-cards">
                     <p>Player Name</p>
-                    <img src={playerCard} className='player-draw' ></img>
+                    {
+                        playerCard ?
+                            <img src={playerCard} className='player-draw' ></img>
+                            :
+                            <img src={null} className='player-draw' ></img>
+
+                    }
                     <img className='deck1' src={d1}></img>
                     <p>Score: {playerScore}</p>
                 </div>
