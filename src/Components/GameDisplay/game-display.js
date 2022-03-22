@@ -5,9 +5,7 @@ import BlueCard from "./blue-card.jpg";
 import BlackCard from "./black-card.jpg";
 
 let playerCardValue = 0;
-let playerScore = 0;
 let botCardValue = 0;
-let botScore = 0;
 
 const cardImageValue = new Map();
 cardImageValue.set('JACK', 11);
@@ -17,16 +15,19 @@ cardImageValue.set('ACE', 14);
 
 const GameDisplay = function (props) {
 
-    // State for Player DeckID
+    // State for Deck IDs
     const [playerDeckID, setPlayerDeckID] = useState(null);
-    // State for BOT DeckID
     const [botDeckID, setBotDeckID] = useState(null);
 
+    //States for cards
     const [playerCard, setPlayerCard] = useState(null);
-
     const [botCard, setBotCard] = useState(null);
 
     const [deckEnded, setDeckEnded] = useState(false);
+
+    // Sate for scores
+    const [botScore, setBotScore] = useState(0);
+    const [playerScore, setPlayerScore] = useState(0);
 
 
 
@@ -70,17 +71,16 @@ const GameDisplay = function (props) {
     function checkHandWinner() {
         if (!deckEnded) {
             if (botCardValue > playerCardValue) {
-                botScore += parseInt(botCardValue) + parseInt(playerCardValue);
-                console.log(`BOT WINS`);
+                const botScoreTmp = botScore + parseInt(botCardValue) + parseInt(playerCardValue);
+                setBotScore(botScoreTmp);
                 setDrawResult('BOT WINS');
             }
             else if (botCardValue < playerCardValue) {
-                playerScore += parseInt(botCardValue) + parseInt(playerCardValue);
-                console.log(`PLAYER WINS`);
+                const playerScoreTmp = playerScore + parseInt(botCardValue) + parseInt(playerCardValue);
+                setPlayerScore(playerScoreTmp);
                 setDrawResult('PLAYER WINS');
             }
             else {
-                console.log(`DRAW`);
                 setDrawResult('DRAW');
             }
         }
@@ -131,28 +131,28 @@ const GameDisplay = function (props) {
     const [d2, setD2] = useState(RedCard)
 
     const changeDeck = () => {
-        if(d1 === RedCard) {
-            setD1 (BlueCard)
-            setD2 (BlueCard)
+        if (d1 === RedCard) {
+            setD1(BlueCard)
+            setD2(BlueCard)
         }
-        else if(d1 === BlueCard){
+        else if (d1 === BlueCard) {
             setD1(BlackCard)
             setD2(BlackCard)
         }
-        else{
+        else {
             setD1(RedCard)
             setD2(RedCard)
         }
     }
 
     const changeBG = () => {
-        if (BG == "game-table1"){
+        if (BG == "game-table1") {
             setBG("game-table2")
         }
-        else if(BG == "game-table2"){
+        else if (BG == "game-table2") {
             setBG("game-table3")
         }
-        else{
+        else {
             setBG("game-table1")
         }
     }
