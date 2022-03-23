@@ -10,7 +10,7 @@ const LoginWindow = function(props)
         const imgInput = document.getElementById("userIcon")
 
         const imageData = new FormData()
-        imageData.append("profilePic", imgInput.files[0])
+        imageData.append("profile_pic", imgInput.files[0])
 
         fetch("http://localhost:5000/uploads", {
             method: "POST",
@@ -23,15 +23,17 @@ const LoginWindow = function(props)
     }
 
     const createUser = () => {
-        alert("createing user");
+        alert("creating user");
 
-        const newUserName = document.getElementById("newUserName")
+        const newUserName = document.getElementById("newUserCreation")
+        const imgInput = document.getElementById("userIcon")
 
         const nameData = new FormData(newUserName)
         nameData.append("person_position", "0")
         nameData.append("person_level", "0")
+        nameData.append("profile_pic", imgInput.files[0])
 
-        fetch("http://localhost:5000//users/add", {
+        fetch("http://localhost:5000/users/add", {
             method: "POST",
             body: nameData
         })
@@ -50,8 +52,8 @@ const LoginWindow = function(props)
                 <form id="newUserCreation" onSubmit={uploadImage}>
                     <label htmlFor="newUserName">Please Enter Your Username:</label><br></br>
                     <input type="text" id="newUserName" name="person_name"></input><br></br>
-                    <span>Upload your Profile Picture: </span> <input type="file" id="userIcon"></input><br></br>
-                    <Link to ="/game-display"><button type="button" value="Create New User" onClick={uploadImage} >Create New User</button></Link>
+                    <span>Upload your Profile Picture: </span> <input type="file" name="profile_pic" id="userIcon"></input><br></br>
+                    <Link to ="/game-display"><button type="button" value="Create New User" onClick={createUser} >Create New User</button></Link>
                 </form>
             <br></br>
             <p>Already a Player:</p>

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import RedCard from "./red-card.jpg";
 import BlueCard from "./blue-card.jpg";
 import BlackCard from "./black-card.jpg";
+import Blank from './blank.png';
 
 let playerCardValue = 0;
 let botCardValue = 0;
@@ -201,7 +202,7 @@ const GameDisplay = function (props) {
 
                 <div className="bot-cards">
                     <p>Computer</p>
-                    <img className='deck2' src={d2}></img>
+                    {!deckEnded ? <img className='deck2' src={d2}></img> : <img className='deck2' src={Blank} alt=''></img>}
                     {
                         botCard ?
                             <img src={botCard} className='bot-draw' ></img>
@@ -222,7 +223,6 @@ const GameDisplay = function (props) {
                         </div>
                 }
 
-
                 <div className="player-cards">
                     <p>Player Name</p>
                     {
@@ -232,7 +232,7 @@ const GameDisplay = function (props) {
                             <div className='player-draw'></div>
 
                     }
-                    <img className='deck1' src={d1}></img>
+                    {!deckEnded ? <img className='deck1' src={d1}></img> : <img className='deck2' src={Blank} alt=''></img>}
                     <p>Score: {playerScore}</p>
                 </div>
             </div>
