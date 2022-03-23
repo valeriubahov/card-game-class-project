@@ -6,72 +6,46 @@ import './result.css';
 
 function Result(props) {
 
-    const [records, setRecords] = useState(null);
+    const [records, setRecords] = useState([]);
+    let test;
+
     // Fetches the data from DB
-
     useEffect(() => {
-        async function getRecords(){
-            const response = await fetch('http://localhost:5000/users');
-            if (!response.ok){
-                const message = `An error occured: ${response.statusText}`;
-                window.alert(message);
-                return;
-            }
-            const records = await response.json()
-            return records;
+        fetchDatas();
+
+        async function fetchDatas() {
+            await fetch('http://localhost:5000/users').then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    console.log(data.map(x => x))
+                    setRecords(data)
+                })
         }
-
-        getRecords().then(data => {
-            console.log(data)
-            setRecords(data);
-            
-           let Sortname =  data.map(x=> x.userName)
-           let UserID = data.map (x=> x.userId)
-          
-
-            document.getElementById('username-1st').innerHTML = Sortname; 
-            document.getElementById('user-score-highest').innerHTML = UserID;   
-            document.getElementById('username-2nd').innerHTML = Sortname;
-            document.getElementById('username-3rd').innerHTML = Sortname;
-        });
-    })
-
-
-
-
+    }, []);
     return (
         <div className="result-name">
             <h2 id="results">Results</h2>
-            <br />
-            <br />
-            <table border="1">
 
-                <tr>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        records.map(x => ({ id: x._id, user: x.userName, score: 100 })).map(user =>
+                            <tr key={user.id}>
+                                <td>{user.user}</td>
+                                <td>{user.score}</td>
+                            </tr>
 
-                    <td id ="username-1st">Highest Username</td>
-                    <td id="user-score-highest">(insert score data)</td>
-                    <br />
-                </tr>
-
+                        )
+                    }
+                </tbody>
             </table>
-            <table border="1">
-                <tr>
 
-                    <td id="username-2nd">Username</td>
-                    <td id="user-score-2nd">(insert score data)</td>
-
-                </tr>
-            </table>
-            <table border="1">
-                <tr>
-                    <br />
-                    <td id="username-3rd">Username</td>
-                    <td id="user-score-3rd">(insert score data)</td>
-                </tr>
-            </table>
-            <br />
-            <br />
-            <br />
             <button id="quit">Quit</button>
 
         </div>
