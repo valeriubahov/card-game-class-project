@@ -74,3 +74,10 @@
   float: right;
   margin-right: 1rem;
 }
+.game-process{
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 70px;
+  justify-content: space-between;
+}

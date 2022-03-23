@@ -22,7 +22,7 @@ recordRoutes.route("/users").get(function (req, res) {
       if (err) throw err;
       // This stop it from pulling it every second
       const results = res.json(result);
-      db_connect.close();
+      // db_connect.close();
       return results;
     });
 });
