@@ -1,5 +1,13 @@
 import './result.css';
 
+
+// TODO 
+
+// Pull real time score to result screen
+// Fix Quit Button 
+// Pull UserScore and Display
+// Import script from search 
+
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import './result.css';
@@ -9,10 +17,26 @@ function Result(props) {
     const [records, setRecords] = useState([]);
     let test;
 
-    // Fetches the data from DB
+    
     useEffect(() => {
         fetchDatas();
+        fetchScore();
 
+        // Pulls user score data 
+        async function fetchScore (e){
+            
+            const response = await fetch(`http://localhost:5000/userscore/`);
+            if (!response.ok){
+              window.alert(`An error occured: ${response.statusText}`);
+              return;
+            }
+            const data = await response.json();
+            const query = e.target.searchUser.value;
+             let user = data.find(x => x.userName === query);
+             console.log(data)
+        }
+
+        // Pulls UserID
         async function fetchDatas() {
             await fetch('http://localhost:5000/users').then(response => response.json())
                 .then(data => {
@@ -21,6 +45,7 @@ function Result(props) {
                     setRecords(data)
                 })
         }
+        
     }, []);
     return (
         <div className="result-name">
@@ -46,7 +71,7 @@ function Result(props) {
                 </tbody>
             </table>
 
-            <button id="quit">Quit</button>
+            <button  id="quit">Quit</button>
 
         </div>
     )
