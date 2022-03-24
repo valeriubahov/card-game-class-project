@@ -1,9 +1,9 @@
 import './styles.css';
 import React, { useState, useEffect } from 'react';
-import RedCard from "./red-card.jpg";
-import BlueCard from "./blue-card.jpg";
-import BlackCard from "./black-card.jpg";
-import Blank from './blank.png';
+import RedCard from "./images/red-card.jpg";
+import BlueCard from "./images/blue-card.jpg";
+import BlackCard from "./images/black-card.jpg";
+import Blank from './images/blank.png';
 
 let playerCardValue = 0;
 let botCardValue = 0;
