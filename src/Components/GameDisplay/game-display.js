@@ -65,7 +65,7 @@ const GameDisplay = function (props) {
     const API_URL_BOT = `https://deckofcardsapi.com/api/deck/${botDeckID}/draw/?count=1`
 
 
-    function nextRoud() {
+    function nextRound() {
         fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
             .then(res => res.json())
             .then(botDeckID => {
@@ -84,6 +84,14 @@ const GameDisplay = function (props) {
         setDrawResult('');
         playerCardValue = 0;
         botCardValue = 0;
+    }
+
+    function newGame() {
+        nextRound();
+        setPlayerScore(0);
+        setBotScore(0);
+        setBotWinStreak(0);
+        setPlayerWinStreak(0);
     }
 
     async function getPlayerCard() {
@@ -219,7 +227,7 @@ const GameDisplay = function (props) {
                         </div> :
                         <div className='game-process'>
                             <div className='draw-result'>{drawResult}</div>
-                            <button className='drawButton' onClick={nextRoud}>Next Round</button>
+                            <button className='drawButton' onClick={nextRound}>Next Round</button>
                         </div>
                 }
 
@@ -239,6 +247,7 @@ const GameDisplay = function (props) {
 
             <button className='colorButton' onClick={changeBG}>Table Color</button>
             <button className='cardColor' onClick={changeDeck}>Card Color</button>
+            <button className="newGame" onClick={newGame}>New Game</button>
         </div>
     )
 }
