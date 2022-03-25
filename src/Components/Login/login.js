@@ -31,6 +31,9 @@ const LoginWindow = function(props)
         const nameData = new FormData(newUserName)
         nameData.append("person_position", "0")
         nameData.append("person_level", "0")
+
+        //TODO: change the below line to grab the file path of the imageu upload and put that into mongoDB first.
+        //reseach after about a way to upload the image first, and then deposit the image inthe the DB.
         nameData.append("profile_pic", imgInput.files[0])
 
         fetch("http://localhost:5000/users/add", {
@@ -38,9 +41,8 @@ const LoginWindow = function(props)
             body: nameData
         })
 
-//take the image upload function and grab the guts of it and put it here.  
-//change the onclick for new user from upload Image to the create user function
-//create a blob section in mongo to upload the image from the temp folder into the database.
+
+        
 
 
     }
@@ -53,6 +55,7 @@ const LoginWindow = function(props)
                     <label htmlFor="newUserName">Please Enter Your Username:</label><br></br>
                     <input type="text" id="newUserName" name="person_name"></input><br></br>
                     <span>Upload your Profile Picture: </span> <input type="file" name="profile_pic" id="userIcon"></input><br></br>
+                    {/* change the onClick function to a new one that first does the image upload, and then submits the form data into mongo. */}
                     <Link to ="/game-display"><button type="button" value="Create New User" onClick={createUser} >Create New User</button></Link>
                 </form>
             <br></br>
