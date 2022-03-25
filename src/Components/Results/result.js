@@ -32,14 +32,13 @@ function Result(props) {
             }
             const data = await response.json();
             console.log('Userscore Original: ', data)
-            const testUser = data.map(x=> ({id: x._id, score: x.score.map(x=> x.score)})  )
+            const testUser = data.map(x=> ({id: x._id, score: x.score.map(x=>x.score)})  )
             console.log('Test:', testUser)
-           // setRecords(testUser)     
+           // setRecords(testUser)  << causes name list to be overwritten when uses state   
             console.log('Records: ', records)
-            console.log('Score:', testUser)
-            const query = e.target.searchUser.value;
-             let user = data.find(x => x.userName == query);
-             console.log(query)
+            const query = e.target.searchUser.value; // Type Error
+            let user = data.find(x => x.userName == query);
+             console.log(user)
             
         }
 
@@ -57,6 +56,11 @@ function Result(props) {
 
         
     }, []);
+
+    // Quit Button
+
+  
+
     return (
         <div className="result-name">
             <h2 id="results">Results 📈</h2>
@@ -66,6 +70,8 @@ function Result(props) {
                     <tr>
                         <th>Username 👨👩</th>
                         <th>Score ✔️</th>
+                        <th>ID 🃏</th> 
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -76,14 +82,15 @@ function Result(props) {
                             <tr key={user.id}>
                                 <td>{user.user}</td>
                                 <td>{user.score}</td>
+                                <td>{user.id}</td>
                             </tr>
 
                         )
                     }
                 </tbody>
             </table>
-
-            <button  id="quit">Quit ↩️</button>
+                    <br/>
+            <button  id="quit" >Quit ↩️</button>
 
         </div>
     )
