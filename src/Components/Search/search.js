@@ -1,9 +1,7 @@
-// write tests...
 // User not found (Dean) WORKS
 // User found, no scores in db (Grace) WORKS 
 // User found, more than 5 scores in db, displays only 5 on screen (Mykyta) WORKS
 // User found, fewer than 5 scores in db, doesnt display any empty rows (Matt, Valeriu) WORKS
-
 import React, { useState } from "react"; 
 
 export default function Search() {
@@ -34,21 +32,18 @@ export default function Search() {
 
     if(query !== undefined) {
       if(user !== undefined) {
-        if(user.score.length > 0) { 
-
+        if(user.score.length > 0) {
           // set display text and reveal table
           setDisplay({
             msg: '', 
             title: `${user.userName}'s Top Scores`,
             table: true,
           });
-
           // returns 5 best user scores in order
           let sort = user.score.map(x => {
             return [parseInt(x.score.$numberDecimal), x.date.slice(0, 10)]
           });
           let sorted = sort.sort((a,b) => (b[0] - a[0])).slice(0,5);
-
           // fill table 
           for(let i=0; i<sorted.length; i++) {
             let row = document.createElement('tr');
