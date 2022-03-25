@@ -1,8 +1,9 @@
 import './styles.css';
 import React, { useState, useEffect } from 'react';
-import RedCard from "./red-card.jpg";
-import BlueCard from "./blue-card.jpg";
-import BlackCard from "./black-card.jpg";
+import RedCard from "./images/red-card.jpg";
+import BlueCard from "./images/blue-card.jpg";
+import BlackCard from "./images/black-card.jpg";
+import Blank from './images/blank.png';
 
 let playerCardValue = 0;
 let botCardValue = 0;
@@ -13,6 +14,11 @@ cardImageValue.set('QUEEN', 12);
 cardImageValue.set('KING', 13);
 cardImageValue.set('ACE', 14);
 
+/**
+ * GameDisplay component, used as main component for the gameplay, show, draw, calculate score and win streaks
+ * @param {*} props 
+ * @returns GameDisplay component
+ */
 const GameDisplay = function (props) {
 
     // State for Deck IDs
@@ -33,15 +39,13 @@ const GameDisplay = function (props) {
     const [botWinStreak, setBotWinStreak] = useState(0);
 
 
-    const [BG, setBG] = useState("game-table1")
-    const [drawResult, setDrawResult] = useState('')
+    const [BG, setBG] = useState("game-table1");
+    const [drawResult, setDrawResult] = useState('');
 
-    const [d1, setD1] = useState(RedCard)
-    const [d2, setD2] = useState(RedCard)
+    const [d1, setD1] = useState(RedCard);
+    const [d2, setD2] = useState(RedCard);
 
 
-
-    // GET AI DECK ID - THE ID IS USED TO KNOW FROM WHICH DECK TO DRAW
     useEffect(() => {
         fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
             .then(res => res.json())
@@ -64,7 +68,12 @@ const GameDisplay = function (props) {
     const API_URL_BOT = `https://deckofcardsapi.com/api/deck/${botDeckID}/draw/?count=1`
 
 
-    function nextRoud() {
+    /**
+     * Function to start a new round, reset the deck and use the previous score to track the progress
+     * @param none
+     * @returns void
+     */
+    function nextRound() {
         fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
             .then(res => res.json())
             .then(botDeckID => {
@@ -85,18 +94,46 @@ const GameDisplay = function (props) {
         botCardValue = 0;
     }
 
+    /**
+     * Function to reset all states and start a new game
+     * @param none
+     * @returns void
+     */
+    function newGame() {
+        nextRound();
+        setPlayerScore(0);
+        setBotScore(0);
+        setBotWinStreak(0);
+        setPlayerWinStreak(0);
+    }
+
+    /**
+     * Function to fetch and get the card from the player deck
+     * @param none
+     * @returns Player Card
+     */
     async function getPlayerCard() {
         const callAPi = await fetch(API_URL_PLAYER);
         const card = callAPi.json();
         return card;
     }
 
+    /**
+     *  Function to fetch and get the card from the BOT deck
+     * @param none
+     * @returns Bot Card
+     */
     async function getAICard() {
         const callAPi = await fetch(API_URL_BOT);
         const card = callAPi.json();
         return card;
     }
 
+    /**
+     * Function to chech who wins the hand, player or bot card value
+     * @param none
+     * @returns void
+     */
     function checkHandWinner() {
         if (!deckEnded) {
             if (botCardValue > playerCardValue) {
@@ -132,7 +169,11 @@ const GameDisplay = function (props) {
         }
     }
 
-
+    /**
+     * Function called when Draw button is clicked - draw cards from both decks
+     * @param none
+     * @returns void
+     */
     async function draw() {
         // DRAW CARD FROM THE PLAYER DECK
         await getPlayerCard().then(playerCard => {
@@ -167,6 +208,11 @@ const GameDisplay = function (props) {
         checkHandWinner();
     }
 
+    /**
+     * Function called when Card Color button is pressed - change the style of background deck
+     * @param none
+     * @returns none
+     */
     const changeDeck = () => {
         if (d1 === RedCard) {
             setD1(BlueCard)
@@ -182,6 +228,11 @@ const GameDisplay = function (props) {
         }
     }
 
+    /**
+     * Function called when Table Color button is pressed - change table css style
+     * @param none
+     * @returns void
+     */
     const changeBG = () => {
         if (BG == "game-table1") {
             setBG("game-table2")
@@ -201,7 +252,7 @@ const GameDisplay = function (props) {
 
                 <div className="bot-cards">
                     <p>Computer</p>
-                    <img className='deck2' src={d2}></img>
+                    {!deckEnded ? <img className='deck2' src={d2}></img> : <img className='deck2' src={Blank} alt=''></img>}
                     {
                         botCard ?
                             <img src={botCard} className='bot-draw' ></img>
@@ -218,10 +269,9 @@ const GameDisplay = function (props) {
                         </div> :
                         <div className='game-process'>
                             <div className='draw-result'>{drawResult}</div>
-                            <button className='drawButton' onClick={nextRoud}>Next Round</button>
+                            <button className='drawButton' onClick={nextRound}>Next Round</button>
                         </div>
                 }
-
 
                 <div className="player-cards">
                     <p>Player Name</p>
@@ -232,13 +282,14 @@ const GameDisplay = function (props) {
                             <div className='player-draw'></div>
 
                     }
-                    <img className='deck1' src={d1}></img>
+                    {!deckEnded ? <img className='deck1' src={d1}></img> : <img className='deck2' src={Blank} alt=''></img>}
                     <p>Score: {playerScore}</p>
                 </div>
             </div>
 
             <button className='colorButton' onClick={changeBG}>Table Color</button>
             <button className='cardColor' onClick={changeDeck}>Card Color</button>
+            <button className="newGame" onClick={newGame}>New Game</button>
         </div>
     )
 }

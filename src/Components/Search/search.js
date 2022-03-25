@@ -23,7 +23,7 @@ export default function Search() {
       title: '',
       highscores: '',
     });
-
+// Matt: Use this to pull score in result screen 
   async function clicked(e) {
     e.preventDefault();
     const response = await fetch(`http://localhost:5000/userscore/`);
