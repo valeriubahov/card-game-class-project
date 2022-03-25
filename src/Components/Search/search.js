@@ -1,29 +1,18 @@
-/*
-TODO: 
-clean up names of state variables... 
-add good comments 
-make output topscores into a table or something 
+// write tests...
+// User not found (Dean) WORKS
+// User found, no scores in db (Grace) WORKS 
+// User found, more than 5 scores in db, displays only 5 on screen (Mykyta) WORKS
+// User found, fewer than 5 scores in db, doesnt display any empty rows (Matt, Valeriu) WORKS
 
-BROKEN: on matt bc he has less than 5 scores.. fix!! 
-
-test...
-  user found
-    more than 5 scores (mykyta 6 scores)
-    less than 5 scores (matt)
-    0 scores (val) => add no data available msg 
-  user not found 
-    found user loaded
-    nothing loaded
-*/
 import React, { useState } from "react"; 
 
 export default function Search() {
-    const [display, setDisplay] = useState({ 
-      msg: '',
-      title: '',
-      highscores: '',
-    });
-// Matt: Use this to pull score in result screen 
+  const [display, setDisplay] = useState({ 
+    msg: '',
+    title: '',
+    table: false,
+  });
+
   async function clicked(e) {
     e.preventDefault();
     const response = await fetch(`http://localhost:5000/userscore/`);
@@ -31,43 +20,52 @@ export default function Search() {
       window.alert(`An error occured: ${response.statusText}`);
       return;
     }
-    
-    const data = await response.json();
     const query = e.target.searchUser.value;
+    const data = await response.json();
     let user = data.find(x => x.userName === query);
 
-    // queried user not found 
-    if(query !== undefined && user == undefined) { 
-      setDisplay({ 
-        msg: 'User not found.', 
-        title: '',
-        highscores: '',
-      });
-    } 
+    // clear rows off table if already drawn 
+    let table = document.querySelector('#search-score-table');
+    if(table) {
+      for(let i=table.rows.length-1; i>0; i--){
+        table.deleteRow(i);
+      }
+    }
 
-    if (user !== undefined) { // queried user found 
-      if(user.score.length > 0) { // if user has scores saved in db 
-        let sortedScore = user.score.reduce((sorted, x) => {
-          let i = 0;
-          let score = parseInt(x.score.$numberDecimal);
-          let date = x.date.slice(0, 10);
-          while(i < sorted.length && score < sorted[i][0]) i++;
-          sorted.splice(i, 0, [score, date]);
-          return sorted;
-        }, []);
-              
-        let test = ''//rename if using
-        for(let i=0; i<5; i++) {// dont go up to 5 if you dont need to 
-          test += `${i + 1}. ${sortedScore[i][0]} on ${sortedScore[i][1]}\n`
-        }// return as a big string but its discarding lne breaks 
+    if(query !== undefined) {
+      if(user !== undefined) {
+        if(user.score.length > 0) { 
 
-        setDisplay({ 
-          msg: '', 
-          title: `${user.userName}'s Top Scores`,
-          highscores: `${test}`,
-        });
+          // set display text and reveal table
+          setDisplay({
+            msg: '', 
+            title: `${user.userName}'s Top Scores`,
+            table: true,
+          });
 
-      } else { setDisplay({ msg: 'No score data found.' }) }
+          // returns 5 best user scores in order
+          let sort = user.score.map(x => {
+            return [parseInt(x.score.$numberDecimal), x.date.slice(0, 10)]
+          });
+          let sorted = sort.sort((a,b) => (b[0] - a[0])).slice(0,5);
+
+          // fill table 
+          for(let i=0; i<sorted.length; i++) {
+            let row = document.createElement('tr');
+            let cellData = [
+              document.createTextNode(i + 1), // rank
+              document.createTextNode(sorted[i][0]), // score
+              document.createTextNode(sorted[i][1]), // date
+            ]
+            for(let j=0; j<3; j++) {
+              let cell = document.createElement('td');
+              cell.appendChild(cellData[j]);
+              row.appendChild(cell);
+            }
+            document.querySelector('#search-score-table').appendChild(row);
+          }
+        } else { setDisplay({ msg: 'No score data found.' }) }
+      } else { setDisplay({ msg: 'User not found.' }) }
     }
   }
 
@@ -80,12 +78,24 @@ export default function Search() {
           name="searchUser"
           placeholder="Enter Username"
         />
-        <button type="submit">Go</button>
+        <button>Go</button>
       </form>
       <p>{display.msg}</p>
       <h2>{display.title}</h2>
-      {/* make the scores output less ugly */}
-      <p>{display.highscores}</p>
+      <div id="table-wrapper">
+        { !display.table ? ('') : (
+            <table id="search-score-table">
+              <tbody>
+                <tr>
+                  <th></th>
+                  <th>Score</th>
+                  <th>Date</th>
+                </tr>
+              </tbody>
+            </table>
+          )
+        }
+      </div>
     </div>
   )
 }
