@@ -3,15 +3,18 @@ import './result.css';
 
 // TODO 
 
-// Pull real time score to result screen << Displays in console, isue with UseState overwrititng the array
-// Fix Quit Button 
-// Pull UserScore and Display 
+// Add details to each function (help with removal of exess comments like this one!)
+
 
 
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import './result.css';
 
+/**
+ * Main Function that contains pulling user data, score and assigning to the application
+ 
+ */
 function Result(props) {
 
     const [records, setRecords] = useState([]);
@@ -19,10 +22,12 @@ function Result(props) {
 
     
     useEffect(() => {
-        fetchDatas();
+        // fetchDatas();
         fetchScore();
 
-        // Pulls user score data 
+        /**
+ * Fetches Userscore into an array, sorts it and returns from Highest to Lowest
+ */
         async function fetchScore (e){
             
             const response = await fetch(`http://localhost:5000/userscore/`);
@@ -32,34 +37,51 @@ function Result(props) {
             }
             const data = await response.json();
             console.log('Userscore Original: ', data)
-            const testUser = data.map(x=> ({id: x._id, score: x.score.map(x=>x.score)})  )
-            console.log('Test:', testUser)
-           // setRecords(testUser)  << causes name list to be overwritten when uses state   
+
+            const filter = data.filter(x=> x.score == 100)
+            console.log('Filter: ',filter)
+
+            const testUser = data.map(x => ({
+                id: x._id, user: x.userName, score: x.score.map(x=> x.score.$numberDecimal).reduce (
+                    function (a,b) {
+                        return Math.max(a,b)
+                    },
+                0)
+            }))
+
+            setRecords(testUser)  
             console.log('Records: ', records)
-            const query = e.target.searchUser.value; // Type Error
+
+            const query = e.target.searchUser.value; // Type Error << Matt fix
             let user = data.find(x => x.userName == query);
              console.log(user)
             
         }
 
       
-        // Pulls UserID
-        async function fetchDatas() {
-            await fetch('http://localhost:5000/users').then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    console.log(data.map(x => x))
-                   setRecords(data)
-                })
-        }
+        // // Pulls UserID
+        // async function fetchDatas() {
+        //     await fetch('http://localhost:5000/users').then(response => response.json())
+        //         .then(data => {
+        //             console.log(data);
+        //             console.log(data.map(x => x))
+        //            setRecords(data)
+        //         })
+        // }
     
 
         
     }, []);
 
-    // Quit Button
+   /**
+ * Sends user back to home screen
+ */
 
-  
+   function quitbotton () 
+   {
+      window.location = '/'; 
+      alert('Thanks for playing!')  
+   }
 
     return (
         <div className="result-name">
@@ -69,20 +91,20 @@ function Result(props) {
                 <thead>
                     <tr>
                         <th>Username 👨👩</th>
-                        <th>Score ✔️</th>
-                        <th>ID 🃏</th> 
+                        <th> Highest Score ✔️</th>
+                        {/* <th>ID 🃏</th>  */}
                         
                     </tr>
                 </thead>
                 <tbody>
                     {
                         
-                        records.map(x => ({ id: x._id, user: x.userName, score: 100
+                        records.map(x => ({ id: x._id, user: x.user, score: x.score
                          })).map(user =>
                             <tr key={user.id}>
-                                <td>{user.user}</td>
-                                <td>{user.score}</td>
-                                <td>{user.id}</td>
+                                <td id='username-display'>{user.user}</td>
+                                <td id='userscore-display'>{user.score}</td>
+                                {/* <td>{user.id}</td> */}
                             </tr>
 
                         )
@@ -90,7 +112,7 @@ function Result(props) {
                 </tbody>
             </table>
                     <br/>
-            <button  id="quit" >Quit ↩️</button>
+            <button  id="quit" onClick={quitbotton} >Quit ↩️</button>
 
         </div>
     )

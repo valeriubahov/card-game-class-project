@@ -19,7 +19,23 @@ table, th, td {
 
   #username-1st{
     font-style: italic;
-    font-weight: bolder;
+    
   }
 
-  
+  #username-display {
+    font-style: italic;
+    font-family: 'Signika Negative', sans-serif;
+  }
+  #quit {
+    padding: 0;
+    border:inherit;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor:pointer;
+  }
+
+  #userscore-display {
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+  }
