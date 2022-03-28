@@ -34,7 +34,10 @@
     color: white;
 }
 
-#search-form > button:hover{ color: hotpink }
+#search-form > button:hover{ 
+    color: hotpink;
+    cursor: pointer;
+}
 
 #msg { color: orange }
 

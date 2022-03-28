@@ -64,7 +64,7 @@ export default function Search() {
   return (
     <div id="container">
       <div id="monitor">
-        <h1>SEARCH USER SCORES</h1>
+        <h1>SEARCH HIGH SCORES</h1>
         <form id="search-form" onSubmit={clicked}>
           <input 
             type="text"
@@ -72,7 +72,7 @@ export default function Search() {
             placeholder="SEARCH USERS"
           />
           <button>
-            <i class="fa-solid fa-angles-right"></i>
+            <i class="fa-solid fa-forward-fast"></i>          
           </button>
         </form>
         <p id="msg">{display.msg}</p>
@@ -82,7 +82,7 @@ export default function Search() {
             <table id="search-score-table">
               <tbody>
                 <tr>
-                  <th></th>
+                  <th>RANK</th>
                   <th>SCORE</th>
                   <th>DATE</th>
                 </tr>
