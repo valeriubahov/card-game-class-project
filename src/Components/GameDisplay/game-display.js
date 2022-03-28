@@ -41,6 +41,8 @@ const GameDisplay = function (props) {
     const [playerWinStreak, setPlayerWinStreak] = useState(0);
     const [botWinStreak, setBotWinStreak] = useState(0);
 
+    let playerWins = useRef(0);
+    let botWins = useRef(0);
     // States for table style
     const [BG, setBG] = useState("game-table1");
 
@@ -114,6 +116,8 @@ const GameDisplay = function (props) {
         setBotScore(0);
         setBotWinStreak(0);
         setPlayerWinStreak(0);
+        playerWins.current = 0;
+        botWins.current = 0;
     }
 
     /**
@@ -145,10 +149,10 @@ const GameDisplay = function (props) {
      */
     function checkHandWinner() {
         if (!deckEnded.current) {
-            console.log('test');
             if (botCardValue > playerCardValue) {
-                if (botWinStreak >= 2) {
-                    setBotScore(botScore => botScore + (parseInt(botCardValue) + parseInt(playerCardValue)) * 2);
+                if (botWins.current >= 2) {
+                    console.log('BOT double points')
+                    setBotScore(botScore => botScore + (parseInt(botCardValue) * 2 + parseInt(playerCardValue) * 2));
                 }
                 else {
                     setBotScore(botScore => botScore + parseInt(botCardValue) + parseInt(playerCardValue));
@@ -156,7 +160,8 @@ const GameDisplay = function (props) {
                 setDrawResult('BOT WINS');
             }
             else if (botCardValue < playerCardValue) {
-                if (playerWinStreak >= 2) {
+                if (playerWins.current >= 2) {
+                    console.log('PLAYER double points')
                     setPlayerScore(playerScore => playerScore + (parseInt(botCardValue) + parseInt(playerCardValue)) * 2);
                 }
                 else {
@@ -169,16 +174,22 @@ const GameDisplay = function (props) {
             }
         }
         else {
-            console.log('Saving to DB')
             if (botScore > playerScore) {
-                console.log('BOT')
+                botWins.current = botWins.current + 1;
+                playerWins.current = 0;
                 setBotWinStreak(botWinStreak => botWinStreak + 1);
                 setWinner("BOT is the winner");
             }
             else {
-                console.log('PLAYER')
+                playerWins.current = playerWins.current + 1;
+                botWins.current = 0;
                 setPlayerWinStreak(playerWinStreak => playerWinStreak + 1);
+
                 setWinner("YOU are the winner");
+            }
+
+            if (botWinStreak === 3 || playerWinStreak === 3) {
+                console.log('Saving to DB')
             }
         }
     }
@@ -283,7 +294,7 @@ const GameDisplay = function (props) {
                             <div className='draw-result'>{drawResult}</div>
                             <button className='drawButton' onClick={draw}>Draw</button>
                         </div> :
-                        <PopUp nextRound={nextRound} winner={winner}/>
+                        <PopUp nextRound={nextRound} winner={winner} />
                 }
 
                 <div className="player-cards">
