@@ -1,8 +1,4 @@
-// User not found (Dean) WORKS
-// User found, no scores in db (Grace) WORKS 
-// User found, more than 5 scores in db, displays only 5 on screen (Mykyta) WORKS
-// User found, fewer than 5 scores in db, doesnt display any empty rows (Matt, Valeriu) WORKS
-
+import './search.css';
 import React, { useState } from "react"; 
 
 export default function Search() {
@@ -37,7 +33,7 @@ export default function Search() {
           // set display text and reveal table
           setDisplay({
             msg: '', 
-            title: `${user.userName}'s Top Scores`,
+            title: `${user.userName.toUpperCase()}'s TOP 5`,
             table: true,
           });
           // returns 5 best user scores in order
@@ -49,7 +45,7 @@ export default function Search() {
           for(let i=0; i<sorted.length; i++) {
             let row = document.createElement('tr');
             let cellData = [
-              document.createTextNode(`${i + 1}.`), // rank
+              document.createTextNode(i + 1), // rank
               document.createTextNode(sorted[i][0]), // score
               document.createTextNode(sorted[i][1]), // date
             ]
@@ -60,40 +56,41 @@ export default function Search() {
             }
             document.querySelector('#search-score-table').appendChild(row);
           }
-        } else { setDisplay({ msg: 'No score data found.' }) }
-      } else { setDisplay({ msg: 'User not found.' }) }
+        } else { setDisplay({ msg: 'No score data found!' }) }
+      } else { setDisplay({ msg: 'User not found!' }) }
     }
   }
 
   return (
-    <div>
-      <h1>Search User Scores</h1>
-      <form onSubmit={clicked}>
-        <input 
-          type="text"
-          name="searchUser"
-          placeholder="Enter Username"
-        />
-        <button>Go</button>
-      </form>
-      <p>{display.msg}</p>
-      <h2>{display.title}</h2>
-      <div id="table-wrapper">
-        { !display.table ? ('') : (
-          <table 
-            id="search-score-table"      
-            style={{ borderCollapse: 'collapse' }}
-          >
-            <tbody>
-              <tr>
-                <th></th>
-                <th>Score</th>
-                <th>Date</th>
-              </tr>
-            </tbody>
-          </table>
-          )
-        }
+    <div id="container">
+      <div id="monitor">
+        <h1>SEARCH HIGH SCORES</h1>
+        <form id="search-form" onSubmit={clicked}>
+          <input 
+            type="text"
+            name="searchUser"
+            placeholder="SEARCH USERS"
+          />
+          <button>
+            <i class="fa-solid fa-forward-fast"></i>          
+          </button>
+        </form>
+        <p id="msg">{display.msg}</p>
+        <div id="table-wrapper">
+          <h2 id="title">{display.title}</h2>
+          { !display.table ? ('') : (
+            <table id="search-score-table">
+              <tbody>
+                <tr>
+                  <th>RANK</th>
+                  <th>SCORE</th>
+                  <th>DATE</th>
+                </tr>
+              </tbody>
+            </table>
+            )
+          }
+        </div>
       </div>
     </div>
   )

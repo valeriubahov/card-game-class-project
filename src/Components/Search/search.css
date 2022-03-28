@@ -1,0 +1,54 @@
+/* background color? */
+/* tv frame border? tv glow outside border? */
+
+#container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 600px;
+    height: 500px;
+    background: black;
+    text-align: center;
+    border-radius: 50% / 10%; 
+    font-family: 'Press Start 2P', sans-serif;
+    color: lime;
+}
+
+#monitor { font-size: 10px }
+
+#search-form { background-color: black }
+
+#search-form:hover { cursor: text }
+
+#search-form > input {
+    background-color: black;
+    border: none;
+    font: 10px 'Press Start 2P';
+    padding: 4px;
+    color: hotpink;
+}
+
+#search-form > button {
+    background-color: black;
+    border: none;
+    color: white;
+}
+
+#search-form > button:hover{ 
+    color: hotpink;
+    cursor: pointer;
+}
+
+#msg { color: orange }
+
+#title { color: red }
+
+#table-wrapper {
+    padding: 20px;
+}
+
+#search-score-table {
+    border-collapse: collapse;
+    color: yellow;
+
+}
