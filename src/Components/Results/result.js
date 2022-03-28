@@ -1,15 +1,10 @@
 import './result.css';
 
 
-// TODO 
-
-// Add details to each function (help with removal of exess comments like this one!)
-
-
-
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import './result.css';
+import image from './card.png';
 
 /**
  * Main Function that contains pulling user data, score and assigning to the application
@@ -85,6 +80,7 @@ function Result(props) {
 
     return (
         <div className="result-name">
+            <img src={image} />
             <h2 id="results">Results 📈</h2>
 
             <table>
