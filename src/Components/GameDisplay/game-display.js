@@ -1,9 +1,10 @@
 import './styles.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import RedCard from "./images/red-card.jpg";
 import BlueCard from "./images/blue-card.jpg";
 import BlackCard from "./images/black-card.jpg";
 import Blank from './images/blank.png';
+import PopUp from '../PopUp/popUp';
 
 let playerCardValue = 0;
 let botCardValue = 0;
@@ -21,6 +22,9 @@ cardImageValue.set('ACE', 14);
  */
 const GameDisplay = function (props) {
 
+    // State for final winner
+    const [winner, setWinner] = useState('');
+
     // State for Deck IDs
     const [playerDeckID, setPlayerDeckID] = useState(null);
     const [botDeckID, setBotDeckID] = useState(null);
@@ -29,21 +33,28 @@ const GameDisplay = function (props) {
     const [playerCard, setPlayerCard] = useState(null);
     const [botCard, setBotCard] = useState(null);
 
-    const [deckEnded, setDeckEnded] = useState(false);
-
-    // Sate for scores
+    // State for scores
     const [botScore, setBotScore] = useState(0);
     const [playerScore, setPlayerScore] = useState(0);
 
+    // States for win streaks
     const [playerWinStreak, setPlayerWinStreak] = useState(0);
     const [botWinStreak, setBotWinStreak] = useState(0);
 
-
+    let playerWins = useRef(0);
+    let botWins = useRef(0);
+    // States for table style
     const [BG, setBG] = useState("game-table1");
-    const [drawResult, setDrawResult] = useState('');
 
+    //Statae for deck styles
     const [d1, setD1] = useState(RedCard);
     const [d2, setD2] = useState(RedCard);
+
+    // State to check if deck is ended
+    const deckEnded = useRef(false);
+
+    // State to show if bot wins the hand or the player
+    const [drawResult, setDrawResult] = useState('');
 
 
     useEffect(() => {
@@ -86,7 +97,7 @@ const GameDisplay = function (props) {
             .then(playerDeckID => {
                 setPlayerDeckID(playerDeckID.deck_id);
             });
-        setDeckEnded(false);
+        deckEnded.current = false;
         setPlayerCard(null);
         setBotCard(null);
         setDrawResult('');
@@ -105,6 +116,8 @@ const GameDisplay = function (props) {
         setBotScore(0);
         setBotWinStreak(0);
         setPlayerWinStreak(0);
+        playerWins.current = 0;
+        botWins.current = 0;
     }
 
     /**
@@ -135,10 +148,11 @@ const GameDisplay = function (props) {
      * @returns void
      */
     function checkHandWinner() {
-        if (!deckEnded) {
+        if (!deckEnded.current) {
             if (botCardValue > playerCardValue) {
-                if (botWinStreak >= 2) {
-                    setBotScore(botScore => (botScore + parseInt(botCardValue) + parseInt(playerCardValue)) * 2);
+                if (botWins.current >= 2) {
+                    console.log('BOT double points')
+                    setBotScore(botScore => botScore + (parseInt(botCardValue) * 2 + parseInt(playerCardValue) * 2));
                 }
                 else {
                     setBotScore(botScore => botScore + parseInt(botCardValue) + parseInt(playerCardValue));
@@ -146,8 +160,9 @@ const GameDisplay = function (props) {
                 setDrawResult('BOT WINS');
             }
             else if (botCardValue < playerCardValue) {
-                if (playerWinStreak >= 2) {
-                    setPlayerScore(playerScore => (playerScore + parseInt(botCardValue) + parseInt(playerCardValue)) * 2);
+                if (playerWins.current >= 2) {
+                    console.log('PLAYER double points')
+                    setPlayerScore(playerScore => playerScore + (parseInt(botCardValue) + parseInt(playerCardValue)) * 2);
                 }
                 else {
                     setPlayerScore(playerScore => playerScore + parseInt(botCardValue) + parseInt(playerCardValue));
@@ -160,12 +175,22 @@ const GameDisplay = function (props) {
         }
         else {
             if (botScore > playerScore) {
-                setBotWinStreak(botWinStreak + 1);
+                botWins.current = botWins.current + 1;
+                playerWins.current = 0;
+                setBotWinStreak(botWinStreak => botWinStreak + 1);
+                setWinner("BOT is the winner");
             }
             else {
-                setPlayerWinStreak(playerWinStreak + 1);
+                playerWins.current = playerWins.current + 1;
+                botWins.current = 0;
+                setPlayerWinStreak(playerWinStreak => playerWinStreak + 1);
+
+                setWinner("YOU are the winner");
             }
-            console.log('Saving to DB')
+
+            if (botWinStreak === 3 || playerWinStreak === 3) {
+                console.log('Saving to DB')
+            }
         }
     }
 
@@ -186,7 +211,8 @@ const GameDisplay = function (props) {
                 }
             }
             else {
-                setDeckEnded(true);
+                console.log('Deck ended')
+                deckEnded.current = true;
             }
         });
 
@@ -201,7 +227,8 @@ const GameDisplay = function (props) {
                 }
             }
             else {
-                setDeckEnded(true);
+                console.log('Deck ended')
+                deckEnded.current = true;
             }
         });
 
@@ -234,10 +261,10 @@ const GameDisplay = function (props) {
      * @returns void
      */
     const changeBG = () => {
-        if (BG == "game-table1") {
+        if (BG === "game-table1") {
             setBG("game-table2")
         }
-        else if (BG == "game-table2") {
+        else if (BG === "game-table2") {
             setBG("game-table3")
         }
         else {
@@ -251,8 +278,8 @@ const GameDisplay = function (props) {
             <div className='card-display'>
 
                 <div className="bot-cards">
-                    <p>Computer</p>
-                    {!deckEnded ? <img className='deck2' src={d2}></img> : <img className='deck2' src={Blank} alt=''></img>}
+                    <p>Computer - Wins {botWinStreak}</p>
+                    {!deckEnded.current ? <img className='deck2' src={d2}></img> : <img className='deck2' src={Blank} alt=''></img>}
                     {
                         botCard ?
                             <img src={botCard} className='bot-draw' ></img>
@@ -262,19 +289,16 @@ const GameDisplay = function (props) {
                     <p>Score: {botScore}</p>
                 </div>
                 {
-                    !deckEnded && (botWinStreak === 0 && playerWinStreak === 0) ?
+                    !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) ?
                         <div className='game-process'>
                             <div className='draw-result'>{drawResult}</div>
                             <button className='drawButton' onClick={draw}>Draw</button>
                         </div> :
-                        <div className='game-process'>
-                            <div className='draw-result'>{drawResult}</div>
-                            <button className='drawButton' onClick={nextRound}>Next Round</button>
-                        </div>
+                        <PopUp nextRound={nextRound} winner={winner} />
                 }
 
                 <div className="player-cards">
-                    <p>Player Name</p>
+                    <p>Player Name - Wins {playerWinStreak}</p>
                     {
                         playerCard ?
                             <img src={playerCard} className='player-draw' ></img>
@@ -282,7 +306,7 @@ const GameDisplay = function (props) {
                             <div className='player-draw'></div>
 
                     }
-                    {!deckEnded ? <img className='deck1' src={d1}></img> : <img className='deck2' src={Blank} alt=''></img>}
+                    {!deckEnded.current ? <img className='deck1' src={d1}></img> : <img className='deck2' src={Blank} alt=''></img>}
                     <p>Score: {playerScore}</p>
                 </div>
             </div>
