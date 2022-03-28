@@ -8,7 +8,6 @@ import PopUp from '../PopUp/popUp';
 
 let playerCardValue = 0;
 let botCardValue = 0;
-let winner;
 
 const cardImageValue = new Map();
 cardImageValue.set('JACK', 11);
@@ -22,6 +21,9 @@ cardImageValue.set('ACE', 14);
  * @returns GameDisplay component
  */
 const GameDisplay = function (props) {
+
+    // State for final winner
+    const [winner, setWinner] = useState('');
 
     // State for Deck IDs
     const [playerDeckID, setPlayerDeckID] = useState(null);
@@ -169,12 +171,14 @@ const GameDisplay = function (props) {
         else {
             console.log('Saving to DB')
             if (botScore > playerScore) {
+                console.log('BOT')
                 setBotWinStreak(botWinStreak => botWinStreak + 1);
-                winner = "BOT is the winner";
+                setWinner("BOT is the winner");
             }
             else {
+                console.log('PLAYER')
                 setPlayerWinStreak(playerWinStreak => playerWinStreak + 1);
-                winner = "YOU are the winner";
+                setWinner("YOU are the winner");
             }
         }
     }
