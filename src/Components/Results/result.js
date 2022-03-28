@@ -5,6 +5,18 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import './result.css';
 import image from './card.png';
+import image1 from './cardload.gif';
+import frog from './frog.gif';
+
+
+
+
+// TODO:
+
+// Add 1st, 2nd, 3rd place emoji to the Top 3 in Results
+// Make the table look better
+// Replace rotating frog with another gif to add additional style to the page 
+
 
 /**
  * Main Function that contains pulling user data, score and assigning to the application
@@ -80,10 +92,13 @@ function Result(props) {
 
     return (
         <div className="result-name">
-            <img src={image} />
+            <img id="gif-top" src={frog} />
+            <img  id="result-main" src={image} />
+            {/* <img src={image1} /> */}
+
             <h2 id="results">Results 📈</h2>
 
-            <table>
+            <table id ="table-display">
                 <thead>
                     <tr>
                         <th>Username 👨👩</th>
