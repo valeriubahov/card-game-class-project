@@ -1,31 +1,52 @@
 
 body {
     text-align: center;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
 }
 
 
-
 table, th, td {
-    border: 1px solid black;
+    position: relative;
+    width: 450px;
+    
+    margin: 100px auto 0;
     padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
+    box-sizing: border-box;
+   
+
   }
   table {
     border-spacing: 10px;
   }
 
+   #gif-top{
 
+    position: absolute;
+    width: 80px;
+    top: 0px;
+    right: 0px;
 
-  #username-1st{
-    font-style: italic;
-    
-  }
+   }
 
   #username-display {
     font-style: italic;
     font-family: 'Signika Negative', sans-serif;
+    
   }
+
+  #username-display:hover {
+    font-size: 25px;
+    font-size-adjust: 15px;
+    
+  }
+  #userscore-display:hover {
+    font-size: 30px;
+    font-size-adjust: 20px;
+    text-decoration: underline;
+  }
+  
   #quit {
     padding: 0;
     border:inherit;
@@ -33,6 +54,13 @@ table, th, td {
     color: inherit;
     background-color: transparent;
     cursor:pointer;
+    
+  }
+
+  #quit:hover {
+    font-size: 40px;
+    background-color:blueviolet;
+    font-size-adjust: 20px;
   }
 
   #userscore-display {
@@ -40,4 +68,47 @@ table, th, td {
     font-family: Arial, Helvetica, sans-serif;
   }
 
- 
+  @keyframes fade-inout {
+    40%{ opacity: 1;}
+    100%{ opacity: 0;}
+  }
+
+  #quit {
+    animation: fade-inout 3s infinite alternate;
+    
+  }
+
+  /* @keyframes image-example {
+    0%   {background-color: red;}
+    25%  {background-color: brown;}
+    50%  {background-color: green;}
+    100% {background-color: blue;}
+  
+  }
+
+  #results {
+    animation-name: image-example;
+    animation-duration: 10s;
+  } */
+
+  @keyframes fade-in-username {
+    from { opacity: 0;}
+    to { opacity: 1;}
+  }
+
+  #username-display {
+    animation-name: fade-in-username;
+    animation-duration: 5s;
+  }
+
+  @keyframes fade-in-userscore {
+    from { opacity: 0;}
+    to { opacity: 1;}
+  }
+
+  #userscore-display {
+    animation-name: fade-in-userscore;
+    animation-duration: 5s;
+  }
+
+  
