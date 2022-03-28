@@ -4,9 +4,11 @@ import RedCard from "./images/red-card.jpg";
 import BlueCard from "./images/blue-card.jpg";
 import BlackCard from "./images/black-card.jpg";
 import Blank from './images/blank.png';
+import PopUp from '../PopUp/popUp';
 
 let playerCardValue = 0;
 let botCardValue = 0;
+let winner;
 
 const cardImageValue = new Map();
 cardImageValue.set('JACK', 11);
@@ -168,9 +170,11 @@ const GameDisplay = function (props) {
             console.log('Saving to DB')
             if (botScore > playerScore) {
                 setBotWinStreak(botWinStreak => botWinStreak + 1);
+                winner = "BOT is the winner";
             }
             else {
                 setPlayerWinStreak(playerWinStreak => playerWinStreak + 1);
+                winner = "YOU are the winner";
             }
         }
     }
@@ -275,10 +279,7 @@ const GameDisplay = function (props) {
                             <div className='draw-result'>{drawResult}</div>
                             <button className='drawButton' onClick={draw}>Draw</button>
                         </div> :
-                        <div className='game-process'>
-                            <div className='draw-result'>{drawResult}</div>
-                            <button className='drawButton' onClick={nextRound}>Next Round</button>
-                        </div>
+                        <PopUp nextRound={nextRound} winner={winner}/>
                 }
 
                 <div className="player-cards">
