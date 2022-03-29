@@ -1,9 +1,11 @@
 import './search.css';
 import React, { useState } from "react"; 
 
-// merge tv & monitor 
-// comments over functions like val showed 
-
+/**
+ * Search component, used to find & display top 5 scores by user 
+ * @param none 
+ * @returns Search component
+ */
 export default function Search() {
   const [display, setDisplay] = useState({ 
     msg: '',
@@ -11,6 +13,11 @@ export default function Search() {
     table: false,
   });
 
+   /**
+   * Function to search database for queried username, updates state & display score info on the screen
+   * @param click  
+   * @returns none
+   */
   async function clicked(e) {
     e.preventDefault();
     const response = await fetch(`http://localhost:5000/userscore/`);
