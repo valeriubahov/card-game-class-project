@@ -1,6 +1,9 @@
 import './search.css';
 import React, { useState } from "react"; 
 
+// merge tv & monitor 
+// comments over functions like val showed 
+
 export default function Search() {
   const [display, setDisplay] = useState({ 
     msg: '',
