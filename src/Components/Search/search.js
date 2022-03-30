@@ -72,39 +72,36 @@ export default function Search() {
   }
 
   return (
-    // <div id="container">
-      <div id="monitor">
-        <div id="monitor-screen">
-          <h1>SEARCH HIGH SCORES</h1>
-          <form id="search-form" onSubmit={clicked}>
-            <input 
-              type="text"
-              name="searchUser"
-              placeholder="SEARCH USERS"
-            />
-            <button>
-              <i class="fa-solid fa-forward-fast"></i>          
-            </button>
-          </form>
-          <p id="msg">{display.msg}</p>
-          <div id="table-wrapper">
-            <h2 id="title">{display.title}</h2>
-            { !display.table ? ('') : (
-              <table id="search-score-table">
-                <tbody>
-                  <tr>
-                    <th>RANK</th>
-                    <th>SCORE</th>
-                    <th>DATE</th>
-                  </tr>
-                </tbody>
-              </table>
-              )
-            }
-          </div>
+    <div id="monitor">
+      <div id="monitor-screen">
+        <h1>SEARCH HIGH SCORES</h1>
+        <form id="search-form" onSubmit={clicked}>
+          <input 
+            type="text"
+            name="searchUser"
+            placeholder="SEARCH USERS"
+          />
+          <button>
+            <i class="fa-solid fa-forward-fast"></i>          
+          </button>
+        </form>
+        <p id="msg">{display.msg}</p>
+        <div id="table-wrapper">
+          <h2 id="title">{display.title}</h2>
+          { !display.table ? ('') : (
+            <table id="search-score-table">
+              <tbody>
+                <tr>
+                  <th>RANK</th>
+                  <th>SCORE</th>
+                  <th>DATE</th>
+                </tr>
+              </tbody>
+            </table>
+            )
+          }
         </div>
       </div>
-    // </div>
-
+    </div>
   )
 }
