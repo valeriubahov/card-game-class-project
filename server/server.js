@@ -36,6 +36,19 @@ app.listen(port, () => {
 
 
 //used for the user uploading profile pics
-app.post('/uploads', upload.single("profilePic"), function(req, res) {
-    console.log(req.file.profilePic); // the uploaded file object
-  });
+app.post('/uploads', upload.single("profile_pic"), function(req, res) {
+  console.log("please",req.file.filename); // the uploaded file object
+  let db_connect = dbo.getDb("CardGame");
+  // const formData = req.body;
+  // console.log(formData);
+  // let myobj = {
+  //   name: req.body.person_name,
+  //   profilePic: req.body.profile_pic,
+
+  // };
+  //change below to update instead of insert
+  // db_connect.collection("Users").insertOne(myobj, function (err, res) {
+  //   if (err) throw err;
+  //   response.json(res);
+  // });
+});

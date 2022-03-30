@@ -65,10 +65,9 @@ recordRoutes.route("/users/add").post(upload.any(),function (req, response) {
   const formData = req.body;
   console.log(formData);
   let myobj = {
-    name: req.body.person_name,
-    position: req.body.person_position,
-    level: req.body.person_level,
+    userName: req.body.person_name,
     profilePic: req.body.profile_pic,
+
   };
   db_connect.collection("Users").insertOne(myobj, function (err, res) {
     if (err) throw err;
