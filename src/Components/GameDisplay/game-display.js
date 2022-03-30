@@ -293,10 +293,10 @@ const GameDisplay = function (props) {
 
                 <div className="bot-cards">
                     <p>Computer - Wins {botWinStreak}</p>
-                    {!deckEnded.current ? <img className='deck2' src={d2}></img> : <img className='deck2' src={Blank} alt=''></img>}
+                    {!deckEnded.current ? <img className='deck2' src={d2} alt='card'></img> : <img className='deck2' src={Blank} alt=''></img>}
                     {
                         botCard ?
-                            <img src={botCard} className='bot-draw' ></img>
+                            <img src={botCard} className='bot-draw' alt='card'></img>
                             :
                             <div className='bot-draw'></div>
                     }
@@ -317,12 +317,12 @@ const GameDisplay = function (props) {
                     <p>Player Name - Wins {playerWinStreak}</p>
                     {
                         playerCard ?
-                            <img src={playerCard} className='player-draw' ></img>
+                            <img src={playerCard} className='player-draw' alt='card'></img>
                             :
                             <div className='player-draw'></div>
 
                     }
-                    {!deckEnded.current ? <img className='deck1' src={d1}></img> : <img className='deck2' src={Blank} alt=''></img>}
+                    {!deckEnded.current ? <img className='deck1' src={d1} alt='card'></img> : <img className='deck2' src={Blank} alt=''></img>}
                     <p>Score: {playerScore}</p>
                 </div>
             </div>
