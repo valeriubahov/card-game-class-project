@@ -1,6 +1,11 @@
 import './search.css';
 import React, { useState } from "react"; 
 
+/**
+ * Search component, used to find & display top 5 scores by user 
+ * @param none 
+ * @returns Search component
+ */
 export default function Search() {
   const [display, setDisplay] = useState({ 
     msg: '',
@@ -8,6 +13,11 @@ export default function Search() {
     table: false,
   });
 
+   /**
+   * Function to search database for queried username, updates state & display score info on the screen
+   * @param click  
+   * @returns none
+   */
   async function clicked(e) {
     e.preventDefault();
     const response = await fetch(`http://localhost:5000/userscore/`);
@@ -62,36 +72,39 @@ export default function Search() {
   }
 
   return (
-    <div id="container">
+    // <div id="container">
       <div id="monitor">
-        <h1>SEARCH HIGH SCORES</h1>
-        <form id="search-form" onSubmit={clicked}>
-          <input 
-            type="text"
-            name="searchUser"
-            placeholder="SEARCH USERS"
-          />
-          <button>
-            <i class="fa-solid fa-forward-fast"></i>          
-          </button>
-        </form>
-        <p id="msg">{display.msg}</p>
-        <div id="table-wrapper">
-          <h2 id="title">{display.title}</h2>
-          { !display.table ? ('') : (
-            <table id="search-score-table">
-              <tbody>
-                <tr>
-                  <th>RANK</th>
-                  <th>SCORE</th>
-                  <th>DATE</th>
-                </tr>
-              </tbody>
-            </table>
-            )
-          }
+        <div id="monitor-screen">
+          <h1>SEARCH HIGH SCORES</h1>
+          <form id="search-form" onSubmit={clicked}>
+            <input 
+              type="text"
+              name="searchUser"
+              placeholder="SEARCH USERS"
+            />
+            <button>
+              <i class="fa-solid fa-forward-fast"></i>          
+            </button>
+          </form>
+          <p id="msg">{display.msg}</p>
+          <div id="table-wrapper">
+            <h2 id="title">{display.title}</h2>
+            { !display.table ? ('') : (
+              <table id="search-score-table">
+                <tbody>
+                  <tr>
+                    <th>RANK</th>
+                    <th>SCORE</th>
+                    <th>DATE</th>
+                  </tr>
+                </tbody>
+              </table>
+              )
+            }
+          </div>
         </div>
       </div>
-    </div>
+    // </div>
+
   )
 }
