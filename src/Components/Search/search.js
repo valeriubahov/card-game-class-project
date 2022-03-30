@@ -38,7 +38,7 @@ export default function Search() {
           });
           // returns 5 best user scores in order
           let sort = user.score.map(x => {
-            return [parseInt(x.score.$numberDecimal), x.date.slice(0, 10)]
+            return [parseInt(x.score), x.date.slice(0, 10)]
           });
           let sorted = sort.sort((a,b) => (b[0] - a[0])).slice(0,5);
           // fill table 

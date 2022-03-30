@@ -74,9 +74,25 @@ const GameDisplay = function (props) {
             });
     }, []);
 
+    // Called only when the botWinStreak or playerWinStreak are modified => check if === 3 then end the game and save the score
+    useEffect(() => {
+        if (botWinStreak === 3 || playerWinStreak === 3) {
 
-    const API_URL_PLAYER = `https://deckofcardsapi.com/api/deck/${playerDeckID}/draw/?count=1`
-    const API_URL_BOT = `https://deckofcardsapi.com/api/deck/${botDeckID}/draw/?count=1`
+
+            const userScore = new FormData()
+            userScore.append(" _id", 1)
+            userScore.append("score", playerScore)
+            console.log(userScore)
+            fetch("http://localhost:5000/userScore/add", {
+                method: "POST",
+                body: userScore
+            });
+        }
+    }, [botWinStreak, playerWinStreak])
+
+
+    const API_URL_PLAYER = `https://deckofcardsapi.com/api/deck/${playerDeckID}/draw/?count=1`;
+    const API_URL_BOT = `https://deckofcardsapi.com/api/deck/${botDeckID}/draw/?count=1`;
 
 
     /**
@@ -148,6 +164,8 @@ const GameDisplay = function (props) {
      * @returns void
      */
     function checkHandWinner() {
+        let count = 0;
+        console.log(count++)
         if (!deckEnded.current) {
             if (botCardValue > playerCardValue) {
                 if (botWins.current >= 2) {
@@ -177,19 +195,15 @@ const GameDisplay = function (props) {
             if (botScore > playerScore) {
                 botWins.current = botWins.current + 1;
                 playerWins.current = 0;
-                setBotWinStreak(botWinStreak => botWinStreak + 1);
+                setBotWinStreak(botWinStreak + 1);
                 setWinner("BOT is the winner");
             }
             else {
                 playerWins.current = playerWins.current + 1;
                 botWins.current = 0;
-                setPlayerWinStreak(playerWinStreak => playerWinStreak + 1);
+                setPlayerWinStreak(playerWinStreak + 1);
 
                 setWinner("YOU are the winner");
-            }
-
-            if (botWinStreak === 3 || playerWinStreak === 3) {
-                console.log('Saving to DB')
             }
         }
     }
@@ -294,7 +308,9 @@ const GameDisplay = function (props) {
                             <div className='draw-result'>{drawResult}</div>
                             <button className='drawButton' onClick={draw}>Draw</button>
                         </div> :
-                        <PopUp nextRound={nextRound} winner={winner} />
+                        (botWinStreak === 3 || playerWinStreak === 3)
+                            ? <PopUp nextRound={newGame} winner="Game Ended" />
+                            : <PopUp nextRound={nextRound} winner={winner} />
                 }
 
                 <div className="player-cards">
