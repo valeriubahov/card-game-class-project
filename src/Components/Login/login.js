@@ -66,8 +66,9 @@ const LoginWindow = function(props)
 
         fetch("http://localhost:5000/users")
         .then(response => response.json())
-        .then(value => (value.filter(x => x.userName === loginName)));
-
+        .then(value => (value.filter(x => x.userName === loginName)))
+        .then(value => console.log(value.filter(x => x.userName === loginName)));
+        console.log(loginName);
 
     }
 
