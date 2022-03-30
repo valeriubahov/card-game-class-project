@@ -65,7 +65,7 @@ recordRoutes.route("/users/add").post(upload.any(),function (req, response) {
   const formData = req.body;
   console.log(formData);
   let myobj = {
-    name: req.body.person_name,
+    userName: req.body.person_name,
     profilePic: req.body.profile_pic,
 
   };
