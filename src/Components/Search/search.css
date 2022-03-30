@@ -29,6 +29,21 @@
     100% { box-shadow: 0 0 90px 0 rgba(200,235,255,0.4) }
 }
 
+#monitor-screen { height: 350px }
+
+#text-wrapper { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 35%;
+}
+
+#table-wrapper { 
+    display: flex;
+    flex-direction: column;
+    height: 65%;
+}
+
 #search-form { background-color: black }
 #search-form:hover { cursor: text }
 
@@ -51,8 +66,6 @@
     color: hotpink;
     cursor: pointer;
 }
-
-#table-wrapper { padding: 20px }
 
 #msg { color: orange }
 
