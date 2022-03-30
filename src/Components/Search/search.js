@@ -78,7 +78,6 @@ export default function Search() {
     <div id="container">
       <div id="monitor">
         <div id="monitor-screen">
-
           <div id="text-wrapper">
             <h1>SEARCH HIGH SCORES</h1>
             <form id="search-form" onSubmit={clicked}>
@@ -94,7 +93,6 @@ export default function Search() {
             </form>
             <p id="msg">{display.msg}</p>
           </div>
-
           <div id="table-wrapper">
             <h2 id="title">{display.title}</h2>
             { !display.table ? ('') : (
@@ -110,7 +108,6 @@ export default function Search() {
               )
             }
           </div>
-
         </div>
       </div>
     </div>
