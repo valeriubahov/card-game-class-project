@@ -25,6 +25,7 @@ export default function Search() {
       window.alert(`An error occured: ${response.statusText}`);
       return;
     }
+    
     const query = e.target.searchUser.value;
     const data = await response.json();
     let user = data.find(x => x.userName === query);
@@ -46,11 +47,13 @@ export default function Search() {
             title: `${user.userName.toUpperCase()}'s TOP 5`,
             table: true,
           });
+
           // returns 5 best user scores in order
           let sort = user.score.map(x => {
             return [parseInt(x.score), x.date.slice(0, 10)]
           });
           let sorted = sort.sort((a,b) => (b[0] - a[0])).slice(0,5);
+          
           // fill table 
           for(let i=0; i<sorted.length; i++) {
             let row = document.createElement('tr');
