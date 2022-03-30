@@ -80,7 +80,7 @@ const GameDisplay = function (props) {
 
 
             const userScore = new FormData()
-            userScore.append(" _id", 1)
+            userScore.append("_id", 1)
             userScore.append("score", playerScore)
             console.log(userScore)
             fetch("http://localhost:5000/userScore/add", {
