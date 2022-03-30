@@ -53,7 +53,7 @@ export default function Search() {
             return [parseInt(x.score), x.date.slice(0, 10)]
           });
           let sorted = sort.sort((a,b) => (b[0] - a[0])).slice(0,5);
-          
+
           // fill table 
           for(let i=0; i<sorted.length; i++) {
             let row = document.createElement('tr');
@@ -75,34 +75,42 @@ export default function Search() {
   }
 
   return (
-    <div id="monitor">
-      <div id="monitor-screen">
-        <h1>SEARCH HIGH SCORES</h1>
-        <form id="search-form" onSubmit={clicked}>
-          <input 
-            type="text"
-            name="searchUser"
-            placeholder="SEARCH USERS"
-          />
-          <button>
-            <i class="fa-solid fa-forward-fast"></i>          
-          </button>
-        </form>
-        <p id="msg">{display.msg}</p>
-        <div id="table-wrapper">
-          <h2 id="title">{display.title}</h2>
-          { !display.table ? ('') : (
-            <table id="search-score-table">
-              <tbody>
-                <tr>
-                  <th>RANK</th>
-                  <th>SCORE</th>
-                  <th>DATE</th>
-                </tr>
-              </tbody>
-            </table>
-            )
-          }
+    <div id="container">
+      <div id="monitor">
+        <div id="monitor-screen">
+
+          <div id="text-wrapper">
+            <h1>SEARCH HIGH SCORES</h1>
+            <form id="search-form" onSubmit={clicked}>
+              <input 
+              id="search-input"
+                type="text"
+                name="searchUser"
+                placeholder="SEARCH USERS"
+              />
+              <button id="search-button">
+                <i class="fa-solid fa-forward-fast"></i>          
+              </button>
+            </form>
+            <p id="msg">{display.msg}</p>
+          </div>
+
+          <div id="table-wrapper">
+            <h2 id="title">{display.title}</h2>
+            { !display.table ? ('') : (
+              <table id="search-score-table">
+                <tbody>
+                  <tr>
+                    <th>RANK</th>
+                    <th>SCORE</th>
+                    <th>DATE</th>
+                  </tr>
+                </tbody>
+              </table>
+              )
+            }
+          </div>
+
         </div>
       </div>
     </div>

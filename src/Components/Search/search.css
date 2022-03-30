@@ -1,3 +1,11 @@
+#container { 
+    /* eventually delete me !!!!!! just here for testing animation against black background*/
+    width: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+}
+
 #monitor {
     display: flex;
     align-items: center;
@@ -18,14 +26,13 @@
 
 @keyframes flicker {
     0% { box-shadow: 0 0 100px 0 rgba(200,235,255,0.4) }
-    100% { box-shadow: 0 0 90px 0 rgba(200,230,255,0.45) }
+    100% { box-shadow: 0 0 90px 0 rgba(200,235,255,0.4) }
 }
 
 #search-form { background-color: black }
-
 #search-form:hover { cursor: text }
 
-#search-form > input {
+#search-input {
     background-color: black;
     border: none;
     font: 10px 'Press Start 2P';
@@ -34,22 +41,22 @@
     color: hotpink;
 }
 
-#search-form > button {
+#search-button {
     background-color: black;
     border: none;
     color: white;
 }
 
-#search-form > button:hover{ 
+#search-button:hover{ 
     color: hotpink;
     cursor: pointer;
 }
 
+#table-wrapper { padding: 20px }
+
 #msg { color: orange }
 
 #title { color: red }
-
-#table-wrapper { padding: 20px }
 
 #search-score-table {
     margin: 0;
