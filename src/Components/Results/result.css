@@ -27,7 +27,12 @@ table, th, td {
     width: 80px;
     top: 0px;
     right: 0px;
+    opacity: 0;
 
+   }
+
+   #gif-top:hover {
+     opacity: 1;
    }
 
   #username-display {
@@ -58,7 +63,7 @@ table, th, td {
   }
 
   #quit:hover {
-    font-size: 40px;
+    font-size: 30px;
     background-color:blueviolet;
     font-size-adjust: 20px;
   }
@@ -70,11 +75,11 @@ table, th, td {
 
   @keyframes fade-inout {
     40%{ opacity: 1;}
-    100%{ opacity: 0;}
+    80%{ opacity: 0.4;}
   }
 
   #quit {
-    animation: fade-inout 3s infinite alternate;
+    animation: fade-inout 4s infinite alternate;
     
   }
 
@@ -111,4 +116,9 @@ table, th, td {
     animation-duration: 5s;
   }
 
-  
+  .link {
+    font-family:Arial, Helvetica, sans-serif;
+    color: white;
+    padding: 10px;
+    
+  }
