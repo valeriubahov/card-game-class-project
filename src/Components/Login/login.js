@@ -60,15 +60,15 @@ const LoginWindow = function(props)
     const loginUser = () => {
         //need to confirm the username entered into the text field is in the mongoDB, if it is return the user info as a prop/object to be passed along.
         const loginName = document.getElementById("existingUserName").value
-        // if(loginName)
         //else error message saying that user doesn't exist.
-        console.log("login name", loginName.value);
+        // console.log("login name", loginName.value);
 
-        fetch("http://localhost:5000/users")
+        const userInfo = fetch("http://localhost:5000/users")
         .then(response => response.json())
         .then(value => (value.filter(x => x.userName === loginName)))
-        .then(value => console.log(value.filter(x => x.userName === loginName)));
-        console.log(loginName);
+        // .then(value => console.log(value.filter(x => x.userName === loginName)));
+        // console.log(loginName);
+        console.log(userInfo);
 
     }
 
