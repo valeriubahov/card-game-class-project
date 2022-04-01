@@ -57,19 +57,31 @@ const LoginWindow = function(props)
         })
     }
 
-    const loginUser = () => {
+    const loginUser = async() => {
         //need to confirm the username entered into the text field is in the mongoDB, if it is return the user info as a prop/object to be passed along.
         const loginName = document.getElementById("existingUserName").value
         //else error message saying that user doesn't exist.
         // console.log("login name", loginName.value);
-
-        const userInfo = fetch("http://localhost:5000/users")
+        let userName = "";
+        let _id = "";
+        fetch("http://localhost:5000/users")
         .then(response => response.json())
-        .then(value => (value.filter(x => x.userName === loginName)))
-        // .then(value => console.log(value.filter(x => x.userName === loginName)));
-        // console.log(loginName);
-        console.log(userInfo);
+        .then(value => {
+            userName = value.filter(x => x.userName === loginName)[0].userName
+            // console.log(userName);
+            _id = value.filter(x => x.userName === loginName)[0]._id
+            // console.log(_id);
 
+
+        //impletement below objet as a state object.
+        let loginInfo = {
+            loginName: userName,
+            id: _id
+        }
+        
+        console.log(loginInfo);
+    })
+    
     }
 
 
