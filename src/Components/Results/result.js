@@ -95,19 +95,28 @@ function Result(props) {
 
     function froggie() {
         frogCount++
-        if (frogCount === 6) {
-
-            alert('You have been visited by the Frog of Wisdom \n May your odds be in your favor')
-            window.location = '/';
+        if (frogCount === 1) {
+            
+            alert(`Frog Count: ${frogCount}`)
+            // window.location = '/';
+        }
+        if (frogCount === 2) {
+            alert('frog')
         }
 
     }
 
 
 
+    // Easter Egg == User must find all 3 frogs on screen, when the 3 frogs are all discovered (displays message than reends user to screen)
+    // Option 1: seperate functions for each frog << WIP
+
+
     return (
         <div className="result-name">
             <img id="gif-top" onClick={froggie} src={frog} />
+            <img id="gif-top-1" onClick={froggie} src={frog} />
+            <img id="gif-top-2" onClick={froggie} src={frog} />
             <img id="result-main" src={image} />
             {/* <img src={image1} /> */}
 
