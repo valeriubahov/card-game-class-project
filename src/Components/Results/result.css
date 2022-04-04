@@ -33,6 +33,7 @@ table, th, td {
 
    #gif-top:hover {
      opacity: 1;
+     background-color: cyan;
    }
 
   #username-display {
@@ -133,6 +134,7 @@ table, th, td {
 
   #gif-top-1:hover {
     opacity: 1;
+    background-color: red;
   }
 
  #gif-top-2 {
@@ -145,4 +147,7 @@ table, th, td {
 
  #gif-top-2:hover {
    opacity: 1;
+   background-color: chartreuse;
  }
+
+ 
