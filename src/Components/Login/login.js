@@ -1,9 +1,12 @@
 // TODO: add functionality to link to the game display once the submit button is clicked.
 import {Link} from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, createContext, useContext} from "react";
+import { UserContext, UserProvider } from "../../context/UserContext";
+
 
 const LoginWindow = function(props)
 {
+    const [user, setUser] = useContext(UserContext);
 
     // const uploadImage = () => {
     //     alert("uploading");
@@ -79,13 +82,12 @@ const LoginWindow = function(props)
 
         //impletement below objet as a state object.
         let loginInfo = {
-            userName: userName,
-            _id: _id,
-            profilePic: profilePic
+            'userName': userName,
+            '_id': _id,
+            'profilePic': profilePic
         }
-        
-        console.log(loginInfo);
-
+        setUser(loginInfo);
+        console.log(`Login ${user} `)
         // const [state, setState] = useState({
         //     userName: userName,
         //     _id: _id,
@@ -116,7 +118,9 @@ const LoginWindow = function(props)
                     <label htmlFor="existingUserName">Please Enter Your Username:</label><br></br>
                     <input type="text" id="existingUserName" name="existingUserName"></input><br></br>
                     {/* add onClick function that passes the user info prop on to the game display. */}
-                    <Link to ="/game-display"><button type="button" value="Login" onClick={loginUser}>Login</button></Link>
+                    <UserProvider value={user}>
+                        <Link to ="/game-display" user={user}><button type="button" value="Login" onClick={loginUser}>Login</button></Link>
+                    </UserProvider>
                 </form>
 
         </div>

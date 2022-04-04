@@ -35,7 +35,7 @@ recordRoutes.route("/userscore").get(function (req, res) {
     .aggregate([{
         $lookup: {
           from: "ScoreBoard",
-          localField: "userId",
+          localField: "_id",
           foreignField: "userId",
           as: "score"
         }
@@ -43,6 +43,7 @@ recordRoutes.route("/userscore").get(function (req, res) {
     .toArray(function (err, result) {
       if (err) throw err;
       const results = res.json(result);
+      console.log(result)
       return results;
     });
 });

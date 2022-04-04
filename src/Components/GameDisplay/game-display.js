@@ -1,10 +1,11 @@
 import './styles.css';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import RedCard from "./images/red-card.jpg";
 import BlueCard from "./images/blue-card.jpg";
 import BlackCard from "./images/black-card.jpg";
 import Blank from './images/blank.png';
 import PopUp from '../PopUp/popUp';
+import { UserContext } from '../../context/UserContext';
 
 let playerCardValue = 0;
 let botCardValue = 0;
@@ -21,6 +22,8 @@ cardImageValue.set('ACE', 14);
  * @returns GameDisplay component
  */
 const GameDisplay = function (props) {
+
+    const user = useContext(UserContext);
 
     // State for final winner
     const [winner, setWinner] = useState('');
@@ -78,11 +81,11 @@ const GameDisplay = function (props) {
     useEffect(() => {
         if (botWinStreak === 3 || playerWinStreak === 3) {
 
-
+            console.log(user[0]._id);
             const userScore = new FormData()
-            userScore.append("_id", 1)
+            userScore.append("_id", user[0]._id)
             userScore.append("score", playerScore)
-            console.log(userScore)
+            console.log(`My User ${userScore}`);
             fetch("http://localhost:5000/userScore/add", {
                 method: "POST",
                 body: userScore

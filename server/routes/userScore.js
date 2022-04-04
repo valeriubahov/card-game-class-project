@@ -19,7 +19,7 @@ scoreRoutes.route("/userScore/add").post(upload.any(),function (req, response) {
     const formData = req.body;
     console.log(formData);
     let myobj = {
-      userId: parseInt(req.body._id),
+      userId: ObjectId(req.body._id),
       score: parseInt(req.body.score),
       date: new Date(),
     };
