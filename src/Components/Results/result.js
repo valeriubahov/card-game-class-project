@@ -7,6 +7,7 @@ import './result.css';
 import image from './card.png';
 import image1 from './cardload.gif';
 import frog from './frog.gif';
+import frogchill from './chill-frog.gif';
 
 
 
@@ -97,11 +98,32 @@ function Result(props) {
         frogCount++
         if (frogCount === 1) {
             
-            alert(`Frog Count: ${frogCount}`)
-            // window.location = '/';
+            alert(`${frogCount} out of 3 Frogs Found`)
+            // ;
+            
         }
         if (frogCount === 2) {
-            alert('frog')
+            alert(`${frogCount} out of 3 Frogs Found`)
+        }
+
+        
+        // if (frogCount === 3) {
+        //     let question = prompt('What is 5x5? ')
+        //     if (question == 25){
+                
+        //     }   
+        // }
+
+        if(frogCount === 3){
+            alert(`You have discovered ${frogCount} out of 3 Frogs \n `)
+            // document.getElementById("root").innerHTML = frogchill;
+            let p = document.createElement("p")
+            p.innerText = 'You have been visted by the 🐸 of Wisdom \n  '
+            document.getElementById("root").appendChild(p)
+            let elem = document.createElement("img");
+            elem.src = frogchill;
+            document.getElementById("root").appendChild(elem);
+        
         }
 
     }
