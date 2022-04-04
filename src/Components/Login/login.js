@@ -1,5 +1,6 @@
 // TODO: add functionality to link to the game display once the submit button is clicked.
 import {Link} from "react-router-dom";
+import React, { useState } from "react";
 
 const LoginWindow = function(props)
 {
@@ -64,6 +65,7 @@ const LoginWindow = function(props)
         // console.log("login name", loginName.value);
         let userName = "";
         let _id = "";
+        let profilePic ="";
         fetch("http://localhost:5000/users")
         .then(response => response.json())
         .then(value => {
@@ -71,15 +73,27 @@ const LoginWindow = function(props)
             // console.log(userName);
             _id = value.filter(x => x.userName === loginName)[0]._id
             // console.log(_id);
+            profilePic = value.filter(x => x.userName === loginName)[0].profilePic
+
 
 
         //impletement below objet as a state object.
         let loginInfo = {
-            loginName: userName,
-            id: _id
+            userName: userName,
+            _id: _id,
+            profilePic: profilePic
         }
         
         console.log(loginInfo);
+
+        // const [state, setState] = useState({
+        //     userName: userName,
+        //     _id: _id,
+        //     profilePic: profilePic
+        // })
+
+        // const {userName, _id, profilePic} = state
+
     })
     
     }
