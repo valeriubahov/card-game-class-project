@@ -7,6 +7,7 @@ import image from './Images/card.png';
 import image1 from './Images/cardload.gif';
 import frog from './Images/frog.gif';
 import frogchill from './Images/chill-frog.gif';
+import frogSpecial  from './Images/dance.gif';
 
 /**
  * Main Function that contains pulling user data, score and assigning to the application
@@ -89,9 +90,28 @@ function Result(props) {
             let elem = document.createElement("img");
             elem.src = frogchill;
             document.getElementById("results").appendChild(elem);
+            
         
         }
 
+    }
+
+
+    function frog_1() {
+        if(frogCount < 2){
+            alert('Wait a minute.. your are not supposed to see this...')
+        }
+        if (frogCount == 3)
+        {
+            alert('test123')
+            let p1 = document.createElement("p")
+            p1.innerText = 'Congrats! You have found another hidden secret. \n'
+            document.getElementById("results").appendChild(p1)
+            let elm1 = document.createElement("img")
+            elm1.src = frogSpecial;
+            document.getElementById("results").appendChild(elm1)
+
+        }
     }
     
     return (
@@ -99,7 +119,7 @@ function Result(props) {
             <img id="gif-top" onClick={froggie} src={frog} />
             <img id="gif-top-1" onClick={froggie} src={frog} />
             <img id="gif-top-2" onClick={froggie} src={frog} />
-            <img id="result-main" src={image} />
+            <img id="result-main" onClick={frog_1} src={image} />
 
 
             <h2 id="results">Results 📈</h2>
