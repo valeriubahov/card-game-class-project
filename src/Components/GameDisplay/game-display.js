@@ -81,11 +81,9 @@ const GameDisplay = function (props) {
     useEffect(() => {
         if (botWinStreak === 3 || playerWinStreak === 3) {
 
-            console.log(user[0]._id);
             const userScore = new FormData()
             userScore.append("_id", user[0]._id)
             userScore.append("score", playerScore)
-            console.log(`My User ${userScore}`);
             fetch("http://localhost:5000/userScore/add", {
                 method: "POST",
                 body: userScore
@@ -168,11 +166,10 @@ const GameDisplay = function (props) {
      */
     function checkHandWinner() {
         let count = 0;
-        console.log(count++)
+        console.log(count++);
         if (!deckEnded.current) {
-            if (botCardValue > playerCardValue) {
+            if (parseInt(botCardValue) > parseInt(playerCardValue)) {
                 if (botWins.current >= 2) {
-                    console.log('BOT double points')
                     setBotScore(botScore => botScore + (parseInt(botCardValue) * 2 + parseInt(playerCardValue) * 2));
                 }
                 else {
@@ -180,9 +177,8 @@ const GameDisplay = function (props) {
                 }
                 setDrawResult('BOT WINS');
             }
-            else if (botCardValue < playerCardValue) {
+            else if (parseInt(botCardValue) < parseInt(playerCardValue)) {
                 if (playerWins.current >= 2) {
-                    console.log('PLAYER double points')
                     setPlayerScore(playerScore => playerScore + (parseInt(botCardValue) + parseInt(playerCardValue)) * 2);
                 }
                 else {
@@ -228,7 +224,6 @@ const GameDisplay = function (props) {
                 }
             }
             else {
-                console.log('Deck ended')
                 deckEnded.current = true;
             }
         });
@@ -244,7 +239,6 @@ const GameDisplay = function (props) {
                 }
             }
             else {
-                console.log('Deck ended')
                 deckEnded.current = true;
             }
         });
