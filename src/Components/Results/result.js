@@ -2,22 +2,11 @@ import './result.css';
 
 
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
 import './result.css';
-import image from './card.png';
-import image1 from './cardload.gif';
-import frog from './frog.gif';
-import frogchill from './chill-frog.gif';
-
-
-
-
-// TODO:
-
-// Add 1st, 2nd, 3rd place emoji to the Top 3 in Results
-// Make the table look better
-// Replace rotating frog with another gif to add additional style to the page 
-
+import image from './Images/card.png';
+import image1 from './Images/cardload.gif';
+import frog from './Images/frog.gif';
+import frogchill from './Images/chill-frog.gif';
 
 /**
  * Main Function that contains pulling user data, score and assigning to the application
@@ -30,7 +19,7 @@ function Result(props) {
 
 
     useEffect(() => {
-        // fetchDatas();
+        
         fetchScore();
 
         /**
@@ -47,16 +36,11 @@ function Result(props) {
             console.log('Userscore Original: ', data)
 
 
-
-
-
             const testUser = data.map(x => ({
                 id: x._id, user: x.userName, score: x.score.map(x => x.score).reduce(
                     function (a, b) {
 
                         return Math.max(a, b)
-
-
 
                     },
                     0)
@@ -73,14 +57,7 @@ function Result(props) {
             }))
             console.log('Time', TimeUser)
 
-
-
         }
-
-
-
-
-
     }, []);
 
     /**
@@ -97,26 +74,15 @@ function Result(props) {
     function froggie() {
         frogCount++
         if (frogCount === 1) {
-            
             alert(`${frogCount} out of 3 Frogs Found`)
-            // ;
-            
         }
         if (frogCount === 2) {
             alert(`${frogCount} out of 3 Frogs Found`)
         }
 
-        
-        // if (frogCount === 3) {
-        //     let question = prompt('What is 5x5? ')
-        //     if (question == 25){
-                
-        //     }   
-        // }
-
         if(frogCount === 3){
             alert(`You have discovered ${frogCount} out of 3 Frogs \n `)
-            // document.getElementById("root").innerHTML = frogchill;
+            
             let p = document.createElement("p")
             p.innerText = 'You have been visted by the 🐸 of Wisdom \n  '
             document.getElementById("root").appendChild(p)
@@ -127,20 +93,14 @@ function Result(props) {
         }
 
     }
-
-
-
-    // Easter Egg == User must find all 3 frogs on screen, when the 3 frogs are all discovered (displays message than reends user to screen)
-    // Option 1: seperate functions for each frog << WIP
-
-
+    
     return (
         <div className="result-name">
             <img id="gif-top" onClick={froggie} src={frog} />
             <img id="gif-top-1" onClick={froggie} src={frog} />
             <img id="gif-top-2" onClick={froggie} src={frog} />
             <img id="result-main" src={image} />
-            {/* <img src={image1} /> */}
+
 
             <h2 id="results">Results 📈</h2>
 
@@ -149,7 +109,6 @@ function Result(props) {
                     <tr>
                         <th>Username 👨👩</th>
                         <th> Highest Score ✔️</th>
-                        {/* <th>ID 🃏</th>  */}
 
                     </tr>
                 </thead>
@@ -162,17 +121,14 @@ function Result(props) {
                             <tr key={user.id}>
                                 <td id='username-display'>🏅{user.user}</td>
                                 <td id='userscore-display'>{user.score}</td>
-                                <td id='username-date'>{user.date}</td>
 
                             </tr>
-
                         )
                     }
                 </tbody>
             </table>
             <br />
             <button id="quit" onClick={quitbotton} >Quit ↩️</button>
-
         </div>
     )
 }

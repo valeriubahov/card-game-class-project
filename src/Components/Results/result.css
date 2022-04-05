@@ -24,8 +24,8 @@ table, th, td {
    #gif-top{
 
     position: absolute;
-    width: 80px;
-    top: 0px;
+    width: 60px;
+    top: 100px;
     right: 0px;
     opacity: 0;
 
@@ -84,19 +84,6 @@ table, th, td {
     
   }
 
-  /* @keyframes image-example {
-    0%   {background-color: red;}
-    25%  {background-color: brown;}
-    50%  {background-color: green;}
-    100% {background-color: blue;}
-  
-  }
-
-  #results {
-    animation-name: image-example;
-    animation-duration: 10s;
-  } */
-
   @keyframes fade-in-username {
     from { opacity: 0;}
     to { opacity: 1;}
@@ -126,8 +113,8 @@ table, th, td {
 
   #gif-top-1 {
     position: absolute;
-    width: 80px;
-    top: 100px;
+    width: 70px;
+    top: 250px;
     left: 0px;
     opacity: 0;
   }
@@ -141,7 +128,7 @@ table, th, td {
    opacity: 0;
    position: absolute;
    width: 80px;
-   top: 900px;
+   top: 600px;
    right: 400px;
  }
 
