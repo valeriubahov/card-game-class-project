@@ -2,10 +2,8 @@ import './result.css';
 
 
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
 import './result.css';
 import image from './card.png';
-import image1 from './cardload.gif';
 import frog from './frog.gif';
 import frogchill from './chill-frog.gif';
 
@@ -26,7 +24,6 @@ import frogchill from './chill-frog.gif';
 function Result(props) {
 
     const [records, setRecords] = useState([]);
-    let test;
 
 
     useEffect(() => {
@@ -136,10 +133,10 @@ function Result(props) {
 
     return (
         <div className="result-name">
-            <img id="gif-top" onClick={froggie} src={frog} />
-            <img id="gif-top-1" onClick={froggie} src={frog} />
-            <img id="gif-top-2" onClick={froggie} src={frog} />
-            <img id="result-main" src={image} />
+            <img alt="proggy" id="gif-top" onClick={froggie} src={frog} />
+            <img alt="proggy" id="gif-top-1" onClick={froggie} src={frog} />
+            <img alt="proggy" id="gif-top-2" onClick={froggie} src={frog} />
+            <img alt="proggy" id="result-main" src={image} />
             {/* <img src={image1} /> */}
 
             <h2 id="results">Results 📈</h2>
