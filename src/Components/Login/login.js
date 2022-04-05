@@ -1,11 +1,10 @@
 // TODO: add functionality to link to the game display once the submit button is clicked.
-import {Link} from "react-router-dom";
-import React, { useState, createContext, useContext} from "react";
+import { Link } from "react-router-dom";
+import React, { useState, createContext, useContext } from "react";
 import { UserContext, UserProvider } from "../../context/UserContext";
+import './login.css';
 
-
-const LoginWindow = function(props)
-{
+const LoginWindow = function (props) {
     const [user, setUser] = useContext(UserContext);
 
     // const uploadImage = () => {
@@ -30,23 +29,23 @@ const LoginWindow = function(props)
         alert("creating user");
 
         // function uploadImage(){
-            const imgInput = document.getElementById("userIcon")
+        const imgInput = document.getElementById("userIcon")
 
-            const imageData = new FormData()
-            //below line for uploading the actual picture into the uploads folder
-            imageData.append("profile_pic", imgInput.files[0]);
-            //below line to have the file name as an object.
-            // imageData.append("pic_name", imgInput.filename);
+        const imageData = new FormData()
+        //below line for uploading the actual picture into the uploads folder
+        imageData.append("profile_pic", imgInput.files[0]);
+        //below line to have the file name as an object.
+        // imageData.append("pic_name", imgInput.filename);
 
 
-            fetch("http://localhost:5000/uploads", {
-                method: "POST",
-                body: imageData
-            })
-        
+        fetch("http://localhost:5000/uploads", {
+            method: "POST",
+            body: imageData
+        })
+
 
         // uploadImage();
-        
+
         const newUserName = document.getElementById("newUserCreation")
 
         const nameData = new FormData(newUserName)
@@ -61,71 +60,72 @@ const LoginWindow = function(props)
         })
     }
 
-    const loginUser = async() => {
+    const loginUser = async () => {
         //need to confirm the username entered into the text field is in the mongoDB, if it is return the user info as a prop/object to be passed along.
         const loginName = document.getElementById("existingUserName").value
         //else error message saying that user doesn't exist.
         // console.log("login name", loginName.value);
         let userName = "";
         let _id = "";
-        let profilePic ="";
+        let profilePic = "";
         fetch("http://localhost:5000/users")
-        .then(response => response.json())
-        .then(value => {
-            userName = value.filter(x => x.userName === loginName)[0].userName
-            // console.log(userName);
-            _id = value.filter(x => x.userName === loginName)[0]._id
-            // console.log(_id);
-            profilePic = value.filter(x => x.userName === loginName)[0].profilePic
+            .then(response => response.json())
+            .then(value => {
+                userName = value.filter(x => x.userName === loginName)[0].userName
+                // console.log(userName);
+                _id = value.filter(x => x.userName === loginName)[0]._id
+                // console.log(_id);
+                profilePic = value.filter(x => x.userName === loginName)[0].profilePic
 
 
 
-        //impletement below objet as a state object.
-        let loginInfo = {
-            'userName': userName,
-            '_id': _id,
-            'profilePic': profilePic
-        }
-        setUser(loginInfo);
-        console.log(`Login ${user} `)
-        // const [state, setState] = useState({
-        //     userName: userName,
-        //     _id: _id,
-        //     profilePic: profilePic
-        // })
+                //impletement below objet as a state object.
+                let loginInfo = {
+                    'userName': userName,
+                    '_id': _id,
+                    'profilePic': profilePic
+                }
+                setUser(loginInfo);
+                console.log(`Login ${user} `)
+                // const [state, setState] = useState({
+                //     userName: userName,
+                //     _id: _id,
+                //     profilePic: profilePic
+                // })
 
-        // const {userName, _id, profilePic} = state
+                // const {userName, _id, profilePic} = state
 
-    })
-    
+            })
+
     }
 
 
-    return(
-        <div>
-            <h1>Honey Badger Games!</h1>
-            <p>New Player:</p>
-                <form id="newUserCreation" onSubmit={createUser}>
-                    <label htmlFor="newUserName">Please Enter Your Username:</label><br></br>
-                    <input type="text" id="newUserName" name="person_name"></input><br></br>
-                    <span>Upload your Profile Picture: </span> <input type="file" name="profile_pic" id="userIcon"></input><br></br>
-                    {/* change the onClick function to a new one that first does the image upload, and then submits the form data into mongo. */}
-                    <Link to ="/game-display"><button type="button" value="Create New User" onClick={createUser} >Create New User</button></Link>
-                </form>
-            <br></br>
-            <p>Already a Player:</p>
-                <form id="loginForm">
-                    <label htmlFor="existingUserName">Please Enter Your Username:</label><br></br>
-                    <input type="text" id="existingUserName" name="existingUserName"></input><br></br>
-                    {/* add onClick function that passes the user info prop on to the game display. */}
-                    <UserProvider value={user}>
-                        <Link to ="/game-display" user={user}><button type="button" value="Login" onClick={loginUser}>Login</button></Link>
-                    </UserProvider>
-                </form>
+    return (
+        <div className="loginContainer">
+            <div className="login">
+                <div className="form">
+                    <form id="newUserCreation" className="login-form" onSubmit={createUser}>
+                        <span >Sign Up</span>
+                        <input type="text" id="newUserName" name="person_name" placeholder="Enter your username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  />
+                        <input type="file" name="profile_pic" id="userIcon" />
+                        <Link to="/game-display"><button type="button" value="Create New User" onClick={createUser}>Create New User</button></Link>
+                    </form>
+                </div>
+            </div>
 
+            <div className="login">
+                <div className="form">
+                    <form className="login-form">
+                        <span >Login</span>
+                        <input type="text" id="existingUserName" name="existingUserName" placeholder="Enter your username" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+                        <UserProvider value={user}>
+                            <Link to="/game-display" user={user}><button type="button" value="Login" onClick={loginUser}>Login</button></Link>
+                        </UserProvider>
+                    </form>
+                </div>
+            </div>
         </div>
- 
-    ) 
+    )
 }
 
 export default LoginWindow;
