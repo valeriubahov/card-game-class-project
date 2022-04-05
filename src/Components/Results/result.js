@@ -85,10 +85,10 @@ function Result(props) {
             
             let p = document.createElement("p")
             p.innerText = 'You have been visted by the 🐸 of Wisdom \n  '
-            document.getElementById("root").appendChild(p)
+            document.getElementById("results").appendChild(p)
             let elem = document.createElement("img");
             elem.src = frogchill;
-            document.getElementById("root").appendChild(elem);
+            document.getElementById("results").appendChild(elem);
         
         }
 
