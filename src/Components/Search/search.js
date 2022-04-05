@@ -88,7 +88,7 @@ export default function Search() {
                 placeholder="SEARCH USERS"
               />
               <button id="search-button">
-                <i class="fa-solid fa-forward-fast"></i>          
+                <i className="fa-solid fa-forward-fast"></i>          
               </button>
             </form>
             <p id="msg">{display.msg}</p>

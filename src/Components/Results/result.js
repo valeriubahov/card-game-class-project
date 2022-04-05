@@ -158,8 +158,8 @@ function Result(props) {
 
                         records.map(x => ({
                             id: x._id, user: x.user, score: x.score, date: x.date,
-                        })).map(user =>
-                            <tr key={user.id}>
+                        })).map((user,index) =>
+                            <tr key={index}>
                                 <td id='username-display'>🏅{user.user}</td>
                                 <td id='userscore-display'>{user.score}</td>
                                 <td id='username-date'>{user.date}</td>

@@ -80,7 +80,6 @@ const GameDisplay = function (props) {
     // Called only when the botWinStreak or playerWinStreak are modified => check if === 3 then end the game and save the score
     useEffect(() => {
         if (botWinStreak === 3 || playerWinStreak === 3) {
-
             const userScore = new FormData()
             userScore.append("_id", user[0]._id)
             userScore.append("score", playerScore)
