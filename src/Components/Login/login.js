@@ -106,9 +106,11 @@ const LoginWindow = function (props) {
                 <div className="form">
                     <form id="newUserCreation" className="login-form" onSubmit={createUser}>
                         <span >Sign Up</span>
-                        <input type="text" id="newUserName" name="person_name" placeholder="Enter your username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  />
+                        <input type="text" id="newUserName" name="person_name" placeholder="Enter your username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
                         <input type="file" name="profile_pic" id="userIcon" />
-                        <Link to="/game-display"><button type="button" value="Create New User" onClick={createUser}>Create New User</button></Link>
+                            {/* <Link to="/game-display" user={user}> */}
+                                <button type="button" value="Create New User" onClick={createUser}>Create New User</button>
+                                {/* </Link> */}
                     </form>
                 </div>
             </div>
