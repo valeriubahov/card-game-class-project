@@ -110,6 +110,7 @@ const LoginWindow = function (props) {
                         <UserProvider value={user}>
                             <Link to="/game-display" user={user}><button type="button" value="Login" onClick={loginUser}>Login</button></Link>
                         </UserProvider>
+                         <p id='message'></p>
                     </form>
                 </div>
             </div>
