@@ -16,27 +16,27 @@ const dbo = require("./db/conn");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './uploads')
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname)
-    }
-  })
-const upload = multer({storage: storage})
+  destination: function (req, file, cb) {
+    cb(null, '../public/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+const upload = multer({ storage: storage })
 
 app.listen(port, () => {
-    // perform a database connection when server starts
-    dbo.connectToServer(function (err) {
-        if (err) console.error(err);
+  // perform a database connection when server starts
+  dbo.connectToServer(function (err) {
+    if (err) console.error(err);
 
-    });
-    console.log(`Server is running on port: ${port}`);
-}); 
+  });
+  console.log(`Server is running on port: ${port}`);
+});
 
 
 //used for the user uploading profile pics
-app.post('/uploads', upload.single("profile_pic"), function(req, res) {
+app.post('/uploads', upload.single("profile_pic"), function (req, res) {
   // console.log("please",req.file.filename); // the uploaded file object
   let db_connect = dbo.getDb("CardGame");
   // const formData = req.body;
