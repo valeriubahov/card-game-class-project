@@ -33,9 +33,6 @@ const LoginWindow = function (props) {
                     //below line for uploading the actual picture into the uploads folder
                     imageData.append("profile_pic", imgInput.files[0]);
                     // alert(imgInput.files[0].name)
-                    //below line to have the file name as an object.
-                    // imageData.append("pic_name", imgInput.filename);
-
 
                     fetch("http://localhost:5000/uploads", {
                         method: "POST",
@@ -45,10 +42,6 @@ const LoginWindow = function (props) {
                     const newUserName = document.getElementById("newUserCreation")
                     const nameData = new FormData(newUserName)
                     nameData.append("profile_pic", imgInput.files[0].name);
-
-                    //TODO: change the below line to grab the file path of the imageu upload and put that into mongoDB first.
-                    //reseach after about a way to upload the image first, and then deposit the image inthe the DB.
-                    // nameData.append("profile_pic", imgInput.files[0])
 
                     fetch("http://localhost:5000/users/add", {
                         method: "POST",
@@ -61,10 +54,7 @@ const LoginWindow = function (props) {
     }
 
     const loginUser = async () => {
-        //need to confirm the username entered into the text field is in the mongoDB, if it is return the user info as a prop/object to be passed along.
         const loginName = document.getElementById("existingUserName").value
-        //else error message saying that user doesn't exist.
-        // console.log("login name", loginName.value);
         let userName = "";
         let _id = "";
         let profilePic = "";
