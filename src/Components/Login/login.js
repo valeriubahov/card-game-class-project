@@ -25,8 +25,7 @@ const LoginWindow = function (props) {
                 if (userName !== undefined && userName !== '') {
                     document.getElementById("message").innerHTML = 'User already exists';
                 }
-                else 
-                {
+                else {
                     const imgInput = document.getElementById("userIcon")
 
                     const imageData = new FormData()
@@ -61,19 +60,21 @@ const LoginWindow = function (props) {
         fetch("http://localhost:5000/users")
             .then(response => response.json())
             .then(value => {
-                const userArr = value.filter(x => x.userName === loginName).length;
-                if (userArr.length > 0) {
-                    userName = userArr[0].userName
-                    _id = userArr[0]._id
-                    profilePic = userArr[0].profilePic
+                userName = value.filter(x => x.userName === loginName)[0].userName
+                // console.log(userName);
+                _id = value.filter(x => x.userName === loginName)[0]._id
+                // console.log(_id);
+                profilePic = value.filter(x => x.userName === loginName)[0].profilePic
 
-                    let loginInfo = {
-                        'userName': userName,
-                        '_id': _id,
-                        'profilePic': profilePic
-                    }
-                    setUser(loginInfo);
+
+
+                //impletement below objet as a state object.
+                let loginInfo = {
+                    'userName': userName,
+                    '_id': _id,
+                    'profilePic': profilePic
                 }
+                setUser(loginInfo);
             })
     }
 
@@ -85,7 +86,7 @@ const LoginWindow = function (props) {
                     <form id="newUserCreation" className="login-form" onSubmit={createUser}>
                         <span >Sign Up</span>
                         <input type="text" id="newUserName" name="person_name" placeholder="Enter your username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
-                        <input type="file" name="profile_pic" id="userIcon" accept=".tiff,.jpg,.jpeg,.png,.bmp"/>
+                        <input type="file" name="profile_pic" id="userIcon" accept=".tiff,.jpg,.jpeg,.png,.bmp" />
                         <button type="button" value="Create New User" onClick={createUser}>Create New User</button>
                         <p id='message'></p>
                     </form>
@@ -100,7 +101,7 @@ const LoginWindow = function (props) {
                         <UserProvider value={user}>
                             <Link to="/game-display" user={user}><button type="button" value="Login" onClick={loginUser}>Login</button></Link>
                         </UserProvider>
-                         <p id='message'></p>
+                        <p id='message'></p>
                     </form>
                 </div>
             </div>
