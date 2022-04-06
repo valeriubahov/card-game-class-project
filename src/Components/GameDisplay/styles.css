@@ -92,3 +92,9 @@
   animation: draw-butt 3.3s;
   font-weight: bolder;
 } */
+
+
+.welcomeMsg {
+  position:absolute;
+  top: 100px;
+}

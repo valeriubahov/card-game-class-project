@@ -286,6 +286,7 @@ const GameDisplay = function (props) {
         <div className={BG}>
 
             <div className='card-display'>
+                <h1 className='welcomeMsg'>Welcome {user[0].userName}</h1>
 
                 <div className="bot-cards">
                     <p>Computer - Wins {botWinStreak}</p>
