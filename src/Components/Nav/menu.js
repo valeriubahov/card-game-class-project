@@ -7,6 +7,7 @@ const Menu = ({ open, setOpen }) => {
   const [user, setUser] = useContext(UserContext);
   const logOut = () => {
     setUser({});
+    setOpen();
   }
   return (
     <StyledMenu open={open}>
