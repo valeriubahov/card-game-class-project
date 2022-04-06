@@ -25,12 +25,14 @@ const LoginWindow = function (props) {
                 if (userName !== undefined && userName !== '') {
                     document.getElementById("message").innerHTML = 'User already exists';
                 }
-                else {
+                else 
+                {
                     const imgInput = document.getElementById("userIcon")
 
                     const imageData = new FormData()
                     //below line for uploading the actual picture into the uploads folder
                     imageData.append("profile_pic", imgInput.files[0]);
+                    // alert(imgInput.files[0].name)
                     //below line to have the file name as an object.
                     // imageData.append("pic_name", imgInput.filename);
 
@@ -42,6 +44,7 @@ const LoginWindow = function (props) {
 
                     const newUserName = document.getElementById("newUserCreation")
                     const nameData = new FormData(newUserName)
+                    nameData.append("profile_pic", imgInput.files[0].name);
 
                     //TODO: change the below line to grab the file path of the imageu upload and put that into mongoDB first.
                     //reseach after about a way to upload the image first, and then deposit the image inthe the DB.
@@ -71,10 +74,9 @@ const LoginWindow = function (props) {
                 const userArr = value.filter(x => x.userName === loginName).length;
                 if (userArr.length > 0) {
                     userName = userArr[0].userName
-
                     _id = userArr[0]._id
                     profilePic = userArr[0].profilePic
-                    //impletement below objet as a state object.
+
                     let loginInfo = {
                         'userName': userName,
                         '_id': _id,
@@ -82,10 +84,7 @@ const LoginWindow = function (props) {
                     }
                     setUser(loginInfo);
                 }
-
-
             })
-
     }
 
 
@@ -96,7 +95,7 @@ const LoginWindow = function (props) {
                     <form id="newUserCreation" className="login-form" onSubmit={createUser}>
                         <span >Sign Up</span>
                         <input type="text" id="newUserName" name="person_name" placeholder="Enter your username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
-                        <input type="file" name="profile_pic" id="userIcon" />
+                        <input type="file" name="profile_pic" id="userIcon" accept=".tiff,.jpg,.jpeg,.png,.bmp"/>
                         <button type="button" value="Create New User" onClick={createUser}>Create New User</button>
                         <p id='message'></p>
                     </form>
@@ -119,5 +118,3 @@ const LoginWindow = function (props) {
 }
 
 export default LoginWindow;
-
-//for image saving make a folder when react will save them, and then mongoDB can pull and store them in there.

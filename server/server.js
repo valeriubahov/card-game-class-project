@@ -37,7 +37,7 @@ app.listen(port, () => {
 
 //used for the user uploading profile pics
 app.post('/uploads', upload.single("profile_pic"), function(req, res) {
-  console.log("please",req.file.filename); // the uploaded file object
+  // console.log("please",req.file.filename); // the uploaded file object
   let db_connect = dbo.getDb("CardGame");
   // const formData = req.body;
   // console.log(formData);
