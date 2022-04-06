@@ -68,3 +68,9 @@ body {
   font-size: 60px;
   color: #4b6cb7;
 }
+
+#message, #userNotPresent {
+  color: red;
+  margin: 2px;
+  padding: 0;
+}

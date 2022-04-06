@@ -7,57 +7,54 @@ import './login.css';
 const LoginWindow = function (props) {
     const [user, setUser] = useContext(UserContext);
 
-    // const uploadImage = () => {
-    //     alert("uploading");
-
-    //     const imgInput = document.getElementById("userIcon")
-
-    //     const imageData = new FormData()
-    //     imageData.append("profile_pic", imgInput.files[0])
-
-    //     fetch("http://localhost:5000/uploads", {
-    //         method: "POST",
-    //         body: imageData
-    //     })
-
-    //     //add a post using a fetch 
-    //     //grab the file that's in the form 
-    //     //use "https://stackoverflow.com/questions/36067767/how-do-i-upload-a-file-with-the-js-fetch-api" as a starting point.
-    // }
-
     const createUser = () => {
-        alert("creating user");
+        const loginName = document.getElementById("newUserName").value;
+        let userName = "";
+        let _id = "";
+        let profilePic = "";
+        fetch("http://localhost:5000/users")
+            .then(response => response.json())
+            .then(value => {
+                const userArr = value.filter(x => x.userName === loginName);
+                if (userArr.length > 0) {
+                    userName = userArr[0].userName;
+                    _id = userArr[0]._id
+                    profilePic = userArr[0].profilePic
+                }
 
-        // function uploadImage(){
-        const imgInput = document.getElementById("userIcon")
+                if (userName !== undefined && userName !== '') {
+                    document.getElementById("message").innerHTML = 'User already exists';
+                }
+                else {
+                    const imgInput = document.getElementById("userIcon")
 
-        const imageData = new FormData()
-        //below line for uploading the actual picture into the uploads folder
-        imageData.append("profile_pic", imgInput.files[0]);
-        //below line to have the file name as an object.
-        // imageData.append("pic_name", imgInput.filename);
-
-
-        fetch("http://localhost:5000/uploads", {
-            method: "POST",
-            body: imageData
-        })
+                    const imageData = new FormData()
+                    //below line for uploading the actual picture into the uploads folder
+                    imageData.append("profile_pic", imgInput.files[0]);
+                    //below line to have the file name as an object.
+                    // imageData.append("pic_name", imgInput.filename);
 
 
-        // uploadImage();
+                    fetch("http://localhost:5000/uploads", {
+                        method: "POST",
+                        body: imageData
+                    })
 
-        const newUserName = document.getElementById("newUserCreation")
+                    const newUserName = document.getElementById("newUserCreation")
+                    const nameData = new FormData(newUserName)
 
-        const nameData = new FormData(newUserName)
+                    //TODO: change the below line to grab the file path of the imageu upload and put that into mongoDB first.
+                    //reseach after about a way to upload the image first, and then deposit the image inthe the DB.
+                    // nameData.append("profile_pic", imgInput.files[0])
 
-        //TODO: change the below line to grab the file path of the imageu upload and put that into mongoDB first.
-        //reseach after about a way to upload the image first, and then deposit the image inthe the DB.
-        // nameData.append("profile_pic", imgInput.files[0])
+                    fetch("http://localhost:5000/users/add", {
+                        method: "POST",
+                        body: nameData
+                    })
+                    document.getElementById("message").innerHTML = 'User Created';
 
-        fetch("http://localhost:5000/users/add", {
-            method: "POST",
-            body: nameData
-        })
+                }
+            })
     }
 
     const loginUser = async () => {
@@ -71,29 +68,21 @@ const LoginWindow = function (props) {
         fetch("http://localhost:5000/users")
             .then(response => response.json())
             .then(value => {
-                userName = value.filter(x => x.userName === loginName)[0].userName
-                // console.log(userName);
-                _id = value.filter(x => x.userName === loginName)[0]._id
-                // console.log(_id);
-                profilePic = value.filter(x => x.userName === loginName)[0].profilePic
+                const userArr = value.filter(x => x.userName === loginName).length;
+                if (userArr.length > 0) {
+                    userName = userArr[0].userName
 
-
-
-                //impletement below objet as a state object.
-                let loginInfo = {
-                    'userName': userName,
-                    '_id': _id,
-                    'profilePic': profilePic
+                    _id = userArr[0]._id
+                    profilePic = userArr[0].profilePic
+                    //impletement below objet as a state object.
+                    let loginInfo = {
+                        'userName': userName,
+                        '_id': _id,
+                        'profilePic': profilePic
+                    }
+                    setUser(loginInfo);
                 }
-                setUser(loginInfo);
-                console.log(`Login ${user} `)
-                // const [state, setState] = useState({
-                //     userName: userName,
-                //     _id: _id,
-                //     profilePic: profilePic
-                // })
 
-                // const {userName, _id, profilePic} = state
 
             })
 
@@ -108,9 +97,8 @@ const LoginWindow = function (props) {
                         <span >Sign Up</span>
                         <input type="text" id="newUserName" name="person_name" placeholder="Enter your username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
                         <input type="file" name="profile_pic" id="userIcon" />
-                            {/* <Link to="/game-display" user={user}> */}
-                                <button type="button" value="Create New User" onClick={createUser}>Create New User</button>
-                                {/* </Link> */}
+                        <button type="button" value="Create New User" onClick={createUser}>Create New User</button>
+                        <p id='message'></p>
                     </form>
                 </div>
             </div>
