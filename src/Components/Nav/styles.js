@@ -81,3 +81,20 @@ export const StyledBurger = styled.button`
     }
   }
 `
+
+export const StyledIMG = styled.img`
+width: 150px;
+height: 150px;
+`
+
+export const StyledH3 = styled.h3`
+color: black;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 1.5rem;
+`
+export const StyledDiv = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+`
