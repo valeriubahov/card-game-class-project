@@ -78,18 +78,70 @@ function Result(props) {
     }
 
     let frogCount = 0;
+    let frogCount1 = 0;
+    let frogCount2 = 0;
+    let frogCount3 = 0;
+
+    // we weant to create 3 different functions for each frog
+    // incremient the main frog counter
+    // for this method, i use a counter logic to incremient on each click
+    // to save time, i could simply just make eacg frog a boolean and set it as a flag on click than check for all to be clicked
+
+    // TODO: Write documentation on the heck you did lol
 
 
 
-    // document.addEventListener('keyup', (event) => {
-    //     const name = event.key;
-    //     const code = event.code;
+    function froggie1()
+    {
+        frogCount1++
+        
+        if (frogCount1 == 1)
+        {
+            frogCount++
+            alert(`${frogCount} out of 3 Frogs Found`)
+            froggie();
+        }
+        
+        if (frogCount1 > 2)
+        {
+            frogCount1 = 1;
+           
+        }
+    }
 
-    //     alert(`Key pressed ${name} key code value: ${code}`)
-    // }, false)
+    
+    function froggie2()
+    {
+        frogCount2++
+        if (frogCount2 == 1)
+        {
+            frogCount++
+            alert(`${frogCount} out of 3 Frogs Found`)
+            froggie();
+        }
+
+        if (frogCount2 > 2)
+        {
+            frogCount2 = 1;
+        }
+    
+       
+    }
+
+    function test1 ()
+    {
+        alert('test')
+    }
+
 
     function froggie() {
-        frogCount++
+        frogCount3++
+
+        if(frogCount3 == 3)
+        {
+            frogCount++
+        }
+
         if (frogCount === 1) {
             // alert(`${frogCount} out of 3 Frogs Found`)
             let frogText = document.createElement("p")
@@ -100,10 +152,11 @@ function Result(props) {
         }
         if (frogCount === 2) {
             alert(`${frogCount} out of 3 Frogs Found`)
-
+            document.getElementsByName("p").innerHTMl = `${frogCount} out of 3 Frogs Found`
+            
         }
 
-        if(frogCount === 3){
+        if(frogCount == 3){
             alert(`You have discovered ${frogCount} out of 3 Frogs \n `)
             
             let p = document.createElement("p")
@@ -139,8 +192,8 @@ function Result(props) {
     return (
         <div className="result-name">
             <img id="gif-top" onClick={froggie} src={frog} />
-            <img id="gif-top-1" onClick={froggie} src={frog} />
-            <img id="gif-top-2" onClick={froggie} src={frog} />
+            <img id="gif-top-1" onClick={froggie1} src={frog} />
+            <img id="gif-top-2" onClick={froggie2} src={frog} />
             <img id="result-main" onClick={frog_1} src={image} />
 
 
