@@ -1,6 +1,8 @@
 import './search.css';
 import React, { useState } from "react"; 
 
+import arcade from '../Results/Images/arcade.png';
+
 /**
  * Search component, used to find & display top 5 scores by user 
  * @param none 
@@ -74,13 +76,67 @@ export default function Search() {
     }
   }
 
+
+  // Matt's arcade easter egg
+  // TODO: Use turning operator in the return jsx like display.table
+  // cap the user at 2 keystokes, dont let them exceed over 2 for the cheat code
+  // improve the logic of code (maybe impliment useState? Concat)
+
+  let arcadeCounterUp = 0;
+  let arcadeCounterDown = 0;
+  let arcadeCounterRight = 0;
+  let arcadeCounterLeft = 0;
+
+
+  document.addEventListener('keyup', (e) => {
+    if(e.code === "ArrowDown")
+    {
+      arcadeCounterDown ++;
+      
+    }
+
+    if(e.code === "ArrowUp"){
+      arcadeCounterUp ++;
+      
+    }
+
+    if(e.code === "ArrowRight"){
+      arcadeCounterRight ++;
+    }
+
+    if(e.code === "ArrowLeft"){
+      arcadeCounterLeft ++;
+    }
+
+    if(arcadeCounterUp == 2 && arcadeCounterDown == 2 && arcadeCounterLeft == 2 && arcadeCounterRight == 2)
+    {
+      return arcadePlay();
+    }
+
+
+  })
+
+  function arcadePlay () {
+
+      let arcadeFormat = document.createElement("p")
+      arcadeFormat.innerHTML = '<iframe style="width: 1000px; height: 1300px; border: none;" src="https://funhtml5games.com?embed=spaceinvaders" width="0" height="0" frameborder="0" scrolling="no"></iframe>'
+      let arcadeTable = document.getElementById("Test").appendChild(arcadeFormat)
+      arcadeTable.src = arcadeFormat;
+      document.getElementById("Test").appendChild(arcadeTable)
+    
+  }
+
+
+
+
   return (
     <div id="container">
+      <div id="Test">
       <div id="monitor">
         <div id="monitor-screen">
           <div id="text-wrapper">
             <h1>SEARCH HIGH SCORES</h1>
-            <form id="search-form" onSubmit={clicked}>
+            <form id="search-form" onSubmit={clicked} >
               <input 
               id="search-input"
                 type="text"
@@ -107,6 +163,7 @@ export default function Search() {
               </table>
               )
             }
+            </div>
           </div>
         </div>
       </div>

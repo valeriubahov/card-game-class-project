@@ -9,6 +9,13 @@ import frog from './Images/frog.gif';
 import frogchill from './Images/chill-frog.gif';
 import frogSpecial  from './Images/dance.gif';
 
+
+
+// TODO: Figure out key code and impliment an event that returns a arcade cabinent
+
+
+
+
 /**
  * Main Function that contains pulling user data, score and assigning to the application
  
@@ -72,13 +79,28 @@ function Result(props) {
 
     let frogCount = 0;
 
+
+
+    // document.addEventListener('keyup', (event) => {
+    //     const name = event.key;
+    //     const code = event.code;
+
+    //     alert(`Key pressed ${name} key code value: ${code}`)
+    // }, false)
+
     function froggie() {
         frogCount++
         if (frogCount === 1) {
-            alert(`${frogCount} out of 3 Frogs Found`)
+            // alert(`${frogCount} out of 3 Frogs Found`)
+            let frogText = document.createElement("p")
+            frogText.innerHTML = `${frogCount} out of 3 Frogs Found`
+            let elm2 = document.getElementById("results").appendChild(frogText)
+            elm2.src = frogText;
+            document.getElementById("results").appendChild(elm2)
         }
         if (frogCount === 2) {
             alert(`${frogCount} out of 3 Frogs Found`)
+
         }
 
         if(frogCount === 3){
@@ -103,7 +125,7 @@ function Result(props) {
         }
         if (frogCount == 3)
         {
-            alert('test123')
+            alert('Nice! Found Another Secret.')
             let p1 = document.createElement("p")
             p1.innerText = 'Congrats! You have found another hidden secret. \n'
             document.getElementById("results").appendChild(p1)
