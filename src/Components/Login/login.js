@@ -28,7 +28,9 @@ const LoginWindow = function (props) {
                 else 
                 {
                     const imgInput = document.getElementById("userIcon")
-
+                    //TODO: look for way of adding in faile type validation
+                    //possible solutions: https://www.codexworld.com/file-type-extension-validation-javascript/
+                    //https://www.w3docs.com/snippets/html/how-to-allow-the-file-input-type-to-accept-only-image-files.html
                     const imageData = new FormData()
                     //below line for uploading the actual picture into the uploads folder
                     imageData.append("profile_pic", imgInput.files[0]);
@@ -85,7 +87,7 @@ const LoginWindow = function (props) {
                     <form id="newUserCreation" className="login-form" onSubmit={createUser}>
                         <span >Sign Up</span>
                         <input type="text" id="newUserName" name="person_name" placeholder="Enter your username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
-                        <input type="file" name="profile_pic" id="userIcon" accept=".tiff,.jpg,.jpeg,.png,.bmp"/>
+                        <input type="file" name="profile_pic" id="userIcon" accept="image/tiff,image/jpg,image/jpeg,image/png,image/bmp"/>
                         <button type="button" value="Create New User" onClick={createUser}>Create New User</button>
                         <p id='message'></p>
                     </form>
