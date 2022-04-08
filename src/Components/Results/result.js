@@ -47,14 +47,16 @@ function Result(props) {
             const testUser = data.map(x => ({
                 id: x._id, user: x.userName, score: x.score.map(x => x.score).reduce(
                     function (a, b) {
-
-                        return Math.max(a, b)
-
+                        return Math.max(a,b)
                     },
                     0)
 
-            }))
+            })).sort((a,b) => {
+                return (parseInt(b.score) - parseInt(a.score))
+            })
 
+
+    
             console.log('Working', testUser)
             setRecords(testUser)
 
@@ -211,9 +213,13 @@ function Result(props) {
                     {
 
                         records.map(x => ({
-                            id: x._id, user: x.user, score: x.score, date: x.date,
+                            id: x._id, user: x.user, score: x.score, date: x.date, 
                         })).map(user =>
-                            <tr key={user.id}>
+                            <tr key={user.id}
+                            
+                            
+                            >
+                            
                                 <td id='username-display'>🏅{user.user}</td>
                                 <td id='userscore-display'>{user.score}</td>
 
