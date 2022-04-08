@@ -23,12 +23,22 @@ const LoginWindow = function (props) {
                         profilePic = userArr[0].profilePic
                     }
 
+                    const newUserName = document.getElementById("newUserCreation")
+                    const imgInput = document.getElementById("userIcon")
+                    const imgInputCheck = imgInput.value
+                    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.tiff|\.bmp)$/i;
+
                     if (userName !== undefined && userName !== '') {
                         document.getElementById("message").innerHTML = 'User already exists';
                     }
-                    else {
-                        const newUserName = document.getElementById("newUserCreation")
-                        const imgInput = document.getElementById("userIcon")
+                    else if(!allowedExtensions.exec(imgInputCheck))
+                    {
+                        document.getElementById("message").innerHTML = 'Please select one of the following file types: jpg, jpeg, png, tiff or bmp';
+                        imgInputCheck.value = '';
+                        return false;
+                    }
+                    else 
+                    {
                     //TODO: look for way of adding in faile type validation
                     //possible solutions: https://www.codexworld.com/file-type-extension-validation-javascript/
                     //https://www.w3docs.com/snippets/html/how-to-allow-the-file-input-type-to-accept-only-image-files.html
