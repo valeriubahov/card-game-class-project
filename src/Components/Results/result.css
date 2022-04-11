@@ -27,7 +27,7 @@ table, th, td {
     width: 60px;
     top: 100px;
     right: 0px;
-    opacity: 0;
+    opacity: 1;
 
    }
 
@@ -116,7 +116,7 @@ table, th, td {
     width: 70px;
     top: 250px;
     left: 0px;
-    opacity: 0;
+    opacity: 1;
   }
 
   #gif-top-1:hover {
@@ -125,7 +125,7 @@ table, th, td {
   }
 
  #gif-top-2 {
-   opacity: 0;
+   opacity: 1;
    position: absolute;
    width: 80px;
    top: 600px;

@@ -101,13 +101,17 @@ function Result(props) {
         {
             frogCount++
             alert(`${frogCount} out of 3 Frogs Found`)
-            froggie();
+            // froggie();
         }
         
         if (frogCount1 > 2)
         {
             frogCount1 = 1;
            
+        }
+
+        if (frogCount == 3){
+            froggie();
         }
     }
 
@@ -119,44 +123,25 @@ function Result(props) {
         {
             frogCount++
             alert(`${frogCount} out of 3 Frogs Found`)
-            froggie();
+            // froggie();
         }
 
-        if (frogCount2 > 2)
-        {
-            frogCount2 = 1;
-        }
     
-       
+       if (frogCount == 3 )
+       {
+           froggie();
+       }
     }
-
-    function test1 ()
-    {
-        alert('test')
-    }
-
 
     function froggie() {
         frogCount3++
-
-        if(frogCount3 == 3)
-        {
+        if (frogCount3 == 1){
             frogCount++
+            alert(`${frogCount} out of 3 Frogs`)
         }
 
-        if (frogCount === 1) {
-            // alert(`${frogCount} out of 3 Frogs Found`)
-            let frogText = document.createElement("p")
-            frogText.innerHTML = `${frogCount} out of 3 Frogs Found`
-            let elm2 = document.getElementById("results").appendChild(frogText)
-            elm2.src = frogText;
-            document.getElementById("results").appendChild(elm2)
-        }
-        if (frogCount === 2) {
-            alert(`${frogCount} out of 3 Frogs Found`)
-            document.getElementsByName("p").innerHTMl = `${frogCount} out of 3 Frogs Found`
-            
-        }
+       
+
 
         if(frogCount == 3){
             alert(`You have discovered ${frogCount} out of 3 Frogs \n `)
