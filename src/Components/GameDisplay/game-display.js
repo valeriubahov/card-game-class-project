@@ -311,7 +311,7 @@ const GameDisplay = function (props) {
                 }
 
                 <div className="player-cards">
-                    <p>Player Name - Wins {playerWinStreak}</p>
+                    <p>{user[0].userName} - Wins {playerWinStreak}</p>
                     {
                         playerCard ?
                             <img src={playerCard} className='player-draw' alt='card'></img>
