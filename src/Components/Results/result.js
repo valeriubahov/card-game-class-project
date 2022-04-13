@@ -11,7 +11,7 @@ import frogSpecial  from './Images/dance.gif';
 
 
 
-// TODO: Figure out key code and impliment an event that returns a arcade cabinent
+
 
 
 
@@ -84,14 +84,11 @@ function Result(props) {
     let frogCount2 = 0;
     let frogCount3 = 0;
 
-    // we weant to create 3 different functions for each frog
-    // incremient the main frog counter
-    // for this method, i use a counter logic to incremient on each click
-    // to save time, i could simply just make eacg frog a boolean and set it as a flag on click than check for all to be clicked
 
-    // TODO: Write documentation on the heck you did lol
-
-
+/**
+ * Frog counter setup 
+ 
+ */
 
     function froggie1()
     {
