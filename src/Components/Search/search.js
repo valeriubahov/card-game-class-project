@@ -1,6 +1,5 @@
 import './search.css';
 import React, { useState } from "react";
-import arcade from '../Results/Images/arcade.png';
 
 /**
  * Search component, used to find & display top 5 scores by user 
@@ -115,15 +114,15 @@ export default function Search() {
 
   })
 
-  function arcadePlay() {
+  // function arcadePlay() {
 
-    let arcadeFormat = document.createElement("p")
-    arcadeFormat.innerHTML = '<iframe style="width: 1000px; height: 1300px; border: none;" src="https://funhtml5games.com?embed=spaceinvaders" width="0" height="0" frameborder="0" scrolling="no"></iframe>'
-    let arcadeTable = document.getElementById("Test").appendChild(arcadeFormat)
-    arcadeTable.src = arcadeFormat;
-    document.getElementById("Test").appendChild(arcadeTable)
+  //   let arcadeFormat = document.createElement("p")
+  //   arcadeFormat.innerHTML = '<iframe style="width: 1000px; height: 1300px; border: none;" src="https://funhtml5games.com?embed=spaceinvaders" width="0" height="0" frameborder="0" scrolling="no"></iframe>'
+  //   let arcadeTable = document.getElementById("Test").appendChild(arcadeFormat)
+  //   arcadeTable.src = arcadeFormat;
+  //   document.getElementById("Test").appendChild(arcadeTable)
 
-  }
+  // }
 
   function goBack() {
     setSpaceInvaded(false);
@@ -168,8 +167,8 @@ export default function Search() {
         </div>
       </div> :
         <div className="invasion">
-          <iframe style={{ width: '1000px', height: '1300px', border: 'none' }} src="https://funhtml5games.com?embed=spaceinvaders" width="0" height="0" frameBorder="0" scrolling="no"></iframe>
-          <button onClick={goBack}>Back</button>
+          <iframe title='Invasion' style={{ width: '1000px', height: '1300px', border: 'none' }} src="https://funhtml5games.com?embed=spaceinvaders" width="0" height="0" frameBorder="0" scrolling="no"></iframe>
+          <button className="backButton" onClick={goBack}>Back</button>
         </div>
       }
     </div>
