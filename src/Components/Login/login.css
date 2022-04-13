@@ -78,7 +78,7 @@ body {
 }
 
 .form span {
-  font-size: 60px;
+  font-size: 30px;
   color: #4b6cb7;
 }
 
@@ -86,9 +86,10 @@ body {
   color: red;
   margin-top: 1rem;
   margin-bottom: 0;
-  font-size: 20px;
+  font-size: 10px;
 }
 
 .logoImg{
   border-radius: 10px;
+  margin-bottom: 50px;
 }

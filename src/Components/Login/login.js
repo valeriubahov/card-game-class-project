@@ -104,10 +104,10 @@ const LoginWindow = function (props) {
     return (
         <div className="loginContainer">
             <img className="logoImg" src={process.env.PUBLIC_URL + ' logo.png'}></img>
-            <br/> <br/>
+         
             <div className="login"> 
                 <div className="form">
-                    <form className="login-form"> <br/>
+                    <form className="login-form">
                         <span >LOGIN</span>
                         <input type="text" id="existingUserName" name="existingUserName" placeholder="Enter your username" required={true} />
                         <UserProvider value={user}>
