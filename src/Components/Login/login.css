@@ -22,7 +22,7 @@ body {
   background: #FFFFFF;
   border-radius: 10px;
   max-width: 360px;
-  padding: 5px;
+  padding: 15px;
   text-align: center;
 }
 
@@ -61,7 +61,7 @@ body {
   font-family: 'Comfortaa', cursive;
   text-transform: uppercase;
   outline: 0;
-  background: #4b6cb7;
+  background: rgba(45, 59, 161, 1);
   width: 100%;
   border: 0;
   border-radius: 5px;
@@ -73,13 +73,18 @@ body {
   cursor: pointer;
 }
 
+.form button:hover {
+  font-weight: bold;
+  background: tomato;
+}
+
 .form button:active {
-  background: #395591;
+  background: rgba(45, 59, 161, 0.8);
 }
 
 .form span {
   font-size: 30px;
-  color: #4b6cb7;
+  color: rgb(45, 59, 161);
 }
 
 #message, #loginMsg {
@@ -92,4 +97,5 @@ body {
 .logoImg{
   border-radius: 10px;
   margin-bottom: 50px;
+  
 }
