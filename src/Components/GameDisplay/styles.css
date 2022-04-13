@@ -111,15 +111,25 @@
 
 
 
+
 /* stuff grace is working on below */
+
 .card-display {
   display: flex;
   flex-direction: row;
+
   justify-content: space-evenly;
   align-items: center;
   height: 100%;
   width: 100%;
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 10px;
+  text-align: center;
+  /* color: lime; */
+
+  border: thin green solid;
 }
+
 
 #arcade-buttons-container {
   border: thin red solid;
