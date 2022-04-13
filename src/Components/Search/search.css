@@ -1,20 +1,11 @@
-#container { 
-    /* 
-    eventually delete me !!!!!! 
-    just here for testing animation against black background
-    */
-    width: 100%;
-    background-color: black;
-    display: flex;
-    justify-content: center;
-}
+.gamePage { background: rgb(19, 25, 70) }
 
 #monitor {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 600px;
-    height: 500px;
+    width: 660px;
+    height: 550px;
     background: black;
     border: 12px #5A5A5A solid;
     border-radius: 50% / 10%; 
@@ -70,7 +61,10 @@
     cursor: pointer;
 }
 
-#msg { color: orange }
+#msg { 
+    padding: 6px;
+    color: orange;
+}
 
 #title { color: red }
 
@@ -80,7 +74,7 @@
     color: yellow;
 }
 
-
+/* matt */
 .invasion {
     display: flex;
     flex-direction: column;
