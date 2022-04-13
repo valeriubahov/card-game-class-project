@@ -31,17 +31,15 @@ const LoginWindow = function (props) {
                     if (userName !== undefined && userName !== '') {
                         document.getElementById("message").innerHTML = 'User already exists';
                     }
-                    else if(!allowedExtensions.exec(imgInputCheck))
-                    {
+                    else if (!allowedExtensions.exec(imgInputCheck)) {
                         document.getElementById("message").innerHTML = 'Please select one of the following file types: jpg, jpeg, png, tiff or bmp';
                         imgInputCheck.value = '';
                         return false;
                     }
-                    else 
-                    {
-                    //TODO: look for way of adding in faile type validation
-                    //possible solutions: https://www.codexworld.com/file-type-extension-validation-javascript/
-                    //https://www.w3docs.com/snippets/html/how-to-allow-the-file-input-type-to-accept-only-image-files.html
+                    else {
+                        //TODO: look for way of adding in faile type validation
+                        //possible solutions: https://www.codexworld.com/file-type-extension-validation-javascript/
+                        //https://www.w3docs.com/snippets/html/how-to-allow-the-file-input-type-to-accept-only-image-files.html
                         const imageData = new FormData()
                         //below line for uploading the actual picture into the uploads folder
                         imageData.append("profile_pic", imgInput.files[0]);
@@ -105,12 +103,13 @@ const LoginWindow = function (props) {
 
     return (
         <div className="loginContainer">
+            <img className="logoImg" src={process.env.PUBLIC_URL + ' logo.png'}></img>
             <div className="login">
                 <div className="form">
                     <form id="newUserCreation" className="login-form" onSubmit={createUser}>
                         <span >Sign Up</span>
                         <input type="text" id="newUserName" name="person_name" placeholder="Enter your username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
-                        <input type="file" name="profile_pic" id="userIcon" accept="image/tiff,image/jpg,image/jpeg,image/png,image/bmp"/>
+                        <input type="file" name="profile_pic" id="userIcon" accept="image/tiff,image/jpg,image/jpeg,image/png,image/bmp" />
                         <button type="button" value="Create New User" onClick={createUser}>Create New User</button>
                         <p id='message'></p>
                     </form>
