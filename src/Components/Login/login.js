@@ -106,18 +106,6 @@ const LoginWindow = function (props) {
             <img className="logoImg" src={process.env.PUBLIC_URL + ' logo.png'}></img>
             <div className="login">
                 <div className="form">
-                    <form id="newUserCreation" className="login-form" onSubmit={createUser}>
-                        <span >Sign Up</span>
-                        <input type="text" id="newUserName" name="person_name" placeholder="Enter your username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
-                        <input type="file" name="profile_pic" id="userIcon" accept="image/tiff,image/jpg,image/jpeg,image/png,image/bmp" />
-                        <button type="button" value="Create New User" onClick={createUser}>Create New User</button>
-                        <p id='message'></p>
-                    </form>
-                </div>
-            </div>
-
-            <div className="login">
-                <div className="form">
                     <form className="login-form">
                         <span >Login</span>
                         <input type="text" id="existingUserName" name="existingUserName" placeholder="Enter your username" required={true} />
@@ -128,6 +116,19 @@ const LoginWindow = function (props) {
                     </form>
                 </div>
             </div>
+            <div className="login">
+                <div className="form">
+                    <form id="newUserCreation" className="login-form" onSubmit={createUser}>
+                        <span >Sign Up</span>
+                        <input type="text" id="newUserName" name="person_name" placeholder="Enter your username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+                        <input type="file" name="profile_pic" id="userIcon" accept="image/tiff,image/jpg,image/jpeg,image/png,image/bmp" />
+                        <button type="button" value="Create New User" onClick={createUser}>Create New User</button>
+                        <p id='message'></p>
+                    </form>
+                </div>
+            </div>
+
+          
         </div>
     )
 }

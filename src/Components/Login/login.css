@@ -13,8 +13,6 @@ body {
 .loginContainer{
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    max-height: 100vh;
 }
 
 .form {
@@ -92,5 +90,4 @@ body {
 
 .logoImg{
   border-radius: 10px;
-  margin-top: 10px;
 }
