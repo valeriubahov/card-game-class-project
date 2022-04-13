@@ -46,6 +46,7 @@ const GameDisplay = function (props) {
 
     let playerWins = useRef(0);
     let botWins = useRef(0);
+
     // States for table style
     const [BG, setBG] = useState("game-table1");
 
@@ -58,7 +59,6 @@ const GameDisplay = function (props) {
 
     // State to show if bot wins the hand or the player
     const [drawResult, setDrawResult] = useState('');
-
 
     useEffect(() => {
         fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
@@ -90,10 +90,8 @@ const GameDisplay = function (props) {
         }
     }, [botWinStreak, playerWinStreak])
 
-
     const API_URL_PLAYER = `https://deckofcardsapi.com/api/deck/${playerDeckID}/draw/?count=1`;
     const API_URL_BOT = `https://deckofcardsapi.com/api/deck/${botDeckID}/draw/?count=1`;
-
 
     /**
      * Function to start a new round, reset the deck and use the previous score to track the progress
@@ -106,8 +104,8 @@ const GameDisplay = function (props) {
             .then(botDeckID => {
                 setBotDeckID(botDeckID.deck_id);
             });
-        // GET PLAYER DECK ID - THE ID IS USED TO KNOW FROM WHICH DECK TO DRAW
 
+        // GET PLAYER DECK ID - THE ID IS USED TO KNOW FROM WHICH DECK TO DRAW
         fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
             .then(res => res.json())
             .then(playerDeckID => {
@@ -241,7 +239,6 @@ const GameDisplay = function (props) {
                 deckEnded.current = true;
             }
         });
-
         checkHandWinner();
     }
 
@@ -277,6 +274,9 @@ const GameDisplay = function (props) {
         else if (BG === "game-table2") {
             setBG("game-table3")
         }
+        else if (BG === "game-table3") {
+            setBG("game-table4");
+        }
         else {
             setBG("game-table1")
         }
@@ -284,7 +284,6 @@ const GameDisplay = function (props) {
 
     return (
         <div className={BG}>
-
             <div className='card-display'>
                 <h1 className='welcomeMsg'>Welcome {user[0].userName}</h1>
 
@@ -299,6 +298,7 @@ const GameDisplay = function (props) {
                     }
                     <p>Score: {botScore}</p>
                 </div>
+
                 {
                     !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) ?
                         <div className='game-process'>
@@ -324,9 +324,19 @@ const GameDisplay = function (props) {
                 </div>
             </div>
 
-            <button className='colorButton' onClick={changeBG}>Table Color</button>
-            <button className='cardColor' onClick={changeDeck}>Card Color</button>
-            <button className="newGame" onClick={newGame}>New Game</button>
+
+
+
+            {/* graces new stuff still working on it */}
+            <div id="arcade-buttons-container">
+
+
+
+                <button className='arcade-button' id='change-table-btn' onClick={changeBG}>Table Color</button>
+                <button className='arcade-button' id='change-card-btn' onClick={changeDeck}>Card Color</button>
+                <button className='arcade-button' id='new-game-btn' onClick={newGame}>New Game</button>
+
+            </div>
         </div>
     )
 }

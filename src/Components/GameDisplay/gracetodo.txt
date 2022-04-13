@@ -1,0 +1,32 @@
+1st commit:
+  - button layout on screen ... make it smaller and maybe on a panel
+  - buttons just base color for now 
+
+
+GAMEDISPLAY.JS & .CSS
+  - put button labels above or below buttons 
+  - make diff color schemes for two other buttons (blue & green)
+  - button press animation
+  - style text on board, maybe do an animation if there is time (reuse namco fonts) ... make to-do list 
+  - make classes for different text formatting styles 
+  - draw card button
+
+ 
+
+SEARCH.JS - go thru and tidy up after matt once he is done...
+
+CODE LAYOUT STUFF
+  - organize color templating... way to transform colors? or declare them as variables? .. have comments with hex value numbers at top?
+
+FUN THINGS IF THERE IS TIME
+  - put in msg so it says welcome grace ... did someone already do this?
+
+delete this file and push changes to github 
+
+NOTES ...
+game-table1
+-> card-display
+-> arcade-buttons-container
+
+CLASSES: arcade-button 
+IDs: change-table-btn, change-card-btn, new-game-btn, arcade-buttons-layout

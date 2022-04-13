@@ -25,6 +25,7 @@
   box-shadow: rgba(0, 0, 0, 0.8) 0 0 100px,
     inset 0 0 50px 20px rgba(0, 0, 0, 0.8);
 }
+
 .game-table3
 {
   height: 80vh;
@@ -40,14 +41,21 @@
     inset 0 0 50px 20px rgba(0, 0, 0, 0.8);
 }
 
-.card-display {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 100%;
-  width: 100%;
+.game-table4 {
+  height: 80vh;
+  width: 90vw;
+  background: radial-gradient(
+    circle,
+    rgb(249, 161, 255) 0%,
+    rgb(172, 40, 181) 100%
+  );
+  border: 40px solid rgb(90, 54, 20);
+  border-radius: 42%;
+  box-shadow: rgba(0, 0, 0, 0.8) 0 0 100px,
+    inset 0 0 50px 20px rgba(0, 0, 0, 0.8);
 }
+
+/* grace put card-display style back here! */
 
 .player-cards,
 .bot-cards {
@@ -93,8 +101,43 @@
   font-weight: bolder;
 } */
 
-
 .welcomeMsg {
   position:absolute;
   top: 100px;
+}
+
+
+
+
+
+
+/* stuff grace is working on below */
+.card-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+#arcade-buttons-container {
+  border: thin red solid;
+  width: 100%;
+  /* flex? */
+  /* height: 15%; */
+}
+
+.arcade-button {
+  /* 80=240/3 */
+  width: 80px;
+  height: 80px;
+  border: 0;
+  padding: 0;
+  /* border: thin green solid; */
+  /* margin: 1em;  */
+  outline: none;
+  background-color: #c2290a;
+  border-radius: 50%;
+  cursor: pointer;
 }
