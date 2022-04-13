@@ -100,6 +100,7 @@
     transition: all 0.3 ease;
     cursor: pointer;
     width: 200px;
+    margin-bottom: 1rem;
 }
 .backButton:active {
     background: #395591;
