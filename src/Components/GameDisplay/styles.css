@@ -1,61 +1,46 @@
-.game-table1 {
+.game-table {
+  margin: 20px;
+  min-height: 400px;
   height: 80vh;
+  min-width: 850px;
   width: 90vw;
+  border: 40px solid rgb(90, 54, 20);
+  border-radius: 42%;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.8),
+    inset 0 0 50px 20px rgba(0, 0, 0, 0.8);
+}
+
+#game-table1 {
   background: radial-gradient(
     circle,
     rgba(23, 184, 8, 1) 0%,
     rgba(11, 89, 6, 1) 100%
   );
-  border: 40px solid rgb(90, 54, 20);
-  border-radius: 42%;
-  box-shadow: rgba(0, 0, 0, 0.8) 0 0 100px,
-    inset 0 0 50px 20px rgba(0, 0, 0, 0.8);
 }
-.game-table2
-{
-  height: 80vh;
-  width: 90vw;
+
+#game-table2 {
   background: radial-gradient(
     circle,
     rgb(184, 8, 8) 0%,
     rgb(63, 4, 4) 100%
   );
-  border: 40px solid rgb(90, 54, 20);
-  border-radius: 42%;
-  box-shadow: rgba(0, 0, 0, 0.8) 0 0 100px,
-    inset 0 0 50px 20px rgba(0, 0, 0, 0.8);
 }
 
-.game-table3
-{
-  height: 80vh;
-  width: 90vw;
+#game-table3 {
   background: radial-gradient(
     circle,
     rgb(0, 217, 255) 0%,
     rgb(3, 50, 68) 100%
   );
-  border: 40px solid rgb(90, 54, 20);
-  border-radius: 42%;
-  box-shadow: rgba(0, 0, 0, 0.8) 0 0 100px,
-    inset 0 0 50px 20px rgba(0, 0, 0, 0.8);
 }
 
-.game-table4 {
-  height: 80vh;
-  width: 90vw;
+#game-table4 {
   background: radial-gradient(
     circle,
     rgb(249, 161, 255) 0%,
     rgb(172, 40, 181) 100%
   );
-  border: 40px solid rgb(90, 54, 20);
-  border-radius: 42%;
-  box-shadow: rgba(0, 0, 0, 0.8) 0 0 100px,
-    inset 0 0 50px 20px rgba(0, 0, 0, 0.8);
 }
-
-/* grace put card-display style back here! */
 
 .player-cards,
 .bot-cards {
@@ -82,6 +67,7 @@
   float: right;
   margin-right: 1rem;
 }
+
 .game-process{
   display: flex;
   flex-direction: column;
@@ -89,7 +75,6 @@
   height: 70px;
   justify-content: space-between;
 }
-
 
 /* @keyframes draw-butt {
   0%{ opacity: 0;}
@@ -101,53 +86,97 @@
   font-weight: bolder;
 } */
 
-.welcomeMsg {
-  position:absolute;
-  top: 100px;
+
+
+/* 
+- move font styles into classes 
+    - welcome-text id..
+
+FOR NEXT COMMIT
+  - message animations ... welcome msg, wins, score
+*/
+
+.display-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
 }
 
+#welcome-container {
+  min-height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
 
+/* possibly rename if other text goes in container */
+#welcome-text {
+  margin: 0px;
+  font: 25px 'Press Start 2P', sans-serif;
+}
 
-
-
-
-
-/* stuff grace is working on below */
-
-.card-display {
+.card-container {
+  flex: 1 1 0;
+  padding: 0 40px;
   display: flex;
   flex-direction: row;
-
   justify-content: space-evenly;
   align-items: center;
-  height: 100%;
-  width: 100%;
-  font-family: 'Press Start 2P', sans-serif;
-  font-size: 10px;
-  text-align: center;
-  /* color: lime; */
-
-  border: thin green solid;
 }
 
-
 #arcade-buttons-container {
-  border: thin red solid;
-  width: 100%;
-  /* flex? */
-  /* height: 15%; */
+  max-height: 85px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+#arcade-buttons-panel {
+  height: 85px;
+  width: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: rgb(90, 54, 20);
+  border-radius: 50% 50% 0 0;
+  box-shadow: 0 -6px 6px rgba(0, 0, 0, 0.6);
 }
 
 .arcade-button {
-  /* 80=240/3 */
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   border: 0;
   padding: 0;
-  /* border: thin green solid; */
-  /* margin: 1em;  */
-  outline: none;
-  background-color: #c2290a;
+  outline: none; /* ? */
   border-radius: 50%;
   cursor: pointer;
+}
+
+#change-table-btn {
+  background-color: rgba(0, 255, 0, 1);
+}
+
+#change-card-btn {
+  background-color: rgba(0, 0, 255, 1);
+}
+
+#new-game-btn {
+  background-color: rgba(255, 0, 0, 1);
+}
+
+.arcade-button-label {
+  margin: 3px 0 0 0;
+  padding: 0;
+  font: 12px 'Audiowide', cursive;
+}
+
+.button-label-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 65px;
+  height: 100%;
 }

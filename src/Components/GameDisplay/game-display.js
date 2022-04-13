@@ -269,73 +269,82 @@ const GameDisplay = function (props) {
      */
     const changeBG = () => {
         if (BG === "game-table1") {
-            setBG("game-table2")
+            setBG("game-table2");
         }
         else if (BG === "game-table2") {
-            setBG("game-table3")
+            setBG("game-table3");
         }
         else if (BG === "game-table3") {
             setBG("game-table4");
-        }
-        else {
-            setBG("game-table1")
+        } else {
+            setBG("game-table1");
         }
     }
 
     return (
-        <div className={BG}>
-            <div className='card-display'>
-                <h1 className='welcomeMsg'>Welcome {user[0].userName}</h1>
+        <div id={BG} className="game-table">
+            <div className='display-container'>
 
-                <div className="bot-cards">
-                    <p>Computer - Wins {botWinStreak}</p>
-                    {!deckEnded.current ? <img className='deck2' src={d2} alt='card'></img> : <img className='deck2' src={Blank} alt=''></img>}
-                    {
-                        botCard ?
-                            <img src={botCard} className='bot-draw' alt='card'></img>
-                            :
-                            <div className='bot-draw'></div>
-                    }
-                    <p>Score: {botScore}</p>
+                <div id="welcome-container">
+                    <p id='welcome-text'>WELCOME {user[0].userName.toUpperCase()}!</p>
                 </div>
 
-                {
-                    !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) ?
-                        <div className='game-process'>
-                            <div className='draw-result'>{drawResult}</div>
-                            <button className='drawButton' onClick={draw}>Draw</button>
-                        </div> :
-                        (botWinStreak === 3 || playerWinStreak === 3)
-                            ? <PopUp nextRound={newGame} winner="Game Ended" />
-                            : <PopUp nextRound={nextRound} winner={winner} />
-                }
+                <div className="card-container">
+                    <div className="bot-cards">
+                        <p>COMPUTER - WINS {botWinStreak}</p>
+                        {!deckEnded.current ? <img className='deck2' src={d2} alt='card'></img> : <img className='deck2' src={Blank} alt=''></img>}
+                        {botCard ? <img src={botCard} className='bot-draw' alt='card'></img> : <div className='bot-draw'></div>}
+                        <p>SCORE: {botScore}</p>
+                    </div>
 
-                <div className="player-cards">
-                    <p>{user[0].userName} - Wins {playerWinStreak}</p>
                     {
-                        playerCard ?
-                            <img src={playerCard} className='player-draw' alt='card'></img>
-                            :
-                            <div className='player-draw'></div>
-
+                        !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) ?
+                            <div className='game-process'>
+                                <div className='draw-result'>{drawResult}</div>
+                                <button className='drawButton' onClick={draw}>Draw</button>
+                            </div> 
+                            : (botWinStreak === 3 || playerWinStreak === 3)
+                                ? <PopUp nextRound={newGame} winner="Game Ended" />
+                                : <PopUp nextRound={nextRound} winner={winner} />
                     }
-                    {!deckEnded.current ? <img className='deck1' src={d1} alt='card'></img> : <img className='deck2' src={Blank} alt=''></img>}
-                    <p>Score: {playerScore}</p>
+
+                    <div className="player-cards">
+                        <p>{user[0].userName.slice(0, 20).toUpperCase()} - WINS {playerWinStreak}</p>
+                        { playerCard ? <img src={playerCard} className='player-draw' alt='card'></img> : <div className='player-draw'></div>}
+                        {!deckEnded.current ? <img className='deck1' src={d1} alt='card'></img> : <img className='deck2' src={Blank} alt=''></img>}
+                        <p>SCORE: {playerScore}</p>
+                    </div>
                 </div>
-            </div>
 
-
-
-
-            {/* graces new stuff still working on it */}
-            <div id="arcade-buttons-container">
-
-
-
-                <button className='arcade-button' id='change-table-btn' onClick={changeBG}>Table Color</button>
-                <button className='arcade-button' id='change-card-btn' onClick={changeDeck}>Card Color</button>
-                <button className='arcade-button' id='new-game-btn' onClick={newGame}>New Game</button>
-
+                <div id="arcade-buttons-container">
+                    <div id='arcade-buttons-panel'>
+                        <div className='button-label-container'>
+                            <button 
+                                id='change-table-btn' 
+                                className='arcade-button' 
+                                onClick={changeBG}
+                            />
+                            <p className='arcade-button-label'>TABLE</p>
+                        </div>
+                        <div className='button-label-container'>
+                            <button 
+                                id='change-card-btn' 
+                                className='arcade-button' 
+                                onClick={changeDeck}
+                            />
+                            <p className='arcade-button-label'>CARD</p>
+                        </div>
+                        <div className='button-label-container'>
+                            <button 
+                                id='new-game-btn' 
+                                className='arcade-button' 
+                                onClick={newGame}
+                            />
+                            <p className='arcade-button-label'>RESTART</p>
+                        </div>                        
+                    </div>
+                </div>
+                
             </div>
         </div>
     )
