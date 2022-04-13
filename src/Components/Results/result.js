@@ -51,7 +51,11 @@ function Result(props) {
                     },
                     0)
 
-            })).sort((a,b) => {
+            })).filter((x, index)=> {
+                if(index < 5) {
+                    return x;
+                }
+            }).sort((a,b) => {
                 return (parseInt(b.score) - parseInt(a.score))
             })
 
@@ -217,4 +221,6 @@ function Result(props) {
 }
 
 export default Result;
+
+
 
