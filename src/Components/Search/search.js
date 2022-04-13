@@ -114,15 +114,6 @@ export default function Search() {
 
   })
 
-  // function arcadePlay() {
-
-  //   let arcadeFormat = document.createElement("p")
-  //   arcadeFormat.innerHTML = '<iframe style="width: 1000px; height: 1300px; border: none;" src="https://funhtml5games.com?embed=spaceinvaders" width="0" height="0" frameborder="0" scrolling="no"></iframe>'
-  //   let arcadeTable = document.getElementById("Test").appendChild(arcadeFormat)
-  //   arcadeTable.src = arcadeFormat;
-  //   document.getElementById("Test").appendChild(arcadeTable)
-
-  // }
 
   function goBack() {
     setSpaceInvaded(false);

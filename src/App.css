@@ -2,6 +2,8 @@
   text-align: center;
 }
 
+
+
 .App-header {
   background-color: #282c34;
   color: white;
@@ -12,7 +14,7 @@
 }
 
 .gamePage {
-  background: rgb(19, 25, 70);
+  background: rgba(31, 41, 112, 1);
   min-height: 100vh;
   display: flex;
   align-items: center;
