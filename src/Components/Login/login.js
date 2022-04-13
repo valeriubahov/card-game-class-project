@@ -44,10 +44,10 @@ const LoginWindow = function (props) {
                         //below line for uploading the actual picture into the uploads folder
                         imageData.append("profile_pic", imgInput.files[0]);
 
-                        // fetch("http://localhost:5000/uploads", {
-                        //     method: "POST",
-                        //     body: imageData
-                        // })
+                        fetch("http://localhost:5000/uploads", {
+                            method: "POST",
+                            body: imageData
+                        })
 
                         const nameData = new FormData(newUserName)
                         nameData.append("profile_pic", imgInput.files[0].name);
