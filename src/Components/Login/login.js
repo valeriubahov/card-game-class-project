@@ -104,10 +104,11 @@ const LoginWindow = function (props) {
     return (
         <div className="loginContainer">
             <img className="logoImg" src={process.env.PUBLIC_URL + ' logo.png'}></img>
-            <div className="login">
+            <br/> <br/>
+            <div className="login"> 
                 <div className="form">
-                    <form className="login-form">
-                        <span >Login</span>
+                    <form className="login-form"> <br/>
+                        <span >LOGIN</span>
                         <input type="text" id="existingUserName" name="existingUserName" placeholder="Enter your username" required={true} />
                         <UserProvider value={user}>
                             <button type="button" value="Login" onClick={loginUser}>Login</button>
@@ -119,7 +120,7 @@ const LoginWindow = function (props) {
             <div className="login">
                 <div className="form">
                     <form id="newUserCreation" className="login-form" onSubmit={createUser}>
-                        <span >Sign Up</span>
+                        <span >SIGN UP</span>
                         <input type="text" id="newUserName" name="person_name" placeholder="Enter your username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
                         <input type="file" name="profile_pic" id="userIcon" accept="image/tiff,image/jpg,image/jpeg,image/png,image/bmp" />
                         <button type="button" value="Create New User" onClick={createUser}>Create New User</button>
