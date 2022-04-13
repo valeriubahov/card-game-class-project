@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  min-width: 1000px;
 }
 
 .App-header {
@@ -8,13 +9,11 @@
   position: fixed;
   top: 0;
   width: 100%;
-  border-bottom: 1px solid white;
 }
 
 .gamePage {
   background: rgba(31, 41, 112, 1);
   min-height: 100vh;
-  min-width: 900px;
   display: flex;
   align-items: center;
   justify-content: center;
