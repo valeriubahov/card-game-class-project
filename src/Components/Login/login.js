@@ -4,8 +4,6 @@ import React, { useState, createContext, useContext } from "react";
 import { UserContext, UserProvider } from "../../context/UserContext";
 import './login.css';
 
-
-
 const LoginWindow = function (props) {
     const [user, setUser] = useContext(UserContext);
     let navigate = useNavigate();
@@ -64,11 +62,11 @@ const LoginWindow = function (props) {
         }
         else {
             document.getElementById("message").innerHTML = 'Username is required';
-
         }
     }
 
-    const loginUser = async () => {
+    const loginUser = async (e) => {
+        e.preventDefault(); // this is needed to make login form submit on enter
         const loginName = document.getElementById("existingUserName").value;
         let userName = "";
         let _id = "";
@@ -102,16 +100,20 @@ const LoginWindow = function (props) {
         }
     }
 
-
     return (
         <div className="loginContainer">
             <img className="logoImg" src={process.env.PUBLIC_URL + ' logo.png'}></img>
-         
             <div className="login"> 
                 <div className="form">
-                    <form className="login-form">
-                        <span >LOGIN</span>
-                        <input type="text" id="existingUserName" name="existingUserName" placeholder="Enter your username" required={true} />
+                    <form className="login-form" onSubmit={loginUser}>
+                        <span>LOGIN</span>
+                        <input 
+                            type="text"
+                            id="existingUserName" 
+                            name="existingUserName" 
+                            placeholder="Enter your username" 
+                            required={true} 
+                        />
                         <UserProvider value={user}>
                             <button type="button" value="Login" onClick={loginUser}>Login</button>
                         </UserProvider>
@@ -119,10 +121,12 @@ const LoginWindow = function (props) {
                     </form>
                 </div>
             </div>
+
+            {/* would be great to have it clear form and then run login after user successfully created */}
             <div className="login">
                 <div className="form">
                     <form id="newUserCreation" className="login-form" onSubmit={createUser}>
-                        <span >SIGN UP</span>
+                        <span>SIGN UP</span>
                         <input type="text" id="newUserName" name="person_name" placeholder="Enter your username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
                         <input type="file" name="profile_pic" id="userIcon" accept="image/tiff,image/jpg,image/jpeg,image/png,image/bmp" />
                         <button type="button" value="Create New User" onClick={createUser}>Create New User</button>
@@ -130,8 +134,6 @@ const LoginWindow = function (props) {
                     </form>
                 </div>
             </div>
-
-          
         </div>
     )
 }
