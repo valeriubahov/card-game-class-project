@@ -7,61 +7,67 @@ import './login.css';
 const LoginWindow = function (props) {
     const [user, setUser] = useContext(UserContext);
     let navigate = useNavigate();
+
     const createUser = () => {
         const loginName = document.getElementById("newUserName").value;
-        if (loginName !== '' && loginName !== undefined) {
-            let userName = "";
-            let _id = "";
-            let profilePic = "";
-            fetch("http://localhost:5000/users")
-                .then(response => response.json())
-                .then(value => {
-                    const userArr = value.filter(x => x.userName === loginName);
-                    if (userArr.length > 0) {
-                        userName = userArr[0].userName;
-                        _id = userArr[0]._id
-                        profilePic = userArr[0].profilePic
-                    }
+        if (loginName.length < 20) {
+            if (loginName !== '' && loginName !== undefined) {
+                let userName = "";
+                let _id = "";
+                let profilePic = "";
+                fetch("http://localhost:5000/users")
+                    .then(response => response.json())
+                    .then(value => {
+                        const userArr = value.filter(x => x.userName === loginName);
+                        if (userArr.length > 0) {
+                            userName = userArr[0].userName;
+                            _id = userArr[0]._id
+                            profilePic = userArr[0].profilePic
+                        }
 
-                    const newUserName = document.getElementById("newUserCreation")
-                    const imgInput = document.getElementById("userIcon")
-                    const imgInputCheck = imgInput.value
-                    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.tiff|\.bmp)$/i;
+                        const newUserName = document.getElementById("newUserCreation")
+                        const imgInput = document.getElementById("userIcon")
+                        const imgInputCheck = imgInput.value
+                        const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.tiff|\.bmp)$/i;
 
-                    if (userName !== undefined && userName !== '') {
-                        document.getElementById("message").innerHTML = 'User already exists';
-                    }
-                    else if (!allowedExtensions.exec(imgInputCheck)) {
-                        document.getElementById("message").innerHTML = 'Please select one of the following file types: jpg, jpeg, png, tiff or bmp';
-                        imgInputCheck.value = '';
-                        return false;
-                    }
-                    else {
-                        //TODO: look for way of adding in faile type validation
-                        //possible solutions: https://www.codexworld.com/file-type-extension-validation-javascript/
-                        //https://www.w3docs.com/snippets/html/how-to-allow-the-file-input-type-to-accept-only-image-files.html
-                        const imageData = new FormData()
-                        //below line for uploading the actual picture into the uploads folder
-                        imageData.append("profile_pic", imgInput.files[0]);
+                        if (userName !== undefined && userName !== '') {
+                            document.getElementById("message").innerHTML = 'User already exists';
+                        }
+                        else if (!allowedExtensions.exec(imgInputCheck)) {
+                            document.getElementById("message").innerHTML = 'Please select one of the following file types: jpg, jpeg, png, tiff or bmp';
+                            imgInputCheck.value = '';
+                            return false;
+                        }
+                        else {
+                            //TODO: look for way of adding in faile type validation
+                            //possible solutions: https://www.codexworld.com/file-type-extension-validation-javascript/
+                            //https://www.w3docs.com/snippets/html/how-to-allow-the-file-input-type-to-accept-only-image-files.html
+                            const imageData = new FormData()
+                            //below line for uploading the actual picture into the uploads folder
+                            imageData.append("profile_pic", imgInput.files[0]);
 
-                        fetch("http://localhost:5000/uploads", {
-                            method: "POST",
-                            body: imageData
-                        })
+                            fetch("http://localhost:5000/uploads", {
+                                method: "POST",
+                                body: imageData
+                            })
 
-                        const nameData = new FormData(newUserName)
-                        nameData.append("profile_pic", imgInput.files[0].name);
+                            const nameData = new FormData(newUserName)
+                            nameData.append("profile_pic", imgInput.files[0].name);
 
-                        fetch("http://localhost:5000/users/add", {
-                            method: "POST",
-                            body: nameData
-                        })
-                        document.getElementById("message").innerHTML = 'User Created';
-                    }
-                })
-        }
-        else {
-            document.getElementById("message").innerHTML = 'Username is required';
+                            fetch("http://localhost:5000/users/add", {
+                                method: "POST",
+                                body: nameData
+                            })
+                            document.getElementById("message").innerHTML = 'User Created';
+                        }
+                    })
+            }
+            else {
+                document.getElementById("message").innerHTML = 'Username is required';
+            }
+        } else {
+            document.getElementById("message").innerHTML = 'Username longer than 20 characters not accepted';
+
         }
     }
 
