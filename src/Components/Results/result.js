@@ -7,18 +7,10 @@ import image from './Images/card.png';
 import image1 from './Images/cardload.gif';
 import frog from './Images/frog.gif';
 import frogchill from './Images/chill-frog.gif';
-import frogSpecial  from './Images/dance.gif';
-
-
-
-
-
-
-
+import frogSpecial from './Images/dance.gif';
 
 /**
  * Main Function that contains pulling user data, score and assigning to the application
- 
  */
 function Result(props) {
 
@@ -27,7 +19,7 @@ function Result(props) {
 
 
     useEffect(() => {
-        
+
         fetchScore();
 
         /**
@@ -47,20 +39,20 @@ function Result(props) {
             const testUser = data.map(x => ({
                 id: x._id, user: x.userName, score: x.score.map(x => x.score).reduce(
                     function (a, b) {
-                        return Math.max(a,b)
+                        return Math.max(a, b)
                     },
                     0)
 
-            })).filter((x, index)=> {
-                if(index < 5) {
+            })).filter((x, index) => {
+                if (index < 5) {
                     return x;
                 }
-            }).sort((a,b) => {
+            }).sort((a, b) => {
                 return (parseInt(b.score) - parseInt(a.score))
             })
 
 
-    
+
             console.log('Working', testUser)
             setRecords(testUser)
 
@@ -89,83 +81,76 @@ function Result(props) {
     let frogCount3 = 0;
 
 
-/**
- * Frog counter setup 
- 
- */
+    /**
+     * Frog counter setup 
+     
+     */
 
-    function froggie1()
-    {
+    function froggie1() {
         frogCount1++
-        
-        if (frogCount1 == 1)
-        {
+
+        if (frogCount1 == 1) {
             frogCount++
             alert(`${frogCount} out of 3 Frogs Found`)
             // froggie();
         }
-        
-        if (frogCount1 > 2)
-        {
+
+        if (frogCount1 > 2) {
             frogCount1 = 1;
-           
+
         }
 
-        if (frogCount == 3){
+        if (frogCount == 3) {
             froggie();
         }
     }
 
-    
-    function froggie2()
-    {
+
+    function froggie2() {
         frogCount2++
-        if (frogCount2 == 1)
-        {
+        if (frogCount2 == 1) {
             frogCount++
             alert(`${frogCount} out of 3 Frogs Found`)
             // froggie();
         }
 
-    
-       if (frogCount == 3 )
-       {
-           froggie();
-       }
+
+        if (frogCount == 3) {
+            froggie();
+        }
     }
 
     function froggie() {
         frogCount3++
-        if (frogCount3 == 1){
+        if (frogCount3 == 1) {
             frogCount++
             alert(`${frogCount} out of 3 Frogs`)
         }
 
-       
 
 
-        if(frogCount == 3){
+
+        if (frogCount == 3) {
             alert(`You have discovered ${frogCount} out of 3 Frogs \n `)
-            
+
             let p = document.createElement("p")
             p.innerText = 'You have been visted by the 🐸 of Wisdom \n  '
             document.getElementById("results").appendChild(p)
             let elem = document.createElement("img");
             elem.src = frogchill;
             document.getElementById("results").appendChild(elem);
-            
-        
+
+
         }
 
     }
 
 
     function frog_1() {
-        if(frogCount < 2){
+        if (frogCount < 2) {
             alert('Wait a minute.. your are not supposed to see this...')
         }
-        if (frogCount == 3)
-        {
+        if (frogCount == 3) {
             alert('Nice! Found Another Secret.')
             let p1 = document.createElement("p")
             p1.innerText = 'Congrats! You have found another hidden secret. \n'
@@ -176,7 +161,7 @@ function Result(props) {
 
         }
     }
-    
+
     return (
         <div className="result-name">
             <img id="gif-top" onClick={froggie} src={frog} />
@@ -199,13 +184,13 @@ function Result(props) {
                     {
 
                         records.map(x => ({
-                            id: x._id, user: x.user, score: x.score, date: x.date, 
+                            id: x._id, user: x.user, score: x.score, date: x.date,
                         })).map(user =>
                             <tr key={user.id}
-                            
-                            
+
+
                             >
-                            
+
                                 <td id='username-display'>🏅{user.user}</td>
                                 <td id='userscore-display'>{user.score}</td>
 
@@ -214,7 +199,7 @@ function Result(props) {
                     }
                 </tbody>
             </table>
-            <br />
+     
             <button id="quit" onClick={quitbotton} >Quit ↩️</button>
         </div>
     )

@@ -10,8 +10,6 @@ body {
 table, th, td {
     position: relative;
     width: 450px;
-    
-    margin: 100px auto 0;
     padding: 10px;
     box-sizing: border-box;
    
@@ -135,6 +133,15 @@ table, th, td {
  #gif-top-2:hover {
    opacity: 1;
    background-color: chartreuse;
+ }
+
+ #results {
+   margin: 0;
+ }
+
+ #result-main{
+   width:400px;
+   height: 400px;
  }
 
  
