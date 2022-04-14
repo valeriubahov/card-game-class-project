@@ -66,7 +66,7 @@ const LoginWindow = function (props) {
                 document.getElementById("message").innerHTML = 'Username is required';
             }
         } else {
-            document.getElementById("message").innerHTML = 'Username longer than 20 characters not accepted';
+            document.getElementById("message").innerHTML = 'Username longer than 20 characters is not accepted.';
 
         }
     }
