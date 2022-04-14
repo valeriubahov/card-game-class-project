@@ -86,7 +86,7 @@
   font-weight: bolder;
 } */
 
-#emojis {
+.emojis {
   font-size: 50px;
 }
 
@@ -145,10 +145,44 @@
   align-items: center;
 }
 
-#arcade-buttons-container {
-  max-height: 85px;
+.score-container {
   display: flex;
   justify-content: center;
+  gap: 10px;
+}
+
+.score-frame {
+  width: 110px;
+  padding: 3px;
+  background-color: tomato;
+  border-radius: 10%;
+  border: 1px crimson solid;  
+}
+
+.score {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.score-digit {
+  width: 24px;
+  padding: 1px;
+  background-color: black;
+  border-radius: 20%;
+  font: 38px 'ZCOOL QingKe HuangYou', cursive;
+  color: white;
+}
+
+.score-label {
+  font: 16px 'ZCOOL QingKe HuangYou', cursive;
+  padding: 1px 0;
+}
+
+#bottom-container {
+  max-height: 85px;
+  display: flex;
+  justify-content: space-between;
   align-items: flex-end;
 }
 
@@ -167,11 +201,16 @@
 .arcade-button {
   width: 50px;
   height: 50px;
-  border: 0;
+  border: 1px white solid;
   padding: 0;
-  outline: none; /* ? */
   border-radius: 50%;
   cursor: pointer;
+}
+
+.arcade-button-label {
+  margin: 3px 0 0 0;
+  padding: 0;
+  font: 16px 'ZCOOL QingKe HuangYou', cursive;
 }
 
 #change-table-btn {
@@ -184,12 +223,6 @@
 
 #new-game-btn {
   background-color: rgba(255, 0, 0, 1);
-}
-
-.arcade-button-label {
-  margin: 3px 0 0 0;
-  padding: 0;
-  font: 12px 'Audiowide', cursive;
 }
 
 .button-label-container {

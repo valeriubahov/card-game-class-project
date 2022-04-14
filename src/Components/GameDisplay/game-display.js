@@ -292,6 +292,8 @@ const GameDisplay = function (props) {
         }
     }
 
+    // console.log()
+
     return (
         <div id={BG} className="game-table">
 
@@ -310,7 +312,7 @@ const GameDisplay = function (props) {
                 </div>
 
                 <div className="card-container">
-                    
+
                     <div className="bot-cards">
                         <p>COMPUTER - WINS {botWinStreak}</p>
                         {!deckEnded.current ? <img className='deck2' src={d2} alt='card'></img> : <img className='deck2' src={Blank} alt=''></img>}
@@ -321,9 +323,9 @@ const GameDisplay = function (props) {
                     {
                         !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) ?                            
                             <div className='game-process'>
-                                <div id="emojis">
+                                <div className="emojis">
                                     { animate.welcome ? <>&#128075;</> : null }
-                                    { animate.player ? <>&#128175;</> : null }
+                                    { animate.player ? <>&#129399;</> : null }
                                     { animate.bot ? <>&#x1F916;</> : null }
                                     { animate.draw ? <>&#129309;</> : null }
                                 </div>
@@ -340,9 +342,27 @@ const GameDisplay = function (props) {
                         {!deckEnded.current ? <img className='deck1' src={d1} alt='card'></img> : <img className='deck2' src={Blank} alt=''></img>}
                         <p>SCORE: {playerScore}</p>
                     </div>
+
                 </div>
 
-                <div id="arcade-buttons-container">
+                <div id="bottom-container">
+
+                    {/* doesnt do anything yet */}
+                    <div class="score-container">
+                        <div className='score-frame'>
+                            <div className='score'>
+                                <div className='score-digit'>1</div>
+                                <div className='score-digit'>2</div>
+                                <div className='score-digit'>3</div>
+                                <div className='score-digit'>4</div>
+                            </div>
+                            <div className='score-label'>SCORE</div>
+                        </div>
+                        <div className='emojis'>&#x1F916;</div>
+                    </div>
+
+
+
                     <div id='arcade-buttons-panel'>
                         <div className='button-label-container'>
                             <button 
@@ -367,9 +387,27 @@ const GameDisplay = function (props) {
                                 onClick={newGame}
                             />
                             <p className='arcade-button-label'>RESTART</p>
-                        </div>                        
+                        </div> 
                     </div>
+
+                        {/* doesnt do anything yet */}
+                        <div class="score-container">
+                            {/* (playerScore.toString().length) */}
+                            <div className='emojis'>&#129399;</div>
+                            <div className='score-frame'>
+                                <div className='score'>
+                                    <div className='score-digit'>1</div>
+                                    <div className='score-digit'>2</div>
+                                    <div className='score-digit'>3</div>
+                                    <div className='score-digit'>4</div>
+                                </div>
+                                <div className='score-label'>SCORE</div>
+                            </div>
+                        </div>
                 </div>
+
+
+
             </div>
         </div>
     )

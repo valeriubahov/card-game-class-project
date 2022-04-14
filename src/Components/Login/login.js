@@ -1,6 +1,6 @@
 // TODO: add functionality to link to the game display once the submit button is clicked.
-import { Link, useNavigate } from "react-router-dom";
-import React, { useState, createContext, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
 import { UserContext, UserProvider } from "../../context/UserContext";
 import './login.css';
 
@@ -102,17 +102,17 @@ const LoginWindow = function (props) {
 
     return (
         <div className="loginContainer">
-            <img className="logoImg" src={process.env.PUBLIC_URL + ' logo.png'}></img>
-            <div className="login"> 
+            <img className="logoImg" src={process.env.PUBLIC_URL + ' logo.png'} alt='' />
+            <div className="login">
                 <div className="form">
                     <form className="login-form" onSubmit={loginUser}>
                         <span>LOGIN</span>
-                        <input 
+                        <input
                             type="text"
-                            id="existingUserName" 
-                            name="existingUserName" 
-                            placeholder="Enter your username" 
-                            required={true} 
+                            id="existingUserName"
+                            name="existingUserName"
+                            placeholder="Enter your username"
+                            required={true}
                         />
                         <UserProvider value={user}>
                             <button type="button" value="Login" onClick={loginUser}>Login</button>
