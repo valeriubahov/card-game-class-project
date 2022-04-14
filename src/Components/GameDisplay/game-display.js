@@ -60,8 +60,13 @@ const GameDisplay = function (props) {
     // State to show if bot wins the hand or the player
     const [drawResult, setDrawResult] = useState('');
 
-    // state for animations 
-    const [animate, setAnimate] = useState({welcome: true, result: false});
+    // state object for message animations 
+    const [animate, setAnimate] = useState({
+        welcome: true, 
+        player: false, 
+        bot: false, 
+        draw: false, 
+    });
 
     useEffect(() => {
         fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
@@ -168,7 +173,9 @@ const GameDisplay = function (props) {
         // let count = 0;
         // console.log(count++);
         if (!deckEnded.current) {
-            setAnimate({ result: false });
+
+            setAnimate({ welcome: false, player: false, bot: false, draw: false })
+
             if (parseInt(botCardValue) > parseInt(playerCardValue)) {
                 if (botWins.current >= 2) {
                     setBotScore(botScore => botScore + (parseInt(botCardValue) * 2 + parseInt(playerCardValue) * 2));
@@ -177,18 +184,20 @@ const GameDisplay = function (props) {
                     setBotScore(botScore => botScore + parseInt(botCardValue) + parseInt(playerCardValue));
                 }
                 setDrawResult('BOT WINS');
-            } 
+                setAnimate({ bot: true });
+            }
             else if (parseInt(botCardValue) < parseInt(playerCardValue)) {
                 if (playerWins.current >= 2) {
                     setPlayerScore(playerScore => playerScore + (parseInt(botCardValue) + parseInt(playerCardValue)) * 2);
                 } else {
                     setPlayerScore(playerScore => playerScore + parseInt(botCardValue) + parseInt(playerCardValue));
                 }
-                setDrawResult('PLAYER WINS !!!');
-                setAnimate({ result: true });
+                setDrawResult('YOU WIN !!!');
+                setAnimate({ player: true });
             } 
             else {
                 setDrawResult('DRAW');
+                setAnimate({ draw: true });
             }
         } else {
             if (botScore > playerScore) {
@@ -287,16 +296,21 @@ const GameDisplay = function (props) {
         <div id={BG} className="game-table">
 
             <div className='display-container'>
+
                 <div id="message-container">
+
                     <div className={animate.welcome ? 'welcome-msg' : 'clear-msg'}>
                         WELCOME {user[0].userName.toUpperCase()} !
                     </div>
-                    <div className={animate.result ? 'result-msg' : ''}>
+          
+                    <div className={animate.player ? 'player-msg' : (animate.bot ? 'bot-msg' : (animate.draw) ? 'draw-msg' : '')}>
                         {drawResult}
                     </div>
+
                 </div>
 
                 <div className="card-container">
+                    
                     <div className="bot-cards">
                         <p>COMPUTER - WINS {botWinStreak}</p>
                         {!deckEnded.current ? <img className='deck2' src={d2} alt='card'></img> : <img className='deck2' src={Blank} alt=''></img>}
@@ -307,6 +321,12 @@ const GameDisplay = function (props) {
                     {
                         !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) ?                            
                             <div className='game-process'>
+                                <div id="emojis">
+                                    { animate.welcome ? <>&#128075;</> : null }
+                                    { animate.player ? <>&#128175;</> : null }
+                                    { animate.bot ? <>&#x1F916;</> : null }
+                                    { animate.draw ? <>&#129309;</> : null }
+                                </div>
                                 <button className='drawButton' onClick={draw}>Draw</button>
                             </div> 
                             : (botWinStreak === 3 || playerWinStreak === 3)

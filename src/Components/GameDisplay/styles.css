@@ -86,6 +86,12 @@
   font-weight: bolder;
 } */
 
+#emojis {
+  font-size: 50px;
+}
+
+/* .drawButton {} */
+
 .display-container {
   height: 100%;
   display: flex;
@@ -99,24 +105,25 @@
   justify-content: center;
   align-items: flex-end;
   font: 25px 'Press Start 2P', sans-serif;
-
 }
 
-.clear-msg {
-  display: none;
-}
+.clear-msg { display: none }
 
 .welcome-msg {
   color: hotpink;
   animation: 
     fade 1300ms ease-in 200ms 1 backwards,
-    blinky 400ms step-start 1800ms 3 forwards;
+    blinky 400ms step-start 1800ms 3 none;
 }
 
-.result-msg {
+.player-msg {
   animation: blinky 400ms step-start 0ms 3 forwards;
   color: yellow; 
 }
+
+.bot-msg { color: red }
+
+.draw-msg { color: aqua }
 
 @keyframes fade {
   from { opacity: 0 }

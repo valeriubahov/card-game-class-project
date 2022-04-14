@@ -13,3 +13,9 @@ add animation and styles to bot wins and draw messages
 message event for winner of round ...
     - before or after popup?
     - could possibly have score jump up in size and shrink down again to show the change 
+
+
+
+
+
+                        {animate.bot ? <div id="bot-emoji">&#x1F916;</div> : null}
