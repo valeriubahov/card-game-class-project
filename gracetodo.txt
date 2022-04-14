@@ -1,0 +1,15 @@
+pull comments out/tify
+set welcome to false and test... dbl check all pages look ok 
+commit to git  
+
+scores ---> do large 7segdis looking digits that have animations built in 
+
+style arcade buttons 
+    spin animation?
+style draw button
+style text on board 
+add animation and styles to bot wins and draw messages 
+
+message event for winner of round ...
+    - before or after popup?
+    - could possibly have score jump up in size and shrink down again to show the change 

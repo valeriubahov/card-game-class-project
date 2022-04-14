@@ -22,7 +22,7 @@ cardImageValue.set('ACE', 14);
  * @returns GameDisplay component
  */
 const GameDisplay = function (props) {
-
+    
     const user = useContext(UserContext);
 
     // State for final winner
@@ -59,6 +59,9 @@ const GameDisplay = function (props) {
 
     // State to show if bot wins the hand or the player
     const [drawResult, setDrawResult] = useState('');
+
+    // state for animations 
+    const [animate, setAnimate] = useState({welcome: true, result: false});
 
     useEffect(() => {
         fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
@@ -162,9 +165,10 @@ const GameDisplay = function (props) {
      * @returns void
      */
     function checkHandWinner() {
-        let count = 0;
-        console.log(count++);
+        // let count = 0;
+        // console.log(count++);
         if (!deckEnded.current) {
+            setAnimate({ result: false });
             if (parseInt(botCardValue) > parseInt(playerCardValue)) {
                 if (botWins.current >= 2) {
                     setBotScore(botScore => botScore + (parseInt(botCardValue) * 2 + parseInt(playerCardValue) * 2));
@@ -173,32 +177,29 @@ const GameDisplay = function (props) {
                     setBotScore(botScore => botScore + parseInt(botCardValue) + parseInt(playerCardValue));
                 }
                 setDrawResult('BOT WINS');
-            }
+            } 
             else if (parseInt(botCardValue) < parseInt(playerCardValue)) {
                 if (playerWins.current >= 2) {
                     setPlayerScore(playerScore => playerScore + (parseInt(botCardValue) + parseInt(playerCardValue)) * 2);
-                }
-                else {
+                } else {
                     setPlayerScore(playerScore => playerScore + parseInt(botCardValue) + parseInt(playerCardValue));
                 }
-                setDrawResult('PLAYER WINS');
-            }
+                setDrawResult('PLAYER WINS !!!');
+                setAnimate({ result: true });
+            } 
             else {
                 setDrawResult('DRAW');
             }
-        }
-        else {
+        } else {
             if (botScore > playerScore) {
                 botWins.current = botWins.current + 1;
                 playerWins.current = 0;
                 setBotWinStreak(botWinStreak + 1);
                 setWinner("BOT is the winner");
-            }
-            else {
+            } else {
                 playerWins.current = playerWins.current + 1;
                 botWins.current = 0;
                 setPlayerWinStreak(playerWinStreak + 1);
-
                 setWinner("YOU are the winner");
             }
         }
@@ -239,6 +240,7 @@ const GameDisplay = function (props) {
                 deckEnded.current = true;
             }
         });
+
         checkHandWinner();
     }
 
@@ -283,10 +285,15 @@ const GameDisplay = function (props) {
 
     return (
         <div id={BG} className="game-table">
-            <div className='display-container'>
 
-                <div id="welcome-container">
-                    <p id='welcome-text'>WELCOME {user[0].userName.toUpperCase()}!</p>
+            <div className='display-container'>
+                <div id="message-container">
+                    <div className={animate.welcome ? 'welcome-msg' : 'clear-msg'}>
+                        WELCOME {user[0].userName.toUpperCase()} !
+                    </div>
+                    <div className={animate.result ? 'result-msg' : ''}>
+                        {drawResult}
+                    </div>
                 </div>
 
                 <div className="card-container">
@@ -298,9 +305,8 @@ const GameDisplay = function (props) {
                     </div>
 
                     {
-                        !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) ?
+                        !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) ?                            
                             <div className='game-process'>
-                                <div className='draw-result'>{drawResult}</div>
                                 <button className='drawButton' onClick={draw}>Draw</button>
                             </div> 
                             : (botWinStreak === 3 || playerWinStreak === 3)
@@ -344,7 +350,6 @@ const GameDisplay = function (props) {
                         </div>                        
                     </div>
                 </div>
-                
             </div>
         </div>
     )

@@ -86,16 +86,6 @@
   font-weight: bolder;
 } */
 
-
-
-/* 
-- move font styles into classes 
-    - welcome-text id..
-
-FOR NEXT COMMIT
-  - message animations ... welcome msg, wins, score
-*/
-
 .display-container {
   height: 100%;
   display: flex;
@@ -103,17 +93,40 @@ FOR NEXT COMMIT
   font-size: 10px;
 }
 
-#welcome-container {
+#message-container {
   min-height: 80px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  font: 25px 'Press Start 2P', sans-serif;
+
 }
 
-/* possibly rename if other text goes in container */
-#welcome-text {
-  margin: 0px;
-  font: 25px 'Press Start 2P', sans-serif;
+.clear-msg {
+  display: none;
+}
+
+.welcome-msg {
+  color: hotpink;
+  animation: 
+    fade 1300ms ease-in 200ms 1 backwards,
+    blinky 400ms step-start 1800ms 3 forwards;
+}
+
+.result-msg {
+  animation: blinky 400ms step-start 0ms 3 forwards;
+  color: yellow; 
+}
+
+@keyframes fade {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes blinky {
+  0% { opacity: 1 }
+  50% { opacity: 0 } 
+  100% { opacity: 1 }
 }
 
 .card-container {
