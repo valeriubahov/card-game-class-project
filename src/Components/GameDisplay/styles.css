@@ -110,7 +110,7 @@
 .clear-msg { display: none }
 
 .welcome-msg {
-  color: hotpink;
+  color: orangered;
   animation: 
     fade 1300ms ease-in 200ms 1 backwards,
     blinky 400ms step-start 1800ms 3 none;
