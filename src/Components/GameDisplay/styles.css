@@ -53,6 +53,8 @@
 .player-cards,
 .bot-cards {
   width: 100%;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .player-draw,
@@ -68,15 +70,18 @@
 
 .player-draw {
   float: left;
-  margin-left: 1rem;
+  margin-left: 1px;
 }
 
 .bot-draw {
   float: right;
-  margin-right: 1rem;
+  margin-right: 1px;
 }
 
-.emoji { font-size: 60px }
+.emoji { 
+  margin: 10px;
+  font-size: 70px;
+}
 
 #top-container {
   min-height: 100px;
@@ -195,7 +200,7 @@
   border-radius: 25px;
 }
 
-.score-badge {
+.stats {
   display: flex;
   flex-direction: column;
   align-items: space-between;
@@ -247,6 +252,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 43px;
+  font-size: 60px;
 }
 
 #bot-badge { background-color: fuchsia }

@@ -364,7 +364,8 @@ const GameDisplay = function (props) {
                     { 
                         !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) 
                             ? (
-                                animate.player ? <span className="emoji">&#129399;</span> 
+                                animate.player ? <div className="emoji">&#129399;</div> 
+                                
                                     : animate.bot ? <span className="emoji">&#x1F916;</span>
                                         : animate.draw ? <span className="emoji">&#129309;</span>
                                             : <span className="emoji">&#129441;</span>
@@ -380,7 +381,7 @@ const GameDisplay = function (props) {
                 </div>
                 <div id="bottom-container">
                     <div className='badge'>
-                        <div className="score-badge">
+                        <div className="stats">
                             <div className='score-container'>
                                 <div className="score-digit">{animate.score.bot[0]}</div>
                                 <div className="score-digit">{animate.score.bot[1]}</div>
@@ -393,9 +394,7 @@ const GameDisplay = function (props) {
                                 { (botWinStreak > 2) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
                             </div>
                         </div>
-                        <div className='emoji-backdrop' id='bot-badge'>
-                            <span className='emoji'>&#x1F916;</span>
-                        </div>
+                        <div className='emoji-backdrop' id='bot-badge'><>&#x1F916;</></div>
                     </div>
                     <div id="buttons-panel">
                         <div>
@@ -422,10 +421,8 @@ const GameDisplay = function (props) {
                         >RESTART</button>
                     </div>
                     <div className='badge'>
-                        <div className='emoji-backdrop' id='player-badge'>
-                            <span className='emoji'>&#129399;</span>
-                        </div>
-                        <div className="score-badge">
+                        <div className='emoji-backdrop' id='player-badge'><>&#129399;</></div>
+                        <div className="stats">
                             <div className='score-container'>
                                 <div className="score-digit">{animate.score.player[0]}</div>
                                 <div className="score-digit">{animate.score.player[1]}</div>
