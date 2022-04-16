@@ -4,7 +4,7 @@ import React, { useState } from "react";
 /**
  * Search component, used to find & display top 5 scores by user 
  * @param none 
- * @returns Search component
+ * @returns Search
  */
 export default function Search() {
   const [display, setDisplay] = useState({
@@ -17,8 +17,8 @@ export default function Search() {
 
   /**
   * Function to search database for queried username, updates state & display score info on the screen
-  * @param click  
-  * @returns none
+  * @param e - click event
+  * @returns void
   */
   async function clicked(e) {
     e.preventDefault();
@@ -118,7 +118,6 @@ export default function Search() {
   function goBack() {
     setSpaceInvaded(false);
   }
-
 
   return (
     <div id="Test">

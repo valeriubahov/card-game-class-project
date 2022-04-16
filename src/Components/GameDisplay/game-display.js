@@ -187,6 +187,12 @@ const GameDisplay = function (props) {
         return card;
     }
 
+    /**
+     *  Function to set animation states to print message, and to transform/update the score into state for display
+     * @param {string} score - current score 
+     * @param {string} target - which score we should update
+     * @returns void
+     */
     function animateScore (score, target) {
         setAnimate(prev => {
             let obj = { ...prev };
