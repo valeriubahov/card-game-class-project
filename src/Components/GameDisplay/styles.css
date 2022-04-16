@@ -1,6 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=ZCOOL+QingKe+HuangYou&display=swap');
+
+.display-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .game-table {
-  margin: 20px;
-  min-height: 400px;
+  margin: 50px 30px;
+  min-height: 475px;
   height: 80vh;
   min-width: 850px;
   width: 90vw;
@@ -37,8 +45,8 @@
 #game-table4 {
   background: radial-gradient(
     circle,
-    rgb(249, 161, 255) 0%,
-    rgb(172, 40, 181) 100%
+    rgb(122, 60, 209) 0%,
+    rgb(62, 9, 96) 100%
   );
 }
 
@@ -68,62 +76,52 @@
   margin-right: 1rem;
 }
 
-.game-process{
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  height: 70px;
-  justify-content: space-between;
-}
+.emoji { font-size: 60px }
 
-/* @keyframes draw-butt {
-  0%{ opacity: 0;}
-  100%{ opacity: 1;}
-}
-
-.draw-result {
-  animation: draw-butt 3.3s;
-  font-weight: bolder;
-} */
-
-.emojis {
-  font-size: 50px;
-}
-
-/* .drawButton {} */
-
-.display-container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  font-size: 10px;
-}
-
-#message-container {
-  min-height: 80px;
+#top-container {
+  min-height: 100px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  font: 25px 'Press Start 2P', sans-serif;
+  font: 32px 'Press Start 2P', sans-serif;
 }
 
-.clear-msg { display: none }
+.card-container {
+  flex: 1 1 0;
+  margin: 10px 40px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
 
-.welcome-msg {
-  color: orangered;
+#bottom-container {
+  min-height: 110px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.animate-message {
+  color: hotpink;
   animation: 
     fade 1300ms ease-in 200ms 1 backwards,
     blinky 400ms step-start 1800ms 3 none;
 }
 
-.player-msg {
-  animation: blinky 400ms step-start 0ms 3 forwards;
+.animate-player {
   color: yellow; 
+  animation: blinky 400ms step-start 0ms 3 forwards;
 }
 
-.bot-msg { color: red }
+.animate-bot { 
+  color: red;
+  animation: fade 400ms linear forwards;
+}
 
-.draw-msg { color: aqua }
+.animate-draw { 
+  color: lightgrey;
+  animation: fade 400ms linear forwards;
+}
 
 @keyframes fade {
   from { opacity: 0 }
@@ -136,99 +134,120 @@
   100% { opacity: 1 }
 }
 
-.card-container {
-  flex: 1 1 0;
-  padding: 0 40px;
+#buttons-panel {
+  height: 72px;
+  width: 280px;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  background-color: rgb(90, 54, 20);
+  border-radius: 140px 140px 0 0;
+  box-shadow: 0 -6px 6px rgba(0, 0, 0, 0.6);
+}
+
+.btn {
+  width: 60px;
+  height: 60px;
+  padding: 0px;
+  border: 2px outset rgb(100, 100, 100);
+  border-radius: 30px;
+  cursor: pointer;
+  font: 16px 'ZCOOL QingKe HuangYou', sans-serif;
+  padding: 3px 0px;
+}
+.btn:active { 
+  border: 2px inset rgb(100, 100, 100);
+  color: rgb(220, 220, 220);
+}
+
+#table-color {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 30px;
+  background-color: rgb(0, 0, 255);
+  border-radius: 30px 30px 0 0;
+  border-bottom: none;
+}
+
+#card-color {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 30px;
+  background-color: rgb(255, 255, 0);
+  border-radius: 0 0 30px 30px;
+  border-top: none;
+}
+
+#draw-card { background-color: rgb(0, 255, 0) }
+
+#new-game { background-color: rgb(255, 0, 0) }
+
+.badge {
+  height: 110px;
+  width: 240px;
+  display: flex;
   justify-content: space-evenly;
   align-items: center;
+  background-color: tomato;
+  border-radius: 25px;
+}
+
+.score-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  gap: 6px;
 }
 
 .score-container {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.score-frame {
-  width: 110px;
-  padding: 3px;
-  background-color: tomato;
-  border-radius: 10%;
-  border: 1px crimson solid;  
-}
-
-.score {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  gap: 2px;
+  border-radius: 10px;
+  border: 4px silver solid;
+  background-color: silver;
 }
 
 .score-digit {
   width: 24px;
-  padding: 1px;
+  padding: 2px;
   background-color: black;
-  border-radius: 20%;
-  font: 38px 'ZCOOL QingKe HuangYou', cursive;
+  border-radius: 8px;
+  font: 38px 'ZCOOL QingKe HuangYou', sans-serif;
   color: white;
 }
 
-.score-label {
-  font: 16px 'ZCOOL QingKe HuangYou', cursive;
-  padding: 1px 0;
-}
-
-#bottom-container {
-  max-height: 85px;
+.star-container {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  justify-content: space-around;
+  align-items: center;
 }
 
-#arcade-buttons-panel {
-  height: 80px;
-  width: 250px;
+.star {
+  height: 34px;
+  width: 34px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(90, 54, 20);
-  border-radius: 45% 45% 0 0;
-  box-shadow: 0 -6px 6px rgba(0, 0, 0, 0.6);
 }
 
-.arcade-button {
-  width: 50px;
-  height: 50px;
-  border: 1px white solid;
-  padding: 0;
-  border-radius: 50%;
-  cursor: pointer;
+.circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: silver;
 }
 
-.arcade-button-label {
-  margin: 3px 0 0 0;
-  padding: 0;
-  font: 14px 'ZCOOL QingKe HuangYou', cursive;
-}
-
-#change-table-btn {
-  background-color: rgba(0, 255, 0, 1);
-}
-
-#change-card-btn {
-  background-color: rgba(0, 0, 255, 1);
-}
-
-#new-game-btn {
-  background-color: rgba(255, 0, 0, 1);
-}
-
-.button-label-container {
+.emoji-backdrop {
+  height: 86px;
+  width: 86px;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  width: 65px;
-  height: 100%;
+  border-radius: 43px;
 }
+
+#bot-badge { background-color: fuchsia }
+#player-badge { background-color: cyan }

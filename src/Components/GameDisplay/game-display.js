@@ -25,6 +25,9 @@ const GameDisplay = function (props) {
     
     const user = useContext(UserContext);
 
+    let playerWins = useRef(0);
+    let botWins = useRef(0);
+
     // State for final winner
     const [winner, setWinner] = useState('');
 
@@ -44,9 +47,6 @@ const GameDisplay = function (props) {
     const [playerWinStreak, setPlayerWinStreak] = useState(0);
     const [botWinStreak, setBotWinStreak] = useState(0);
 
-    let playerWins = useRef(0);
-    let botWins = useRef(0);
-
     // States for table style
     const [BG, setBG] = useState("game-table1");
 
@@ -57,15 +57,18 @@ const GameDisplay = function (props) {
     // State to check if deck is ended
     const deckEnded = useRef(false);
 
-    // State to show if bot wins the hand or the player
-    const [drawResult, setDrawResult] = useState('');
-
-    // state object for message animations 
+    // state object for message animations
     const [animate, setAnimate] = useState({
-        welcome: true, 
+        round: 1,
+        text: `WELCOME ${user[0].userName.toUpperCase()} !`,
+        message: true,
         player: false, 
         bot: false, 
-        draw: false, 
+        draw: false,
+        score: { 
+            player: [0, 0, 0, 0],
+            bot: [0, 0, 0, 0]
+        }
     });
 
     useEffect(() => {
@@ -122,7 +125,15 @@ const GameDisplay = function (props) {
         deckEnded.current = false;
         setPlayerCard(null);
         setBotCard(null);
-        setDrawResult('');
+        setAnimate(prev => {
+            let obj = { ...prev };
+            obj.round++;
+            obj.text = `ROUND ${obj.round}`;
+            obj.message = true; 
+            obj.player = obj.bot = obj.draw = false;
+            return obj
+        });
+
         playerCardValue = 0;
         botCardValue = 0;
     }
@@ -138,6 +149,18 @@ const GameDisplay = function (props) {
         setBotScore(0);
         setBotWinStreak(0);
         setPlayerWinStreak(0);
+        setAnimate({
+            round: 1,
+            text: `WELCOME ${user[0].userName.toUpperCase()} !`,
+            message: true, 
+            player: false, 
+            bot: false, 
+            draw: false,
+            score: { 
+                player: [0, 0, 0, 0],
+                bot: [0, 0, 0, 0]
+            }
+        });
         playerWins.current = 0;
         botWins.current = 0;
     }
@@ -164,40 +187,71 @@ const GameDisplay = function (props) {
         return card;
     }
 
+    function animateScore (score, target) {
+        setAnimate(prev => {
+            let obj = { ...prev };
+            obj.text = '';
+            obj.message = obj.player = obj.bot = obj.draw = false;
+
+            if(target === 'bot') {
+                while (score.length < 4) {
+                    score = '0' + score; 
+                }
+                obj.score.bot = score.split('');
+                obj.text = 'BOT WINS';
+                obj.bot = true;
+                return obj
+            } else if(target === 'player') {
+                while (score.length < 4) {
+                    score = '0' + score; 
+                }
+                obj.score.player = score.split('');
+                obj.text = 'YOU WIN!!!';
+                obj.player = true;
+                return obj
+            } else {
+                obj.text = 'TIE';
+                obj.draw = true;
+                return obj
+            }
+        });
+    }
+
     /**
      * Function to chech who wins the hand, player or bot card value
      * @param none
      * @returns void
      */
     function checkHandWinner() {
-        // let count = 0;
-        // console.log(count++);
+        console.log(`
+        PREVIOUS ROUND
+          BOT SCORE:      ${botScore} 
+          PLAYER SCORE:   ${playerScore}
+        CURRENT ROUND
+          BOT PTS:        ${botCardValue} 
+          PLAYER PTS:     ${playerCardValue}
+          TOTAL:          ${botCardValue + playerCardValue}
+        `);
+
         if (!deckEnded.current) {
-
-            setAnimate({ welcome: false, player: false, bot: false, draw: false })
-
-            if (parseInt(botCardValue) > parseInt(playerCardValue)) {
-                if (botWins.current >= 2) {
-                    setBotScore(botScore => botScore + (parseInt(botCardValue) * 2 + parseInt(playerCardValue) * 2));
-                }
-                else {
-                    setBotScore(botScore => botScore + parseInt(botCardValue) + parseInt(playerCardValue));
-                }
-                setDrawResult('BOT WINS');
-                setAnimate({ bot: true });
+            if (botCardValue > playerCardValue) {
+                setBotScore(prevScore => {
+                    let mod = (botWins.current >= 2) ? 2 : 1; 
+                    let score = prevScore + ((botCardValue + playerCardValue) * mod);
+                    animateScore(score.toString(), 'bot');
+                    return score
+                });
             }
-            else if (parseInt(botCardValue) < parseInt(playerCardValue)) {
-                if (playerWins.current >= 2) {
-                    setPlayerScore(playerScore => playerScore + (parseInt(botCardValue) + parseInt(playerCardValue)) * 2);
-                } else {
-                    setPlayerScore(playerScore => playerScore + parseInt(botCardValue) + parseInt(playerCardValue));
-                }
-                setDrawResult('YOU WIN !!!');
-                setAnimate({ player: true });
-            } 
+            else if (botCardValue < playerCardValue) {
+                setPlayerScore(prevScore => {
+                    let mod = (playerWins.current >= 2) ? 2 : 1; 
+                    let score = prevScore + ((botCardValue + playerCardValue) * mod);
+                    animateScore(score.toString(), 'player');
+                    return score
+                });
+            }
             else {
-                setDrawResult('DRAW');
-                setAnimate({ draw: true });
+                animateScore('', '');
             }
         } else {
             if (botScore > playerScore) {
@@ -224,11 +278,9 @@ const GameDisplay = function (props) {
         await getPlayerCard().then(playerCard => {
             if (playerCard.remaining > 0) {
                 const picUrl = playerCard.cards[0].image;
-                playerCardValue = playerCard.cards[0].value;
                 setPlayerCard(picUrl);
-                if (isNaN(playerCardValue)) {
-                    playerCardValue = cardImageValue.get(playerCardValue);
-                }
+                let cardValue = playerCard.cards[0].value;
+                playerCardValue = isNaN(cardValue) ? cardImageValue.get(cardValue) : parseInt(cardValue);
             }
             else {
                 deckEnded.current = true;
@@ -239,11 +291,9 @@ const GameDisplay = function (props) {
         await getAICard().then(botCard => {
             if (botCard.remaining > 0) {
                 const picUrl = botCard.cards[0].image;
-                botCardValue = botCard.cards[0].value;
                 setBotCard(picUrl);
-                if (isNaN(botCardValue)) {
-                    botCardValue = cardImageValue.get(botCardValue);
-                }
+                let cardValue = botCard.cards[0].value;
+                botCardValue = isNaN(cardValue) ? cardImageValue.get(cardValue) : parseInt(cardValue);
             }
             else {
                 deckEnded.current = true;
@@ -292,125 +342,107 @@ const GameDisplay = function (props) {
         }
     }
 
-    // console.log()
-
     return (
         <div id={BG} className="game-table">
-
-            <div className='display-container'>
-
-                <div id="message-container">
-
-                    <div className={animate.welcome ? 'welcome-msg' : 'clear-msg'}>
-                        WELCOME {user[0].userName.toUpperCase()} !
-                    </div>
-          
-                    <div className={animate.player ? 'player-msg' : (animate.bot ? 'bot-msg' : (animate.draw) ? 'draw-msg' : '')}>
-                        {drawResult}
-                    </div>
-
+            <div className="display-container">
+                <div id='top-container'
+                    className={
+                        animate.message ? "animate-message"
+                            : animate.player ? "animate-player"
+                                : animate.bot ? "animate-bot"
+                                    : animate.draw ? "animate-draw"
+                                        : ""
+                    }
+                >
+                    {animate.text}
                 </div>
-
                 <div className="card-container">
-
                     <div className="bot-cards">
-                        <p>COMPUTER - WINS {botWinStreak}</p>
-                        {!deckEnded.current ? <img className='deck2' src={d2} alt='card'></img> : <img className='deck2' src={Blank} alt=''></img>}
-                        {botCard ? <img src={botCard} className='bot-draw' alt='card'></img> : <div className='bot-draw'></div>}
-                        <p>SCORE: {botScore}</p>
+                        { !deckEnded.current ? <img className="deck2" src={d2} alt="card"/> : <img className="deck2" src={Blank} alt=""/> }
+                        { botCard ? <img src={botCard} className="bot-draw" alt="card"/> : <div className="bot-draw"/> }
                     </div>
-
-                    {
-                        !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) ?                            
-                            <div className='game-process'>
-                                <div className="emojis">
-                                    { animate.welcome ? <>&#128075;</> : null }
-                                    { animate.player ? <>&#129399;</> : null }
-                                    { animate.bot ? <>&#x1F916;</> : null }
-                                    { animate.draw ? <>&#129309;</> : null }
-                                </div>
-                                <button className='drawButton' onClick={draw}>Draw</button>
-                            </div> 
-                            : (botWinStreak === 3 || playerWinStreak === 3)
+                    { 
+                        !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) 
+                            ? (
+                                animate.player ? <span className="emoji">&#129399;</span> 
+                                    : animate.bot ? <span className="emoji">&#x1F916;</span>
+                                        : animate.draw ? <span className="emoji">&#129309;</span>
+                                            : <span className="emoji">&#129441;</span>
+                            )
+                            : botWinStreak === 3 || playerWinStreak === 3
                                 ? <PopUp nextRound={newGame} winner="Game Ended" />
                                 : <PopUp nextRound={nextRound} winner={winner} />
                     }
-
                     <div className="player-cards">
-                        <p>{user[0].userName.slice(0, 20).toUpperCase()} - WINS {playerWinStreak}</p>
-                        { playerCard ? <img src={playerCard} className='player-draw' alt='card'></img> : <div className='player-draw'></div>}
-                        {!deckEnded.current ? <img className='deck1' src={d1} alt='card'></img> : <img className='deck2' src={Blank} alt=''></img>}
-                        <p>SCORE: {playerScore}</p>
+                        { !deckEnded.current ? <img className="deck1" src={d1} alt="card"/> : <img className="deck2" src={Blank} alt=""/> }
+                        { playerCard ? <img src={playerCard} className="player-draw" alt="card"/> : <div className="player-draw"/> }
                     </div>
-
                 </div>
-
                 <div id="bottom-container">
-
-                    {/* doesnt do anything yet */}
-                    <div class="score-container">
-                        <div className='score-frame'>
-                            <div className='score'>
-                                <div className='score-digit'>1</div>
-                                <div className='score-digit'>2</div>
-                                <div className='score-digit'>3</div>
-                                <div className='score-digit'>4</div>
+                    <div className='badge'>
+                        <div className="score-badge">
+                            <div className='score-container'>
+                                <div className="score-digit">{animate.score.bot[0]}</div>
+                                <div className="score-digit">{animate.score.bot[1]}</div>
+                                <div className="score-digit">{animate.score.bot[2]}</div>
+                                <div className="score-digit">{animate.score.bot[3]}</div>
                             </div>
-                            <div className='score-label'>SCORE</div>
+                            <div className='star-container'>
+                                { (botWinStreak > 0) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
+                                { (botWinStreak > 1) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
+                                { (botWinStreak > 2) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
+                            </div>
                         </div>
-                        <div className='emojis'>&#x1F916;</div>
+                        <div className='emoji-backdrop' id='bot-badge'>
+                            <span className='emoji'>&#x1F916;</span>
+                        </div>
                     </div>
-
-
-
-                    <div id='arcade-buttons-panel'>
-                        <div className='button-label-container'>
-                            <button 
-                                id='change-table-btn' 
-                                className='arcade-button' 
+                    <div id="buttons-panel">
+                        <div>
+                            <button
+                                id="table-color"
+                                className='btn'
                                 onClick={changeBG}
-                            />
-                            <p className='arcade-button-label'>TABLE</p>
-                        </div>
-                        <div className='button-label-container'>
-                            <button 
-                                id='change-card-btn' 
-                                className='arcade-button' 
+                            >TABLE</button>
+                            <button
+                                id="card-color"
+                                className='btn'
                                 onClick={changeDeck}
-                            />
-                            <p className='arcade-button-label'>CARD</p>
+                            >DECK</button>
                         </div>
-                        <div className='button-label-container'>
-                            <button 
-                                id='new-game-btn' 
-                                className='arcade-button' 
-                                onClick={newGame}
-                            />
-                            <p className='arcade-button-label'>RESTART</p>
-                        </div> 
+                        <button 
+                            id="draw-card"
+                            className='btn'
+                            onClick={draw}
+                        >DRAW CARD</button>
+                        <button
+                            id="new-game"
+                            className="btn"
+                            onClick={newGame}
+                        >RESTART</button>
                     </div>
-
-                        {/* doesnt do anything yet */}
-                        <div class="score-container">
-                            {/* (playerScore.toString().length) */}
-                            <div className='emojis'>&#129399;</div>
-                            <div className='score-frame'>
-                                <div className='score'>
-                                    <div className='score-digit'>1</div>
-                                    <div className='score-digit'>2</div>
-                                    <div className='score-digit'>3</div>
-                                    <div className='score-digit'>4</div>
-                                </div>
-                                <div className='score-label'>SCORE</div>
+                    <div className='badge'>
+                        <div className='emoji-backdrop' id='player-badge'>
+                            <span className='emoji'>&#129399;</span>
+                        </div>
+                        <div className="score-badge">
+                            <div className='score-container'>
+                                <div className="score-digit">{animate.score.player[0]}</div>
+                                <div className="score-digit">{animate.score.player[1]}</div>
+                                <div className="score-digit">{animate.score.player[2]}</div>
+                                <div className="score-digit">{animate.score.player[3]}</div>
+                            </div>
+                            <div className='star-container'>
+                                { (playerWinStreak > 0) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
+                                { (playerWinStreak > 1) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
+                                { (playerWinStreak > 2) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
                             </div>
                         </div>
+                    </div>              
                 </div>
-
-
-
             </div>
         </div>
-    )
+    );
 }
 
 export default GameDisplay;
