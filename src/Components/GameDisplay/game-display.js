@@ -365,7 +365,6 @@ const GameDisplay = function (props) {
                         !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) 
                             ? (
                                 animate.player ? <div className="emoji">&#129399;</div> 
-
                                     : animate.bot ? <span className="emoji">&#x1F916;</span>
                                         : animate.draw ? <span className="emoji">&#129309;</span>
                                             : <span className="emoji">&#129441;</span>
