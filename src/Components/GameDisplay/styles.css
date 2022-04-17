@@ -258,3 +258,44 @@
 
 #bot-badge { background-color: plum }
 #player-badge { background-color: cyan }
+
+.loginWarning {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.loginMsg{
+  font-size: 50px;
+  font-family: 'Press Start 2P', sans-serif;
+}
+
+
+.loginButton {
+  font-family: 'Comfortaa', cursive;
+  text-transform: uppercase;
+  outline: 0;
+  background: rgba(45, 59, 161, 1);
+  width: 30%;
+  border: 0;
+  border-radius: 5px;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  font-family: 'Press Start 2P', sans-serif;
+}
+
+.loginButton:hover {
+  font-weight: bold;
+  background: tomato;
+}
+
+.loginButton:active {
+  background: rgba(45, 59, 161, 0.8);
+}

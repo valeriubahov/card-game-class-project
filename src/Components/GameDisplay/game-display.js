@@ -1,5 +1,6 @@
 import './styles.css';
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 import RedCard from "./images/red-card.jpg";
 import BlueCard from "./images/blue-card.jpg";
 import BlackCard from "./images/black-card.jpg";
@@ -22,8 +23,10 @@ cardImageValue.set('ACE', 14);
  * @returns GameDisplay component
  */
 const GameDisplay = function (props) {
-    
+
     const user = useContext(UserContext);
+
+    let navigate = useNavigate();
 
     let playerWins = useRef(0);
     let botWins = useRef(0);
@@ -60,12 +63,12 @@ const GameDisplay = function (props) {
     // state object for message animations
     const [animate, setAnimate] = useState({
         round: 1,
-        text: `WELCOME ${user[0].userName.toUpperCase()} !`,
+        text: user[0].userName && `WELCOME ${user[0].userName.toUpperCase()} !`,
         message: true,
-        player: false, 
-        bot: false, 
+        player: false,
+        bot: false,
         draw: false,
-        score: { 
+        score: {
             player: [0, 0, 0, 0],
             bot: [0, 0, 0, 0]
         }
@@ -129,7 +132,7 @@ const GameDisplay = function (props) {
             let obj = { ...prev };
             obj.round++;
             obj.text = `ROUND ${obj.round}`;
-            obj.message = true; 
+            obj.message = true;
             obj.player = obj.bot = obj.draw = false;
             return obj
         });
@@ -152,11 +155,11 @@ const GameDisplay = function (props) {
         setAnimate({
             round: 1,
             text: `WELCOME ${user[0].userName.toUpperCase()} !`,
-            message: true, 
-            player: false, 
-            bot: false, 
+            message: true,
+            player: false,
+            bot: false,
             draw: false,
-            score: { 
+            score: {
                 player: [0, 0, 0, 0],
                 bot: [0, 0, 0, 0]
             }
@@ -187,29 +190,33 @@ const GameDisplay = function (props) {
         return card;
     }
 
+    function goToLogin() {
+        navigate('/login');
+    }
+
     /**
      *  Function to set animation states to print message, and to transform/update the score into state for display
      * @param {string} score - current score 
      * @param {string} target - which score we should update
      * @returns void
      */
-    function animateScore (score, target) {
+    function animateScore(score, target) {
         setAnimate(prev => {
             let obj = { ...prev };
             obj.text = '';
             obj.message = obj.player = obj.bot = obj.draw = false;
 
-            if(target === 'bot') {
+            if (target === 'bot') {
                 while (score.length < 4) {
-                    score = '0' + score; 
+                    score = '0' + score;
                 }
                 obj.score.bot = score.split('');
                 obj.text = 'BOT WINS';
                 obj.bot = true;
                 return obj
-            } else if(target === 'player') {
+            } else if (target === 'player') {
                 while (score.length < 4) {
-                    score = '0' + score; 
+                    score = '0' + score;
                 }
                 obj.score.player = score.split('');
                 obj.text = 'YOU WIN!!!';
@@ -242,7 +249,7 @@ const GameDisplay = function (props) {
         if (!deckEnded.current) {
             if (botCardValue > playerCardValue) {
                 setBotScore(prevScore => {
-                    let mod = (botWins.current >= 2) ? 2 : 1; 
+                    let mod = (botWins.current >= 2) ? 2 : 1;
                     let score = prevScore + ((botCardValue + playerCardValue) * mod);
                     animateScore(score.toString(), 'bot');
                     return score
@@ -250,7 +257,7 @@ const GameDisplay = function (props) {
             }
             else if (botCardValue < playerCardValue) {
                 setPlayerScore(prevScore => {
-                    let mod = (playerWins.current >= 2) ? 2 : 1; 
+                    let mod = (playerWins.current >= 2) ? 2 : 1;
                     let score = prevScore + ((botCardValue + playerCardValue) * mod);
                     animateScore(score.toString(), 'player');
                     return score
@@ -349,101 +356,113 @@ const GameDisplay = function (props) {
     }
 
     return (
-        <div id={BG} className="game-table">
-            <div className="display-container">
-                <div id='top-container'
-                    className={
-                        animate.message ? "animate-message"
-                            : animate.player ? "animate-player"
-                                : animate.bot ? "animate-bot"
-                                    : animate.draw ? "animate-draw"
-                                        : ""
-                    }
-                >
-                    {animate.text}
-                </div>
-                <div className="card-container">
-                    <div className="bot-cards">
-                        { !deckEnded.current ? <img className="deck2" src={d2} alt="card"/> : <img className="deck2" src={Blank} alt=""/> }
-                        { botCard ? <img src={botCard} className="bot-draw" alt="card"/> : <div className="bot-draw"/> }
-                    </div>
-                    { 
-                        !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0) 
-                            ? (
-                                animate.player ? <div className="emoji">&#129399;</div> 
-                                    : animate.bot ? <span className="emoji">&#x1F916;</span>
-                                        : animate.draw ? <span className="emoji">&#129309;</span>
-                                            : <span className="emoji">&#129441;</span>
-                            )
-                            : botWinStreak === 3 || playerWinStreak === 3
-                                ? <PopUp nextRound={newGame} winner="Game Ended" />
-                                : <PopUp nextRound={nextRound} winner={winner} />
-                    }
-                    <div className="player-cards">
-                        { playerCard ? <img src={playerCard} className="player-draw" alt="card"/> : <div className="player-draw"/> }
-                        { !deckEnded.current ? <img className="deck1" src={d1} alt="card"/> : <img className="deck2" src={Blank} alt=""/> }
-                    </div>
-                </div>
-                <div id="bottom-container">
-                    <div className='badge'>
-                        <div className="stats">
-                            <div className='score-container'>
-                                <div className="score-digit">{animate.score.bot[0]}</div>
-                                <div className="score-digit">{animate.score.bot[1]}</div>
-                                <div className="score-digit">{animate.score.bot[2]}</div>
-                                <div className="score-digit">{animate.score.bot[3]}</div>
+        <>
+            {user[0].userName ?
+                (<div id={BG} className="game-table">
+                    <div className="display-container">
+                        <div id='top-container'
+                            className={
+                                animate.message ? "animate-message"
+                                    : animate.player ? "animate-player"
+                                        : animate.bot ? "animate-bot"
+                                            : animate.draw ? "animate-draw"
+                                                : ""
+                            }
+                        >
+                            {animate.text}
+                        </div>
+                        <div className="card-container">
+                            <div className="bot-cards">
+                                {!deckEnded.current ? <img className="deck2" src={d2} alt="card" /> : <img className="deck2" src={Blank} alt="" />}
+                                {botCard ? <img src={botCard} className="bot-draw" alt="card" /> : <div className="bot-draw" />}
                             </div>
-                            <div className='star-container'>
-                                { (botWinStreak > 0) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
-                                { (botWinStreak > 1) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
-                                { (botWinStreak > 2) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
+                            {
+                                !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0)
+                                    ? (
+                                        animate.player ? <div className="emoji">&#129399;</div>
+                                            : animate.bot ? <span className="emoji">&#x1F916;</span>
+                                                : animate.draw ? <span className="emoji">&#129309;</span>
+                                                    : <span className="emoji">&#129441;</span>
+                                    )
+                                    : botWinStreak === 3 || playerWinStreak === 3
+                                        ? <PopUp nextRound={newGame} winner="Game Ended" />
+                                        : <PopUp nextRound={nextRound} winner={winner} />
+                            }
+                            <div className="player-cards">
+                                {playerCard ? <img src={playerCard} className="player-draw" alt="card" /> : <div className="player-draw" />}
+                                {!deckEnded.current ? <img className="deck1" src={d1} alt="card" /> : <img className="deck2" src={Blank} alt="" />}
                             </div>
                         </div>
-                        <div className='emoji-backdrop' id='bot-badge'><>&#x1F916;</></div>
-                    </div>
-                    <div id="buttons-panel">
-                        <div>
-                            <button
-                                id="table-color"
-                                className='btn'
-                                onClick={changeBG}
-                            >TABLE</button>
-                            <button
-                                id="card-color"
-                                className='btn'
-                                onClick={changeDeck}
-                            >DECK</button>
-                        </div>
-                        <button 
-                            id="draw-card"
-                            className='btn'
-                            onClick={draw}
-                        >DRAW CARD</button>
-                        <button
-                            id="new-game"
-                            className="btn"
-                            onClick={newGame}
-                        >RESTART</button>
-                    </div>
-                    <div className='badge'>
-                        <div className='emoji-backdrop' id='player-badge'><>&#129399;</></div>
-                        <div className="stats">
-                            <div className='score-container'>
-                                <div className="score-digit">{animate.score.player[0]}</div>
-                                <div className="score-digit">{animate.score.player[1]}</div>
-                                <div className="score-digit">{animate.score.player[2]}</div>
-                                <div className="score-digit">{animate.score.player[3]}</div>
+                        <div id="bottom-container">
+                            <div className='badge'>
+                                <div className="stats">
+                                    <div className='score-container'>
+                                        <div className="score-digit">{animate.score.bot[0]}</div>
+                                        <div className="score-digit">{animate.score.bot[1]}</div>
+                                        <div className="score-digit">{animate.score.bot[2]}</div>
+                                        <div className="score-digit">{animate.score.bot[3]}</div>
+                                    </div>
+                                    <div className='star-container'>
+                                        {(botWinStreak > 0) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle' /></div>}
+                                        {(botWinStreak > 1) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle' /></div>}
+                                        {(botWinStreak > 2) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle' /></div>}
+                                    </div>
+                                </div>
+                                <div className='emoji-backdrop' id='bot-badge'><>&#x1F916;</></div>
                             </div>
-                            <div className='star-container'>
-                                { (playerWinStreak > 0) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
-                                { (playerWinStreak > 1) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
-                                { (playerWinStreak > 2) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle'/></div> }
+                            <div id="buttons-panel">
+                                <div>
+                                    <button
+                                        id="table-color"
+                                        className='btn'
+                                        onClick={changeBG}
+                                    >TABLE</button>
+                                    <button
+                                        id="card-color"
+                                        className='btn'
+                                        onClick={changeDeck}
+                                    >DECK</button>
+                                </div>
+                                <button
+                                    id="draw-card"
+                                    className='btn'
+                                    onClick={draw}
+                                >DRAW CARD</button>
+                                <button
+                                    id="new-game"
+                                    className="btn"
+                                    onClick={newGame}
+                                >RESTART</button>
+                            </div>
+                            <div className='badge'>
+                                <div className='emoji-backdrop' id='player-badge'><>&#129399;</></div>
+                                <div className="stats">
+                                    <div className='score-container'>
+                                        <div className="score-digit">{animate.score.player[0]}</div>
+                                        <div className="score-digit">{animate.score.player[1]}</div>
+                                        <div className="score-digit">{animate.score.player[2]}</div>
+                                        <div className="score-digit">{animate.score.player[3]}</div>
+                                    </div>
+                                    <div className='star-container'>
+                                        {(playerWinStreak > 0) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle' /></div>}
+                                        {(playerWinStreak > 1) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle' /></div>}
+                                        {(playerWinStreak > 2) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle' /></div>}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>              
-                </div>
-            </div>
-        </div>
+                    </div>
+                </div>) :
+                (<div id={BG} className="game-table">
+                    <div className="loginWarning">
+                        <div className={animate.welcome ? 'welcome-msg' : 'clear-msg'}>
+                            <span className='loginMsg'>Please Login</span>
+                            <button className='loginButton' onClick={goToLogin}>Go to Login page</button>
+                        </div>
+                    </div>
+                </div>)
+            }
+        </>
     );
 }
 
