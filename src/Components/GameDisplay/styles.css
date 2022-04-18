@@ -55,6 +55,7 @@
   width: 100%;
   display: flex;
   justify-content: space-evenly;
+  gap: 15px;
 }
 
 .player-draw,
@@ -68,22 +69,18 @@
   border-radius: 4%;
 }
 
-.player-draw {
-  float: left;
-  margin-left: 1px;
+.player-draw { float: left }
+
+.bot-draw { float: right }
+
+.center-emoji {
+  height: 200px;
+  min-width: 130px;
+  line-height: 200px;
+  font-size: 90px;
 }
 
-.bot-draw {
-  float: right;
-  margin-right: 1px;
-}
-
-.emoji { 
-  margin: 10px;
-  font-size: 100px;
-}
-
-#top-container {
+#animation-container {
   min-height: 100px;
   display: flex;
   justify-content: center;
@@ -93,7 +90,7 @@
 
 .card-container {
   flex: 1 1 0;
-  margin: 10px 40px;
+  margin: 0 40px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -246,18 +243,18 @@
   background-color: silver;
 }
 
-.emoji-backdrop {
+.emoji-fill {
   height: 86px;
   width: 86px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 43px;
-  font-size: 60px;
+  font-size: 50px;
 }
 
-#bot-badge { background-color: plum }
-#player-badge { background-color: cyan }
+#bot-emoji { background-color: plum }
+#player-emoji { background-color: cyan }
 
 .loginWarning {
   display: flex;
@@ -272,7 +269,6 @@
   font-size: 50px;
   font-family: 'Press Start 2P', sans-serif;
 }
-
 
 .loginButton {
   font-family: 'Comfortaa', cursive;

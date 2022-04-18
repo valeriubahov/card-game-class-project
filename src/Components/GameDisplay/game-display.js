@@ -11,6 +11,14 @@ import { UserContext } from '../../context/UserContext';
 let playerCardValue = 0;
 let botCardValue = 0;
 
+const emojis = {
+    default: String.fromCodePoint(0x1F9A1),
+    bot: String.fromCodePoint(0x1F916),
+    draw: String.fromCodePoint(0x1F91D),
+    player: String.fromCodePoint(0x1F47D),
+    star: String.fromCodePoint(0x2B50),
+}
+
 const cardImageValue = new Map();
 cardImageValue.set('JACK', 11);
 cardImageValue.set('QUEEN', 12);
@@ -360,7 +368,7 @@ const GameDisplay = function (props) {
             {user[0].userName ?
                 (<div id={BG} className="game-table">
                     <div className="display-container">
-                        <div id='top-container'
+                        <div id='animation-container'
                             className={
                                 animate.message ? "animate-message"
                                     : animate.player ? "animate-player"
@@ -379,10 +387,19 @@ const GameDisplay = function (props) {
                             {
                                 !deckEnded.current || (botWinStreak === 0 && playerWinStreak === 0)
                                     ? (
-                                        animate.player ? <div className="emoji">&#129399;</div>
-                                            : animate.bot ? <span className="emoji">&#x1F916;</span>
-                                                : animate.draw ? <span className="emoji">&#129309;</span>
-                                                    : <span className="emoji">&#129441;</span>
+                                        animate.player ? <span className="center-emoji">{emojis.player}</span>
+                                            : animate.bot ? <span className="center-emoji">{emojis.bot}</span>
+                                                : animate.draw ? <span className="center-emoji">{emojis.draw}</span>
+
+                                                    : <div className='center-emoji' 
+                                                    style={{ 
+                                                        lineHeight: '155px',
+                                                         
+                                                        }}>
+
+                                                        <span>{emojis.default}</span>
+                                                    
+                                                    </div>
                                     )
                                     : botWinStreak === 3 || playerWinStreak === 3
                                         ? <PopUp nextRound={newGame} winner="Game Ended" />
@@ -403,12 +420,12 @@ const GameDisplay = function (props) {
                                         <div className="score-digit">{animate.score.bot[3]}</div>
                                     </div>
                                     <div className='star-container'>
-                                        {(botWinStreak > 0) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle' /></div>}
-                                        {(botWinStreak > 1) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle' /></div>}
-                                        {(botWinStreak > 2) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle' /></div>}
+                                        <div className='star'>{(botWinStreak > 0) ? emojis.star : <span className='circle'/>}</div>
+                                        <div className='star'>{(botWinStreak > 1) ? emojis.star : <span className='circle'/>}</div>
+                                        <div className='star'>{(botWinStreak > 2) ? emojis.star : <span className='circle'/>}</div>
                                     </div>
                                 </div>
-                                <div className='emoji-backdrop' id='bot-badge'><>&#x1F916;</></div>
+                                <div className='emoji-fill' id='bot-emoji'>{emojis.bot}</div>
                             </div>
                             <div id="buttons-panel">
                                 <div>
@@ -435,7 +452,7 @@ const GameDisplay = function (props) {
                                 >RESTART</button>
                             </div>
                             <div className='badge'>
-                                <div className='emoji-backdrop' id='player-badge'><>&#129399;</></div>
+                                <div className='emoji-fill' id='player-emoji'>{emojis.player}</div>
                                 <div className="stats">
                                     <div className='score-container'>
                                         <div className="score-digit">{animate.score.player[0]}</div>
@@ -444,9 +461,9 @@ const GameDisplay = function (props) {
                                         <div className="score-digit">{animate.score.player[3]}</div>
                                     </div>
                                     <div className='star-container'>
-                                        {(playerWinStreak > 0) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle' /></div>}
-                                        {(playerWinStreak > 1) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle' /></div>}
-                                        {(playerWinStreak > 2) ? <div className='star'>&#11088;</div> : <div className='star'><span className='circle' /></div>}
+                                        <div className='star'>{(playerWinStreak > 0) ? emojis.star : <span className='circle'/>}</div>
+                                        <div className='star'>{(playerWinStreak > 1) ? emojis.star : <span className='circle'/>}</div>
+                                        <div className='star'>{(playerWinStreak > 2) ? emojis.star : <span className='circle'/>}</div>
                                     </div>
                                 </div>
                             </div>
@@ -455,10 +472,8 @@ const GameDisplay = function (props) {
                 </div>) :
                 (<div id={BG} className="game-table">
                     <div className="loginWarning">
-                        <div className={animate.welcome ? 'welcome-msg' : 'clear-msg'}>
-                            <span className='loginMsg'>Please Login</span>
-                            <button className='loginButton' onClick={goToLogin}>Go to Login page</button>
-                        </div>
+                        <span className='loginMsg'>Please Login</span>
+                        <button className='loginButton' onClick={goToLogin}>Go to Login page</button>
                     </div>
                 </div>)
             }
