@@ -390,19 +390,10 @@ const GameDisplay = function (props) {
                                         animate.player ? <span className="center-emoji">{emojis.player}</span>
                                             : animate.bot ? <span className="center-emoji">{emojis.bot}</span>
                                                 : animate.draw ? <span className="center-emoji">{emojis.draw}</span>
-
-                                                    : <div className='center-emoji' 
-                                                    style={{ 
-                                                        lineHeight: '155px',
-                                                         
-                                                        }}>
-
-                                                        <span>{emojis.default}</span>
-                                                    
-                                                    </div>
-                                    )
-                                    : botWinStreak === 3 || playerWinStreak === 3
-                                        ? <PopUp nextRound={newGame} winner="Game Ended" />
+                                                    : <span className='center-emoji' style={{ lineHeight: '155px' }}>{emojis.default}</span>
+                                    ) 
+                                    : botWinStreak === 3 || playerWinStreak === 3 
+                                        ? <PopUp nextRound={newGame} winner="Game Ended"/> 
                                         : <PopUp nextRound={nextRound} winner={winner} />
                             }
                             <div className="player-cards">
