@@ -15,7 +15,7 @@ const LoginWindow = function (props) {
                 let userName = "";
                 let _id = "";
                 let profilePic = "";
-                fetch("http://localhost:5000/users")
+                fetch("https://honey-badger-games.herokuapp.com:5000/users")
                     .then(response => response.json())
                     .then(value => {
                         const userArr = value.filter(x => x.userName === loginName);
@@ -46,7 +46,7 @@ const LoginWindow = function (props) {
                             //below line for uploading the actual picture into the uploads folder
                             imageData.append("profile_pic", imgInput.files[0]);
 
-                            fetch("http://localhost:5000/uploads", {
+                            fetch("https://honey-badger-games.herokuapp.com:5000/uploads", {
                                 method: "POST",
                                 body: imageData
                             })
@@ -54,7 +54,7 @@ const LoginWindow = function (props) {
                             const nameData = new FormData(newUserName)
                             nameData.append("profile_pic", imgInput.files[0].name);
 
-                            fetch("http://localhost:5000/users/add", {
+                            fetch("https://honey-badger-games.herokuapp.com:5000/users/add", {
                                 method: "POST",
                                 body: nameData
                             })
@@ -78,7 +78,7 @@ const LoginWindow = function (props) {
         let _id = "";
         let profilePic = "";
         if (loginName !== '' && loginName !== undefined) {
-            fetch("http://localhost:5000/users")
+            fetch("https://honey-badger-games.herokuapp.com:5000/users")
                 .then(response => response.json())
                 .then(value => {
                     const users = value.filter(x => x.userName === loginName);
