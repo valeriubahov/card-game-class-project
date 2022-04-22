@@ -12,7 +12,7 @@ app.use(require("./routes/userScore"));
 // get driver connection
 const dbo = require("./db/conn");
 
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+app.use(express.static(path.resolve(__dirname, "./build")));
 
 
 //multer needed for profile pic uploading
