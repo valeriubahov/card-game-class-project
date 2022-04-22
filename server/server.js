@@ -12,12 +12,8 @@ app.use(require("./routes/userScore"));
 // get driver connection
 const dbo = require("./db/conn");
 
-const publicPath = path.join(__dirname, '..', 'public');
-app.use(express.static(publicPath));
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(publicPath, 'index.html'));
-});
 
 //multer needed for profile pic uploading
 const multer = require("multer");
